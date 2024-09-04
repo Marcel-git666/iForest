@@ -9,9 +9,23 @@ import SwiftUI
 
 @main
 struct iForestApp: App {
+    @StateObject private var appCoordinator = AppCoordinator()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack(path: $appCoordinator.path) {
+                appCoordinator.view()
+                    .navigationDestination(for: ProjectsCoordinator.self) { coordinator in
+                        coordinator.view()
+                    }
+                    .navigationDestination(for: StandsCoordinator.self) { coordinator in
+                        coordinator.view()
+                    }
+                    .navigationDestination(for: TreesCoordinator.self) { coordinator in
+                        coordinator.view()
+                    }
+            }
+            .environmentObject(appCoordinator)
         }
     }
 }

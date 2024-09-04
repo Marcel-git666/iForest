@@ -11,6 +11,18 @@
 		1FAF32A62C88A69F009FCEA3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF32A52C88A69F009FCEA3 /* ContentView.swift */; };
 		1FAF32A82C88A6A0009FCEA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAF32A72C88A6A0009FCEA3 /* Assets.xcassets */; };
 		1FAF32AB2C88A6A0009FCEA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAF32AA2C88A6A0009FCEA3 /* Preview Assets.xcassets */; };
+		1FC7D2D12C88ACBC000E6922 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2D02C88ACBC000E6922 /* LoginView.swift */; };
+		1FC7D2D32C88AD52000E6922 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2D22C88AD52000E6922 /* ForgotPasswordView.swift */; };
+		1FC7D2D52C88ADAD000E6922 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2D42C88ADAD000E6922 /* AuthenticationCoordinator.swift */; };
+		1FC7D2D72C88B5E4000E6922 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2D62C88B5E4000E6922 /* AppCoordinator.swift */; };
+		1FC7D2D92C88B602000E6922 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2D82C88B602000E6922 /* MainView.swift */; };
+		1FC7D2DB2C88D577000E6922 /* ProjectsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2DA2C88D577000E6922 /* ProjectsCoordinator.swift */; };
+		1FC7D2DD2C88D619000E6922 /* StandsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2DC2C88D619000E6922 /* StandsCoordinator.swift */; };
+		1FC7D2DF2C88D632000E6922 /* TreesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2DE2C88D632000E6922 /* TreesCoordinator.swift */; };
+		1FC7D2E12C88D68A000E6922 /* ProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2E02C88D68A000E6922 /* ProjectsView.swift */; };
+		1FC7D2E32C88D6EC000E6922 /* StandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2E22C88D6EC000E6922 /* StandsView.swift */; };
+		1FC7D2E52C88D729000E6922 /* TreesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2E42C88D729000E6922 /* TreesView.swift */; };
+		1FC7D2E72C88DDBC000E6922 /* AppDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2E62C88DDBC000E6922 /* AppDestination.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +31,18 @@
 		1FAF32A52C88A69F009FCEA3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1FAF32A72C88A6A0009FCEA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FAF32AA2C88A6A0009FCEA3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1FC7D2D02C88ACBC000E6922 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		1FC7D2D22C88AD52000E6922 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		1FC7D2D42C88ADAD000E6922 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
+		1FC7D2D62C88B5E4000E6922 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		1FC7D2D82C88B602000E6922 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		1FC7D2DA2C88D577000E6922 /* ProjectsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsCoordinator.swift; sourceTree = "<group>"; };
+		1FC7D2DC2C88D619000E6922 /* StandsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandsCoordinator.swift; sourceTree = "<group>"; };
+		1FC7D2DE2C88D632000E6922 /* TreesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreesCoordinator.swift; sourceTree = "<group>"; };
+		1FC7D2E02C88D68A000E6922 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
+		1FC7D2E22C88D6EC000E6922 /* StandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandsView.swift; sourceTree = "<group>"; };
+		1FC7D2E42C88D729000E6922 /* TreesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreesView.swift; sourceTree = "<group>"; };
+		1FC7D2E62C88DDBC000E6922 /* AppDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDestination.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +77,18 @@
 			children = (
 				1FAF32A32C88A69F009FCEA3 /* iForestApp.swift */,
 				1FAF32A52C88A69F009FCEA3 /* ContentView.swift */,
+				1FC7D2D02C88ACBC000E6922 /* LoginView.swift */,
+				1FC7D2E02C88D68A000E6922 /* ProjectsView.swift */,
+				1FC7D2E22C88D6EC000E6922 /* StandsView.swift */,
+				1FC7D2E42C88D729000E6922 /* TreesView.swift */,
+				1FC7D2D22C88AD52000E6922 /* ForgotPasswordView.swift */,
+				1FC7D2D42C88ADAD000E6922 /* AuthenticationCoordinator.swift */,
+				1FC7D2E62C88DDBC000E6922 /* AppDestination.swift */,
+				1FC7D2DC2C88D619000E6922 /* StandsCoordinator.swift */,
+				1FC7D2DE2C88D632000E6922 /* TreesCoordinator.swift */,
+				1FC7D2D62C88B5E4000E6922 /* AppCoordinator.swift */,
+				1FC7D2DA2C88D577000E6922 /* ProjectsCoordinator.swift */,
+				1FC7D2D82C88B602000E6922 /* MainView.swift */,
 				1FAF32A72C88A6A0009FCEA3 /* Assets.xcassets */,
 				1FAF32A92C88A6A0009FCEA3 /* Preview Content */,
 			);
@@ -137,7 +173,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FC7D2D72C88B5E4000E6922 /* AppCoordinator.swift in Sources */,
+				1FC7D2DD2C88D619000E6922 /* StandsCoordinator.swift in Sources */,
+				1FC7D2DF2C88D632000E6922 /* TreesCoordinator.swift in Sources */,
+				1FC7D2E32C88D6EC000E6922 /* StandsView.swift in Sources */,
+				1FC7D2D92C88B602000E6922 /* MainView.swift in Sources */,
+				1FC7D2DB2C88D577000E6922 /* ProjectsCoordinator.swift in Sources */,
+				1FC7D2D12C88ACBC000E6922 /* LoginView.swift in Sources */,
+				1FC7D2D52C88ADAD000E6922 /* AuthenticationCoordinator.swift in Sources */,
 				1FAF32A62C88A69F009FCEA3 /* ContentView.swift in Sources */,
+				1FC7D2D32C88AD52000E6922 /* ForgotPasswordView.swift in Sources */,
+				1FC7D2E72C88DDBC000E6922 /* AppDestination.swift in Sources */,
+				1FC7D2E52C88D729000E6922 /* TreesView.swift in Sources */,
+				1FC7D2E12C88D68A000E6922 /* ProjectsView.swift in Sources */,
 				1FAF32A42C88A69F009FCEA3 /* iForestApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
