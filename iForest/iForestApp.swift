@@ -5,27 +5,50 @@
 //  Created by Marcel Mravec on 04.09.2024.
 //
 
+import os
 import SwiftUI
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    // Delegate pattern
+    weak var deeplinkHandler: DeeplinkHandling?
+    
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
+//        FirebaseApp.configure()
+        UserDefaults.standard.set(true, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+
+        //        deeplinkFromService()
+        return true
+    }
+    
+    func deeplinkFromService() { // swiftlint:disable:next no_magic_numbers
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            self?.deeplinkHandler?.handleDeeplink(.onboarding(page: 0))
+        }
+    }
+}
 
 @main
 struct iForestApp: App {
-    @StateObject private var appCoordinator = AppCoordinator()
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @ObservedObject private var appCoordinator = AppCoordinator()
+    private let logger = Logger()
+    
+    init() {
+        appCoordinator.start()
+        delegate.deeplinkHandler = appCoordinator
+    }
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: $appCoordinator.path) {
-                appCoordinator.view()
-                    .navigationDestination(for: ProjectsCoordinator.self) { coordinator in
-                        coordinator.view()
-                    }
-                    .navigationDestination(for: StandsCoordinator.self) { coordinator in
-                        coordinator.view()
-                    }
-                    .navigationDestination(for: TreesCoordinator.self) { coordinator in
-                        coordinator.view()
-                    }
-            }
-            .environmentObject(appCoordinator)
+            CoordinatorView(coordinator: appCoordinator )
+                .id(appCoordinator.isAuthorized)
+                .onAppear {
+                    logger.info("🦈 AppCoordinator has appeared.")
+                }
+                .ignoresSafeArea(.all)
         }
     }
 }
