@@ -24,7 +24,7 @@ struct LoginView: View {
             Color.black
             VStack {
                 Spacer()
-                CustomTextLabel(text: "Login screen", textTypeSize: .navigationTitle)
+                CustomTextLabel(text: "iForest Login", textTypeSize: .navigationTitle)
                 Spacer()
                 CustomTextLabel(text: "E-mail", textTypeSize: .baseText)
                 CustomTextField(placeHolder: "E-mail", imageName: "envelope", imageOpacity: 1, imageColor: .white, value: $store.state.email)
