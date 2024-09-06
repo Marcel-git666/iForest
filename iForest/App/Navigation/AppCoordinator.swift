@@ -58,15 +58,15 @@ extension AppCoordinator {
         return loginCoordinator
     }
     
-//    func makeProjectFlow() -> ViewControllerCoordinator {
-////        let mainTabBarCoordinator = MainTabBarCoordinator(container: container)
-////        startChildCoordinator(mainTabBarCoordinator)
-////        mainTabBarCoordinator.eventPublisher.sink { [weak self] event in
-////            self?.handleEvent(event)
-////        }
-////        .store(in: &cancellables)
-////        return mainTabBarCoordinator
-//    }
+    func makeProjectFlow() -> ViewControllerCoordinator {
+        let projectCoordinator = ProjectNavigationCoordinator()
+        startChildCoordinator(projectCoordinator)
+        projectCoordinator.eventPublisher.sink { [weak self] event in
+            self?.handleEvent(event)
+        }
+        .store(in: &cancellables)
+        return projectCoordinator
+    }
     
     func handleDeeplink(deeplink: Deeplink) {
         childCoordinators.forEach { $0.handleDeeplink(deeplink) }
@@ -83,17 +83,19 @@ extension AppCoordinator {
         }
     }
     
-//    func handleEvent(_ event: MainTabBarEvent) {
-//        switch event {
-//        case let .logout(coordinator):
-//            rootViewController = makeLoginFlow().rootViewController
-//            release(coordinator: coordinator)
+    func handleEvent(_ event: ProjectNavigationCoordinatorEvent) {
+        switch event {
+        case let .logout(coordinator):
+            rootViewController = makeLoginFlow().rootViewController
+            release(coordinator: coordinator)
 //            do {
 //                try keychainService.removeAuthData()
 //            } catch {
 //                logger.error("❌ AuthData not removed!")
 //            }
-//            isAuthorized = false
-//        }
-//    }
+            isAuthorized = false
+        default:
+            break
+        }
+    }
 }

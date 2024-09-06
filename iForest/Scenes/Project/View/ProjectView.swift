@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct ProjectView: View {
+    @StateObject private var store: ProjectViewStore
+    
+    init(store: ProjectViewStore) {
+        _store = .init(wrappedValue: store)
+    }
     var body: some View {
-        Text("Projects")
+        ZStack {
+            Color.cyan
+            Text("Projects")
+                .textTypeModifier(textType: .navigationTitle)
+        }
+        .ignoresSafeArea()
     }
 }
 
 #Preview {
-    ProjectView()
+    ProjectView(store: ProjectViewStore())
 }
