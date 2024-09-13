@@ -151,6 +151,7 @@
 		1F0358F92C8987F90054DEA9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				1FAF32A32C88A69F009FCEA3 /* iForestApp.swift */,
 				1F03593A2C89F9150054DEA9 /* Resources */,
 				1F0358FA2C8988090054DEA9 /* Navigation */,
 			);
@@ -380,7 +381,6 @@
 				1F0359422C8A00150054DEA9 /* Info.plist */,
 				1F0358F92C8987F90054DEA9 /* App */,
 				1F0358F02C8986F10054DEA9 /* Common */,
-				1FAF32A32C88A69F009FCEA3 /* iForestApp.swift */,
 				1FAF32A92C88A6A0009FCEA3 /* Preview Content */,
 				1F0358FF2C898ADC0054DEA9 /* Scenes */,
 				1F03590A2C89D3B50054DEA9 /* SharedUI */,
