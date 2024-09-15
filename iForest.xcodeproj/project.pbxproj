@@ -64,6 +64,8 @@
 		1FBAAD372C8B50D80008DB60 /* ProjectViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBAAD362C8B50D80008DB60 /* ProjectViewState.swift */; };
 		1FC7D2D12C88ACBC000E6922 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2D02C88ACBC000E6922 /* LoginView.swift */; };
 		1FC7D2D72C88B5E4000E6922 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2D62C88B5E4000E6922 /* AppCoordinator.swift */; };
+		1FD091AD2C96F8FD00E9A1D1 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091AC2C96F8FD00E9A1D1 /* FirestoreManager.swift */; };
+		1FD091AF2C96F91600E9A1D1 /* FirestoreManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091AE2C96F91600E9A1D1 /* FirestoreManaging.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,6 +125,8 @@
 		1FBAAD362C8B50D80008DB60 /* ProjectViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewState.swift; sourceTree = "<group>"; };
 		1FC7D2D02C88ACBC000E6922 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1FC7D2D62C88B5E4000E6922 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		1FD091AC2C96F8FD00E9A1D1 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		1FD091AE2C96F91600E9A1D1 /* FirestoreManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManaging.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -391,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				1F2120E92C95B1690050B857 /* Authentication */,
+				1FD091AB2C96F8E200E9A1D1 /* Managers */,
 				1F2120EE2C95B1D90050B857 /* Models */,
 			);
 			path = Networking;
@@ -489,6 +494,15 @@
 			path = Store;
 			sourceTree = "<group>";
 		};
+		1FD091AB2C96F8E200E9A1D1 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				1FD091AC2C96F8FD00E9A1D1 /* FirestoreManager.swift */,
+				1FD091AE2C96F91600E9A1D1 /* FirestoreManaging.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -573,6 +587,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F0359162C89EE130054DEA9 /* LoginViewStore.swift in Sources */,
+				1FD091AF2C96F91600E9A1D1 /* FirestoreManaging.swift in Sources */,
 				1F03590D2C89D3C80054DEA9 /* CustomNavigationController.swift in Sources */,
 				1F03592F2C89F7DD0054DEA9 /* CustomTextLabel.swift in Sources */,
 				1F0359212C89F2130054DEA9 /* UIViewController+Ext.swift in Sources */,
@@ -594,6 +609,7 @@
 				1F0359252C89F35C0054DEA9 /* LoginButton.swift in Sources */,
 				1F0359372C89F8CF0054DEA9 /* Font+Appfonts.swift in Sources */,
 				1F0358FE2C8988860054DEA9 /* CustomError.swift in Sources */,
+				1FD091AD2C96F8FD00E9A1D1 /* FirestoreManager.swift in Sources */,
 				1F03592D2C89F7B00054DEA9 /* CustomSecretTextField.swift in Sources */,
 				1F0359182C89EFCD0054DEA9 /* Store.swift in Sources */,
 				1F2120ED2C95B1BD0050B857 /* FirebaseAuthManaging.swift in Sources */,

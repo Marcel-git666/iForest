@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ProjectView: View {
-    @StateObject private var store: ProjectViewStore
+    @StateObject var store: ProjectViewStore
     
     init(store: ProjectViewStore) {
-        _store = .init(wrappedValue: store)
+        _store = StateObject(wrappedValue: store)
     }
     var body: some View {
         NavigationStack {
@@ -54,5 +54,5 @@ struct ProjectView: View {
 }
 
 #Preview {
-    ProjectView(store: ProjectViewStore())
+    ProjectView(store: ProjectViewStore(firestoreManager: FirestoreManager()))
 }
