@@ -10,4 +10,5 @@ import Foundation
 enum ProjectViewEvent {
     case logout
     case openCreateProjectView
+    case openStands(Project)
 }

@@ -36,4 +36,36 @@ final class FirestoreManager: FirestoreManaging {
             "name": newName
         ])
     }
+    
+    // Fetch Stands for a specific project
+       func fetchStands(for projectId: String) async throws -> [Stand] {
+           let snapshot = try await firestore.collection("projects").document(projectId).collection("stands").getDocuments()
+           return snapshot.documents.map { doc in
+               let data = doc.data()
+               return Stand(id: doc.documentID, name: data["name"] as? String ?? "Unnamed Stand", size: data["size"] as? Double ?? 0.0)
+           }
+       }
+
+       // Create a new Stand within a project
+       func createStand(for projectId: String, name: String, size: Double) async throws -> Stand {
+           let newStand = Stand(id: UUID().uuidString, name: name, size: size)
+           try await firestore.collection("projects").document(projectId).collection("stands").document(newStand.id).setData([
+               "name": newStand.name,
+               "size": newStand.size
+           ])
+           return newStand
+       }
+
+       // Delete a Stand within a project
+       func deleteStand(for projectId: String, standId: String) async throws {
+           try await firestore.collection("projects").document(projectId).collection("stands").document(standId).delete()
+       }
+
+       // Update a Stand's name and size within a project
+       func updateStand(for projectId: String, standId: String, newName: String, newSize: Double) async throws {
+           try await firestore.collection("projects").document(projectId).collection("stands").document(standId).updateData([
+               "name": newName,
+               "size": newSize
+           ])
+       }
 }

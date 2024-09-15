@@ -33,12 +33,16 @@ extension ProjectViewStore {
     @MainActor
     func send(_ action: ProjectViewAction) {
         switch action {
-        case .logout:
-            eventSubject.send(.logout)
-        case .createProject(let name):
-            createProject(name: name)
         case .openCreateProjectView:
             eventSubject.send(.openCreateProjectView)
+        case let .openStands(project):
+            eventSubject.send(.openStands(project))
+        case let .deleteProject(project):
+            deleteProject(project)
+        case let .createProject(projectName):  // Handle the createProject action
+            createProject(name: projectName)
+        case .logout:
+            eventSubject.send(.logout)
         }
     }
     

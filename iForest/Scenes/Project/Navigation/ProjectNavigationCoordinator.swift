@@ -48,28 +48,38 @@ private extension ProjectNavigationCoordinator {
 }
 
 private extension ProjectNavigationCoordinator {
-    func handleEvent(_ event: ProjectViewEvent) {
+    private func handleEvent(_ event: ProjectViewEvent) {
         switch event {
         case .logout:
             eventSubject.send(.logout(self))
+
         case .openCreateProjectView:
-            if navigationController.viewControllers.first is UIHostingController<ProjectView> {
-                presentCreateProjectView()
-            }
+            presentCreateProjectView()
+
+        case let .openStands(project):
+            presentStandsView(for: project) // Navigate to StandsView when a project is tapped
         }
     }
+
     
     func presentCreateProjectView() {
         let creationView = ProjectCreationView { [weak self] projectName in
             self?.navigationController.popViewController(animated: true) // Go back after saving
             if let projectViewController = self?.navigationController.viewControllers.first as? UIHostingController<ProjectView> {
                 Task { @MainActor in
-                    projectViewController.rootView.store.send(.createProject(projectName)) // Ensure this runs on the main actor
+                    projectViewController.rootView.store.send(.createProject(projectName)) // Add the project
                 }
             }
         }
         let viewController = UIHostingController(rootView: creationView)
         navigationController.pushViewController(viewController, animated: true) // Push the new view
+    }
+    
+    func presentStandsView(for project: Project) {
+        let store = StandsViewStore(firestoreManager: FirestoreManager(), projectId: project.id)
+        let standsView = StandsView(store: store)
+        let viewController = UIHostingController(rootView: standsView)
+        navigationController.pushViewController(viewController, animated: true)
     }
 }
 

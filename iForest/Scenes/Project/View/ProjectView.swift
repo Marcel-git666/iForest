@@ -26,8 +26,14 @@ struct ProjectView: View {
                     List {
                         ForEach(store.projects) { project in
                             HStack {
+                                // Tapping on the project row navigates to StandsView
                                 Text(project.name)
+                                    .onTapGesture {
+                                        store.send(.openStands(project)) // Navigate to StandsView
+                                    }
                                 Spacer()
+                                
+                                // Edit Button
                                 Button(action: {
                                     projectToUpdate = project
                                     updatedProjectName = project.name
@@ -36,6 +42,8 @@ struct ProjectView: View {
                                     Image(systemName: "pencil")
                                         .foregroundColor(.blue)
                                 }
+                                
+                                // Delete Button
                                 Button(action: {
                                     store.deleteProject(project)
                                 }) {
@@ -51,7 +59,6 @@ struct ProjectView: View {
                         .font(.title)
                         .foregroundColor(.gray)
                 }
-                
                 
                 // Create Project Button
                 Button(action: {
@@ -77,9 +84,19 @@ struct ProjectView: View {
                 }
             }
         }
+        .alert("Update Project", isPresented: $showingUpdateAlert, actions: {
+            TextField("Project Name", text: $updatedProjectName)
+            Button("Save", action: {
+                if let project = projectToUpdate {
+                    store.updateProject(project, newName: updatedProjectName)
+                }
+            })
+            Button("Cancel", role: .cancel, action: {})
+        })
     }
 }
 
 #Preview {
     ProjectView(store: ProjectViewStore(firestoreManager: FirestoreManager()))
 }
+

@@ -12,4 +12,8 @@ protocol FirestoreManaging {
     func createProject(name: String) async throws -> Project
     func deleteProject(_ projectId: String) async throws
     func updateProject(_ projectId: String, newName: String) async throws
+    func fetchStands(for projectId: String) async throws -> [Stand]
+    func createStand(for projectId: String, name: String, size: Double) async throws -> Stand
+    func deleteStand(for projectId: String, standId: String) async throws
+    func updateStand(for projectId: String, standId: String, newName: String, newSize: Double) async throws
 }
