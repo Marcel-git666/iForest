@@ -10,7 +10,7 @@ import Foundation
 
 final class FirestoreManager: FirestoreManaging {
     private let firestore = Firestore.firestore()
-
+    
     func fetchProjects() async throws -> [Project] {
         let snapshot = try await firestore.collection("projects").getDocuments()
         return snapshot.documents.map { doc in
@@ -18,12 +18,22 @@ final class FirestoreManager: FirestoreManaging {
             return Project(id: doc.documentID, name: data["name"] as? String ?? "Unnamed Project")
         }
     }
-
+    
     func createProject(name: String) async throws -> Project {
         let newProject = Project(id: UUID().uuidString, name: name)
         try await firestore.collection("projects").document(newProject.id).setData([
             "name": newProject.name
         ])
         return newProject
+    }
+    
+    func deleteProject(_ projectId: String) async throws {
+        try await firestore.collection("projects").document(projectId).delete()
+    }
+    
+    func updateProject(_ projectId: String, newName: String) async throws {
+        try await firestore.collection("projects").document(projectId).updateData([
+            "name": newName
+        ])
     }
 }

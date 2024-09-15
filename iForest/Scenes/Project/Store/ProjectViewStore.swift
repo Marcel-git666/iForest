@@ -48,7 +48,12 @@ extension ProjectViewStore {
             do {
                 let fetchedProjects = try await firestoreManager.fetchProjects()
                 DispatchQueue.main.async {
-                    self.projects = fetchedProjects
+                    if fetchedProjects.isEmpty {
+                        self.state.status = .empty // Update to empty state if no projects
+                    } else {
+                        self.projects = fetchedProjects
+                        self.state.status = .initial // Back to initial once data is loaded
+                    }
                 }
             } catch {
                 logger.error("❌ Failed to fetch projects: \(error.localizedDescription)")
@@ -64,6 +69,7 @@ extension ProjectViewStore {
                 let newProject = try await firestoreManager.createProject(name: name)
                 DispatchQueue.main.async {
                     self.projects.append(newProject)
+                    self.state.status = .initial
                     self.logger.info("✅ Project created: \(newProject.name)")
                 }
             } catch {
@@ -71,19 +77,39 @@ extension ProjectViewStore {
             }
         }
     }
-    //    func loadProjects() {
-    //        // Later replace with Firestore fetching logic
-    //        // Currently, using mock data
-    //        projects = [
-    //            Project(id: UUID().uuidString, name: "Project A"),
-    //            Project(id: UUID().uuidString, name: "Project B")
-    //        ]
-    //    }
-    //
-    //    func createNewProject(name: String) {
-    //        let newProject = Project(id: UUID().uuidString, name: name)
-    //        projects.append(newProject)
-    //        logger.info("✅ New project created: \(newProject.name)")
-    //    }
+    @MainActor
+    func deleteProject(_ project: Project) {
+        Task {
+            do {
+                try await firestoreManager.deleteProject(project.id)
+                DispatchQueue.main.async {
+                    self.projects.removeAll { $0.id == project.id }
+                    if self.projects.isEmpty {
+                        self.state.status = .empty
+                    }
+                    self.logger.info("🗑️ Project deleted: \(project.name)")
+                }
+            } catch {
+                logger.error("❌ Failed to delete project: \(error.localizedDescription)")
+            }
+        }
+    }
     
+    // Update a project name
+    @MainActor
+    func updateProject(_ project: Project, newName: String) {
+        Task {
+            do {
+                try await firestoreManager.updateProject(project.id, newName: newName)
+                DispatchQueue.main.async {
+                    if let index = self.projects.firstIndex(where: { $0.id == project.id }) {
+                        self.projects[index].name = newName
+                        self.logger.info("✏️ Project updated: \(newName)")
+                    }
+                }
+            } catch {
+                logger.error("❌ Failed to update project: \(error.localizedDescription)")
+            }
+        }
+    }
 }

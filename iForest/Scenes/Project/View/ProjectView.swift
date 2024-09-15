@@ -8,23 +8,50 @@
 import SwiftUI
 
 struct ProjectView: View {
-    @StateObject var store: ProjectViewStore
+    @ObservedObject var store: ProjectViewStore
     
-    init(store: ProjectViewStore) {
-        _store = StateObject(wrappedValue: store)
-    }
+    @State private var showingUpdateAlert = false
+    @State private var projectToUpdate: Project?
+    @State private var updatedProjectName = ""
+    
     var body: some View {
         NavigationStack {
             VStack {
                 // Custom Navigation Title
                 Text("Projects")
-                    .textTypeModifier(textType: .navigationTitle) // Apply custom font
-                    .padding(.top, 20) // Adjust for the space you'd expect for a title
+                    .textTypeModifier(textType: .navigationTitle)
                 
-                // Project List
-                List(store.projects) { project in
-                    Text(project.name)
+                switch store.state.status {
+                case .initial:
+                    List {
+                        ForEach(store.projects) { project in
+                            HStack {
+                                Text(project.name)
+                                Spacer()
+                                Button(action: {
+                                    projectToUpdate = project
+                                    updatedProjectName = project.name
+                                    showingUpdateAlert = true
+                                }) {
+                                    Image(systemName: "pencil")
+                                        .foregroundColor(.blue)
+                                }
+                                Button(action: {
+                                    store.deleteProject(project)
+                                }) {
+                                    Image(systemName: "trash")
+                                        .foregroundColor(.red)
+                                }
+                            }
+                        }
+                    }
+                    
+                case .empty:
+                    Text("No Projects Available")
+                        .font(.title)
+                        .foregroundColor(.gray)
                 }
+                
                 
                 // Create Project Button
                 Button(action: {
