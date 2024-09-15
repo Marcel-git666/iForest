@@ -5,6 +5,7 @@
 //  Created by Marcel Mravec on 04.09.2024.
 //
 
+import FirebaseCore
 import os
 import SwiftUI
 
@@ -16,7 +17,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-//        FirebaseApp.configure()
+        FirebaseApp.configure()
         UserDefaults.standard.set(true, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
 
         //        deeplinkFromService()

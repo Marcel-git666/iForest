@@ -8,8 +8,6 @@
 import Foundation
 
 enum ProjectNavigationCoordinatorEvent {
-    case create
-    case edit
     case logout(Coordinator)
 }
 

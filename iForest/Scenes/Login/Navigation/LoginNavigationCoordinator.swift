@@ -21,7 +21,12 @@ final class LoginNavigationCoordinator: NSObject, LoginCoordinating {
     
     // MARK: Lifecycle
     deinit {
-        logger.info("❌ Deinit ProfileNavigationCoordinator")
+        logger.info("❌ Deinit LoginNavigationCoordinator")
+    }
+    
+    override init() {
+        super.init()
+        logger.info("🦈 Init LoginNavigationCoordinator")
     }
     
     func start() {
@@ -32,7 +37,7 @@ final class LoginNavigationCoordinator: NSObject, LoginCoordinating {
 // MARK: - Factories
 private extension LoginNavigationCoordinator {
     func makeLogin() -> UIViewController {
-        let store = LoginViewStore()
+        let store = LoginViewStore(keychainService: KeychainService(keychainManager: KeychainManager()), authManager: FirebaseAuthManager())
         store.eventPublisher
             .sink { [weak self] event in
                 self?.handleEvent(event)

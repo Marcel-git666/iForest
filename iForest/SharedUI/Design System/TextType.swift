@@ -31,7 +31,7 @@ extension TextType {
     }
 
     var color: Color {
-        .white
+        .blue
     }
 }
 

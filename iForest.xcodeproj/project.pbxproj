@@ -36,6 +36,18 @@
 		1F0359392C89F8EF0054DEA9 /* FontType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0359382C89F8EF0054DEA9 /* FontType.swift */; };
 		1F03593E2C89F9980054DEA9 /* TextTypeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03593D2C89F9980054DEA9 /* TextTypeModifier.swift */; };
 		1F0359472C8A021B0054DEA9 /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0359462C8A021B0054DEA9 /* ProjectView.swift */; };
+		1F2120E72C95B0690050B857 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F2120E62C95B0690050B857 /* GoogleService-Info.plist */; };
+		1F2120EB2C95B1850050B857 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2120EA2C95B1850050B857 /* FirebaseAuthManager.swift */; };
+		1F2120ED2C95B1BD0050B857 /* FirebaseAuthManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2120EC2C95B1BD0050B857 /* FirebaseAuthManaging.swift */; };
+		1F2120F02C95B1E20050B857 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2120EF2C95B1E20050B857 /* Credentials.swift */; };
+		1F2120F32C95B20F0050B857 /* KeychainServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2120F22C95B20F0050B857 /* KeychainServicing.swift */; };
+		1F2120F52C95B2490050B857 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2120F42C95B2490050B857 /* KeychainService.swift */; };
+		1F2120F82C95B2720050B857 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2120F72C95B2720050B857 /* KeychainManager.swift */; };
+		1F2120FA2C95B28A0050B857 /* KeychainManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2120F92C95B28A0050B857 /* KeychainManaging.swift */; };
+		1F2120FC2C95B29B0050B857 /* KeychainManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2120FB2C95B29B0050B857 /* KeychainManagerError.swift */; };
+		1F2120FF2C95B2EB0050B857 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 1F2120FE2C95B2EB0050B857 /* KeychainAccess */; };
+		1F2C337E2C96D45600FE0C02 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C337D2C96D45600FE0C02 /* Project.swift */; };
+		1F2C33802C96D92A00FE0C02 /* ProjectCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C337F2C96D92A00FE0C02 /* ProjectCreationView.swift */; };
 		1FAF32A42C88A69F009FCEA3 /* iForestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF32A32C88A69F009FCEA3 /* iForestApp.swift */; };
 		1FAF32A82C88A6A0009FCEA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAF32A72C88A6A0009FCEA3 /* Assets.xcassets */; };
 		1FAF32AB2C88A6A0009FCEA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAF32AA2C88A6A0009FCEA3 /* Preview Assets.xcassets */; };
@@ -88,6 +100,17 @@
 		1F0359412C89FF800054DEA9 /* ShantellSans-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ShantellSans-MediumItalic.ttf"; sourceTree = "<group>"; };
 		1F0359422C8A00150054DEA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1F0359462C8A021B0054DEA9 /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
+		1F2120E62C95B0690050B857 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1F2120EA2C95B1850050B857 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
+		1F2120EC2C95B1BD0050B857 /* FirebaseAuthManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManaging.swift; sourceTree = "<group>"; };
+		1F2120EF2C95B1E20050B857 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		1F2120F22C95B20F0050B857 /* KeychainServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainServicing.swift; sourceTree = "<group>"; };
+		1F2120F42C95B2490050B857 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		1F2120F72C95B2720050B857 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		1F2120F92C95B28A0050B857 /* KeychainManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManaging.swift; sourceTree = "<group>"; };
+		1F2120FB2C95B29B0050B857 /* KeychainManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManagerError.swift; sourceTree = "<group>"; };
+		1F2C337D2C96D45600FE0C02 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		1F2C337F2C96D92A00FE0C02 /* ProjectCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCreationView.swift; sourceTree = "<group>"; };
 		1FAF32A02C88A69F009FCEA3 /* iForest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iForest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FAF32A32C88A69F009FCEA3 /* iForestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iForestApp.swift; sourceTree = "<group>"; };
 		1FAF32A72C88A6A0009FCEA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -109,6 +132,7 @@
 			files = (
 				1FB8F5DB2C8CA21D001405E3 /* FirebaseAuth in Frameworks */,
 				1FB8F5DD2C8CA21D001405E3 /* FirebaseFirestore in Frameworks */,
+				1F2120FF2C95B2EB0050B857 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,8 +143,11 @@
 			isa = PBXGroup;
 			children = (
 				1F03591F2C89F2080054DEA9 /* Extensions */,
+				1F2120F62C95B2610050B857 /* Managers */,
+				1F2C337C2C96D44F00FE0C02 /* Models */,
 				1F0358F12C8986F90054DEA9 /* Navigation */,
 				1F0359102C89D44D0054DEA9 /* Protocols */,
+				1F2120F12C95B2060050B857 /* Services */,
 				1F0358F62C8987890054DEA9 /* Types */,
 			);
 			path = Common;
@@ -334,8 +361,8 @@
 		1F0359432C8A01C90054DEA9 /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				1FBAAD312C8B509D0008DB60 /* Store */,
 				1F0359442C8A02020054DEA9 /* Navigation */,
+				1FBAAD312C8B509D0008DB60 /* Store */,
 				1F0359452C8A020C0054DEA9 /* View */,
 			);
 			path = Project;
@@ -354,9 +381,63 @@
 			isa = PBXGroup;
 			children = (
 				1F0359462C8A021B0054DEA9 /* ProjectView.swift */,
+				1F2C337F2C96D92A00FE0C02 /* ProjectCreationView.swift */,
 				1FBAAD2F2C8B50440008DB60 /* ProjectViewEvent.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1F2120E82C95B1600050B857 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				1F2120E92C95B1690050B857 /* Authentication */,
+				1F2120EE2C95B1D90050B857 /* Models */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		1F2120E92C95B1690050B857 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				1F2120EA2C95B1850050B857 /* FirebaseAuthManager.swift */,
+				1F2120EC2C95B1BD0050B857 /* FirebaseAuthManaging.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		1F2120EE2C95B1D90050B857 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1F2120EF2C95B1E20050B857 /* Credentials.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1F2120F12C95B2060050B857 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1F2120F22C95B20F0050B857 /* KeychainServicing.swift */,
+				1F2120F42C95B2490050B857 /* KeychainService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1F2120F62C95B2610050B857 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				1F2120F72C95B2720050B857 /* KeychainManager.swift */,
+				1F2120F92C95B28A0050B857 /* KeychainManaging.swift */,
+				1F2120FB2C95B29B0050B857 /* KeychainManagerError.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		1F2C337C2C96D44F00FE0C02 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1F2C337D2C96D45600FE0C02 /* Project.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		1FAF32972C88A69F009FCEA3 = {
@@ -378,9 +459,11 @@
 		1FAF32A22C88A69F009FCEA3 /* iForest */ = {
 			isa = PBXGroup;
 			children = (
-				1F0359422C8A00150054DEA9 /* Info.plist */,
 				1F0358F92C8987F90054DEA9 /* App */,
 				1F0358F02C8986F10054DEA9 /* Common */,
+				1F2120E62C95B0690050B857 /* GoogleService-Info.plist */,
+				1F0359422C8A00150054DEA9 /* Info.plist */,
+				1F2120E82C95B1600050B857 /* Networking */,
 				1FAF32A92C88A6A0009FCEA3 /* Preview Content */,
 				1F0358FF2C898ADC0054DEA9 /* Scenes */,
 				1F03590A2C89D3B50054DEA9 /* SharedUI */,
@@ -425,6 +508,7 @@
 			packageProductDependencies = (
 				1FB8F5DA2C8CA21D001405E3 /* FirebaseAuth */,
 				1FB8F5DC2C8CA21D001405E3 /* FirebaseFirestore */,
+				1F2120FE2C95B2EB0050B857 /* KeychainAccess */,
 			);
 			productName = iForest;
 			productReference = 1FAF32A02C88A69F009FCEA3 /* iForest.app */;
@@ -456,6 +540,7 @@
 			mainGroup = 1FAF32972C88A69F009FCEA3;
 			packageReferences = (
 				1FB8F5D92C8CA21D001405E3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				1F2120FD2C95B2EB0050B857 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = 1FAF32A12C88A69F009FCEA3 /* Products */;
 			projectDirPath = "";
@@ -476,6 +561,7 @@
 				1FBAAD2A2C8B37530008DB60 /* ShantellSans-Regular.ttf in Resources */,
 				1FAF32AB2C88A6A0009FCEA3 /* Preview Assets.xcassets in Resources */,
 				1FAF32A82C88A6A0009FCEA3 /* Assets.xcassets in Resources */,
+				1F2120E72C95B0690050B857 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,22 +576,30 @@
 				1F03590D2C89D3C80054DEA9 /* CustomNavigationController.swift in Sources */,
 				1F03592F2C89F7DD0054DEA9 /* CustomTextLabel.swift in Sources */,
 				1F0359212C89F2130054DEA9 /* UIViewController+Ext.swift in Sources */,
+				1F2120F02C95B1E20050B857 /* Credentials.swift in Sources */,
 				1FC7D2D72C88B5E4000E6922 /* AppCoordinator.swift in Sources */,
+				1F2120FC2C95B29B0050B857 /* KeychainManagerError.swift in Sources */,
+				1F2C337E2C96D45600FE0C02 /* Project.swift in Sources */,
 				1F03591C2C89EFFD0054DEA9 /* LoginViewState.swift in Sources */,
 				1F0359032C898BE60054DEA9 /* CoordinatorView.swift in Sources */,
 				1F0358F52C8987420054DEA9 /* DeeplinkHandling.swift in Sources */,
 				1F0359272C89F61F0054DEA9 /* Action.swift in Sources */,
+				1F2120F52C95B2490050B857 /* KeychainService.swift in Sources */,
 				1F0358F32C8987140054DEA9 /* Coordinator.swift in Sources */,
 				1F0359122C89D4540054DEA9 /* EventEmitting.swift in Sources */,
+				1F2120F32C95B20F0050B857 /* KeychainServicing.swift in Sources */,
 				1F0359142C89D4CA0054DEA9 /* NavigationControllerCoordinator.swift in Sources */,
 				1F0358FC2C89885B0054DEA9 /* ViewControllerCoordinator.swift in Sources */,
+				1F2120FA2C95B28A0050B857 /* KeychainManaging.swift in Sources */,
 				1F0359252C89F35C0054DEA9 /* LoginButton.swift in Sources */,
 				1F0359372C89F8CF0054DEA9 /* Font+Appfonts.swift in Sources */,
 				1F0358FE2C8988860054DEA9 /* CustomError.swift in Sources */,
 				1F03592D2C89F7B00054DEA9 /* CustomSecretTextField.swift in Sources */,
 				1F0359182C89EFCD0054DEA9 /* Store.swift in Sources */,
+				1F2120ED2C95B1BD0050B857 /* FirebaseAuthManaging.swift in Sources */,
 				1F0359392C89F8EF0054DEA9 /* FontType.swift in Sources */,
 				1FBAAD2E2C8B47330008DB60 /* ProjectNavigationCoordinatorEvent.swift in Sources */,
+				1F2C33802C96D92A00FE0C02 /* ProjectCreationView.swift in Sources */,
 				1FBAAD332C8B50AE0008DB60 /* ProjectViewStore.swift in Sources */,
 				1FBAAD302C8B50440008DB60 /* ProjectViewEvent.swift in Sources */,
 				1F03590F2C89D3EE0054DEA9 /* CustomNavigationControllerEvent.swift in Sources */,
@@ -521,7 +615,9 @@
 				1F0359072C89A1C80054DEA9 /* LoginNavigationCoordinatorEvent.swift in Sources */,
 				1F03592B2C89F78C0054DEA9 /* CustomTextField.swift in Sources */,
 				1FAF32A42C88A69F009FCEA3 /* iForestApp.swift in Sources */,
+				1F2120F82C95B2720050B857 /* KeychainManager.swift in Sources */,
 				1F0358F82C8987940054DEA9 /* Deeplink.swift in Sources */,
+				1F2120EB2C95B1850050B857 /* FirebaseAuthManager.swift in Sources */,
 				1F0359472C8A021B0054DEA9 /* ProjectView.swift in Sources */,
 				1F0359092C89A1E20054DEA9 /* LoginNavigationCoordinator.swift in Sources */,
 			);
@@ -735,6 +831,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1F2120FD2C95B2EB0050B857 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		1FB8F5D92C8CA21D001405E3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -746,6 +850,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1F2120FE2C95B2EB0050B857 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1F2120FD2C95B2EB0050B857 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
 		1FB8F5DA2C8CA21D001405E3 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1FB8F5D92C8CA21D001405E3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

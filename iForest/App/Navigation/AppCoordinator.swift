@@ -14,20 +14,20 @@ protocol AppCoordinating: ViewControllerCoordinator {}
 final class AppCoordinator: AppCoordinating, ObservableObject {
     private(set) lazy var rootViewController: UIViewController = {
         if isAuthorized {
-            makeLoginFlow().rootViewController
-            // makeProjectFlow().rootViewController
+            makeProjectFlow().rootViewController
         } else {
             makeLoginFlow().rootViewController
         }
     }()
     var childCoordinators = [Coordinator]()
     private lazy var cancellables = Set<AnyCancellable>()
+    private lazy var keychainService = KeychainService(keychainManager: KeychainManager())
     private lazy var logger = Logger()
     @Published var isAuthorized = false
     
     // MARK: Lifecycle
     init() {
-        isAuthorized = false
+        isAuthorized = (try? keychainService.fetchAuthData()) != nil
     }
 }
 
@@ -77,7 +77,7 @@ extension AppCoordinator {
     func handleEvent(_ event: LoginNavigationCoordinatorEvent) {
         switch event {
         case let .signedIn(coordinator):
-//            rootViewController = makeProjectFlow().rootViewController
+            rootViewController = makeProjectFlow().rootViewController
             release(coordinator: coordinator)
             isAuthorized = true
         }
@@ -88,11 +88,6 @@ extension AppCoordinator {
         case let .logout(coordinator):
             rootViewController = makeLoginFlow().rootViewController
             release(coordinator: coordinator)
-//            do {
-//                try keychainService.removeAuthData()
-//            } catch {
-//                logger.error("❌ AuthData not removed!")
-//            }
             isAuthorized = false
         default:
             break

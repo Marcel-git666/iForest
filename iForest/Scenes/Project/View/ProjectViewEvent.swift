@@ -8,6 +8,6 @@
 import Foundation
 
 enum ProjectViewEvent {
-    case edit
-    case create
+    case logout
+    case openCreateProjectView
 }

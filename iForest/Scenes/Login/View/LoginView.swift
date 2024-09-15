@@ -45,10 +45,10 @@ struct LoginView: View {
                 Spacer()
                 HStack {
                     LoginButton(buttonText: "SignIn", buttonTextColor: .white, buttonBackground: .indigo) {
-                        //store.signIn()
+                        store.signIn()
                     }
                     LoginButton(buttonText: "SignUp", buttonTextColor: .white, buttonBackground: .teal) {
-                        //store.signUp()
+                        store.signUp()
                     }
                 }
                 Spacer()
@@ -63,5 +63,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView(store: LoginViewStore())
+    LoginView(store: LoginViewStore(keychainService: KeychainService(keychainManager: KeychainManager()), authManager: FirebaseAuthManager()))
 }

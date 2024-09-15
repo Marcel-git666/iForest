@@ -8,5 +8,7 @@
 import Foundation
 
 enum ProjectViewAction {
-    
+    case logout
+    case createProject(String)
+    case openCreateProjectView
 }
