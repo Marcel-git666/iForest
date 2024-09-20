@@ -26,11 +26,7 @@ struct ProjectView: View {
                     List {
                         ForEach(store.projects) { project in
                             HStack {
-                                // Tapping on the project row navigates to StandsView
                                 Text(project.name)
-                                    .onTapGesture {
-                                        store.send(.openStands(project)) // Navigate to StandsView
-                                    }
                                 Spacer()
                                 
                                 // Edit Button
@@ -42,7 +38,8 @@ struct ProjectView: View {
                                     Image(systemName: "pencil")
                                         .foregroundColor(.blue)
                                 }
-                                
+                                .buttonStyle(PlainButtonStyle())
+
                                 // Delete Button
                                 Button(action: {
                                     store.deleteProject(project)
@@ -50,6 +47,11 @@ struct ProjectView: View {
                                     Image(systemName: "trash")
                                         .foregroundColor(.red)
                                 }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                            .contentShape(Rectangle()) // Makes the entire row tappable
+                            .onTapGesture {
+                                store.send(.openStands(project))
                             }
                         }
                     }

@@ -10,4 +10,5 @@ import Foundation
 struct Project: Identifiable {
     let id: String
     var name: String
+//    var stands: [Stand]
 }
