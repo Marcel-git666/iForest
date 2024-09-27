@@ -75,18 +75,19 @@ final class LocalDataManager: DataManaging {
     func fetchStands(for projectId: String) async throws -> [Stand] {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "jsonData CONTAINS %@", projectId)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", projectId) // Fetch only the project with the given ID
         let result = try context.fetch(fetchRequest)
         
-        // Return array of stands by flattening all stands arrays from all projects
-        return result.flatMap { entity in
-            guard let jsonData = entity.jsonData?.data(using: .utf8),
-                  let project = try? JSONDecoder().decode(Project.self, from: jsonData) else {
-                return [] // If decoding fails, return an empty array
-            }
-            return project.stands // If decoding succeeds, return the stands array
+        // Check if the project with the given ID exists
+        if let entity = result.first,
+           let jsonData = entity.jsonData?.data(using: .utf8),
+           let project = try? JSONDecoder().decode(Project.self, from: jsonData) {
+            return project.stands // Return the stands for that specific project
+        } else {
+            return [] // Return an empty array if no project is found or decoding fails
         }
     }
+
 
 
 
