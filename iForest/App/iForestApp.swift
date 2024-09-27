@@ -15,7 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     weak var deeplinkHandler: DeeplinkHandling?
     
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "iForestDataModel.xcdatamodeld")
+        let container = NSPersistentContainer(name: "iForestDataModel")
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
