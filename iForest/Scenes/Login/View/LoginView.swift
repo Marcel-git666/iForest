@@ -51,6 +51,9 @@ struct LoginView: View {
                         store.signUp()
                     }
                 }
+                LoginButton(buttonText: "Skip Login", buttonTextColor: .white, buttonBackground: .gray) {
+                                    store.send(.skipLogin) // Trigger skip login action
+                                }
                 Spacer()
             }
             .padding()

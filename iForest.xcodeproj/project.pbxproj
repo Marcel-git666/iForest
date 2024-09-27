@@ -48,6 +48,11 @@
 		1F2120FF2C95B2EB0050B857 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 1F2120FE2C95B2EB0050B857 /* KeychainAccess */; };
 		1F2C337E2C96D45600FE0C02 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C337D2C96D45600FE0C02 /* Project.swift */; };
 		1F2C33802C96D92A00FE0C02 /* ProjectCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C337F2C96D92A00FE0C02 /* ProjectCreationView.swift */; };
+		1F7246022CA528EC00D931CB /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7246012CA528EC00D931CB /* LocalDataManager.swift */; };
+		1F7246042CA52B6F00D931CB /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7246032CA52B6F00D931CB /* Tree.swift */; };
+		1F7246062CA52BA400D931CB /* Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7246052CA52BA400D931CB /* Measurement.swift */; };
+		1F7246092CA52D8200D931CB /* iForestDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F7246072CA52D8200D931CB /* iForestDataModel.xcdatamodeld */; };
+		1F72460B2CA52EB700D931CB /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F72460A2CA52EB700D931CB /* CoreDataStack.swift */; };
 		1FAF32A42C88A69F009FCEA3 /* iForestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF32A32C88A69F009FCEA3 /* iForestApp.swift */; };
 		1FAF32A82C88A6A0009FCEA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAF32A72C88A6A0009FCEA3 /* Assets.xcassets */; };
 		1FAF32AB2C88A6A0009FCEA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAF32AA2C88A6A0009FCEA3 /* Preview Assets.xcassets */; };
@@ -62,11 +67,10 @@
 		1FBAAD332C8B50AE0008DB60 /* ProjectViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBAAD322C8B50AE0008DB60 /* ProjectViewStore.swift */; };
 		1FBAAD352C8B50C90008DB60 /* ProjectViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBAAD342C8B50C90008DB60 /* ProjectViewAction.swift */; };
 		1FBAAD372C8B50D80008DB60 /* ProjectViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBAAD362C8B50D80008DB60 /* ProjectViewState.swift */; };
-		1FC2D1F52C97F6C700C157E8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FC2D1F42C97F6C600C157E8 /* GoogleService-Info.plist */; };
 		1FC7D2D12C88ACBC000E6922 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2D02C88ACBC000E6922 /* LoginView.swift */; };
 		1FC7D2D72C88B5E4000E6922 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC7D2D62C88B5E4000E6922 /* AppCoordinator.swift */; };
 		1FD091AD2C96F8FD00E9A1D1 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091AC2C96F8FD00E9A1D1 /* FirestoreManager.swift */; };
-		1FD091AF2C96F91600E9A1D1 /* FirestoreManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091AE2C96F91600E9A1D1 /* FirestoreManaging.swift */; };
+		1FD091AF2C96F91600E9A1D1 /* DataManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091AE2C96F91600E9A1D1 /* DataManaging.swift */; };
 		1FD091B12C9722E700E9A1D1 /* Stand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091B02C9722E700E9A1D1 /* Stand.swift */; };
 		1FD091B32C97239800E9A1D1 /* StandsViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091B22C97239800E9A1D1 /* StandsViewStore.swift */; };
 		1FD091B52C97242A00E9A1D1 /* StandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091B42C97242A00E9A1D1 /* StandsView.swift */; };
@@ -119,6 +123,11 @@
 		1F2120FB2C95B29B0050B857 /* KeychainManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManagerError.swift; sourceTree = "<group>"; };
 		1F2C337D2C96D45600FE0C02 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		1F2C337F2C96D92A00FE0C02 /* ProjectCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCreationView.swift; sourceTree = "<group>"; };
+		1F7246012CA528EC00D931CB /* LocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
+		1F7246032CA52B6F00D931CB /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
+		1F7246052CA52BA400D931CB /* Measurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measurement.swift; sourceTree = "<group>"; };
+		1F7246082CA52D8200D931CB /* iForestDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iForestDataModel.xcdatamodel; sourceTree = "<group>"; };
+		1F72460A2CA52EB700D931CB /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		1FAF32A02C88A69F009FCEA3 /* iForest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iForest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FAF32A32C88A69F009FCEA3 /* iForestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iForestApp.swift; sourceTree = "<group>"; };
 		1FAF32A72C88A6A0009FCEA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -133,7 +142,7 @@
 		1FC7D2D02C88ACBC000E6922 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1FC7D2D62C88B5E4000E6922 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		1FD091AC2C96F8FD00E9A1D1 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
-		1FD091AE2C96F91600E9A1D1 /* FirestoreManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManaging.swift; sourceTree = "<group>"; };
+		1FD091AE2C96F91600E9A1D1 /* DataManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManaging.swift; sourceTree = "<group>"; };
 		1FD091B02C9722E700E9A1D1 /* Stand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stand.swift; sourceTree = "<group>"; };
 		1FD091B22C97239800E9A1D1 /* StandsViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandsViewStore.swift; sourceTree = "<group>"; };
 		1FD091B42C97242A00E9A1D1 /* StandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandsView.swift; sourceTree = "<group>"; };
@@ -447,6 +456,7 @@
 				1F2120F72C95B2720050B857 /* KeychainManager.swift */,
 				1F2120F92C95B28A0050B857 /* KeychainManaging.swift */,
 				1F2120FB2C95B29B0050B857 /* KeychainManagerError.swift */,
+				1F72460A2CA52EB700D931CB /* CoreDataStack.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -456,6 +466,9 @@
 			children = (
 				1F2C337D2C96D45600FE0C02 /* Project.swift */,
 				1FD091B02C9722E700E9A1D1 /* Stand.swift */,
+				1F7246032CA52B6F00D931CB /* Tree.swift */,
+				1F7246052CA52BA400D931CB /* Measurement.swift */,
+				1F7246072CA52D8200D931CB /* iForestDataModel.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -516,7 +529,8 @@
 			isa = PBXGroup;
 			children = (
 				1FD091AC2C96F8FD00E9A1D1 /* FirestoreManager.swift */,
-				1FD091AE2C96F91600E9A1D1 /* FirestoreManaging.swift */,
+				1FD091AE2C96F91600E9A1D1 /* DataManaging.swift */,
+				1F7246012CA528EC00D931CB /* LocalDataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -554,7 +568,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					1FAF329F2C88A69F009FCEA3 = {
 						CreatedOnToolsVersion = 15.4;
@@ -594,7 +608,6 @@
 				1FAF32AB2C88A6A0009FCEA3 /* Preview Assets.xcassets in Resources */,
 				1FAF32A82C88A6A0009FCEA3 /* Assets.xcassets in Resources */,
 				1F01B6042C97F67A002201E3 /* GoogleService-Info.plist in Resources */,
-				1FC2D1F52C97F6C700C157E8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,7 +619,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F0359162C89EE130054DEA9 /* LoginViewStore.swift in Sources */,
-				1FD091AF2C96F91600E9A1D1 /* FirestoreManaging.swift in Sources */,
+				1F7246022CA528EC00D931CB /* LocalDataManager.swift in Sources */,
+				1FD091AF2C96F91600E9A1D1 /* DataManaging.swift in Sources */,
 				1F03590D2C89D3C80054DEA9 /* CustomNavigationController.swift in Sources */,
 				1F03592F2C89F7DD0054DEA9 /* CustomTextLabel.swift in Sources */,
 				1F0359212C89F2130054DEA9 /* UIViewController+Ext.swift in Sources */,
@@ -619,6 +633,7 @@
 				1F03591C2C89EFFD0054DEA9 /* LoginViewState.swift in Sources */,
 				1F0359032C898BE60054DEA9 /* CoordinatorView.swift in Sources */,
 				1F0358F52C8987420054DEA9 /* DeeplinkHandling.swift in Sources */,
+				1F72460B2CA52EB700D931CB /* CoreDataStack.swift in Sources */,
 				1F0359272C89F61F0054DEA9 /* Action.swift in Sources */,
 				1F2120F52C95B2490050B857 /* KeychainService.swift in Sources */,
 				1F0358F32C8987140054DEA9 /* Coordinator.swift in Sources */,
@@ -651,7 +666,9 @@
 				1FBAAD2C2C8B3EE50008DB60 /* ProjectNavigationCoordinator.swift in Sources */,
 				1FBAAD372C8B50D80008DB60 /* ProjectViewState.swift in Sources */,
 				1FC7D2D12C88ACBC000E6922 /* LoginView.swift in Sources */,
+				1F7246092CA52D8200D931CB /* iForestDataModel.xcdatamodeld in Sources */,
 				1F0359072C89A1C80054DEA9 /* LoginNavigationCoordinatorEvent.swift in Sources */,
+				1F7246042CA52B6F00D931CB /* Tree.swift in Sources */,
 				1F03592B2C89F78C0054DEA9 /* CustomTextField.swift in Sources */,
 				1FAF32A42C88A69F009FCEA3 /* iForestApp.swift in Sources */,
 				1F2120F82C95B2720050B857 /* KeychainManager.swift in Sources */,
@@ -659,6 +676,7 @@
 				1F2120EB2C95B1850050B857 /* FirebaseAuthManager.swift in Sources */,
 				1FD091B72C97645600E9A1D1 /* StandsViewAction.swift in Sources */,
 				1F0359472C8A021B0054DEA9 /* ProjectView.swift in Sources */,
+				1F7246062CA52BA400D931CB /* Measurement.swift in Sources */,
 				1F0359092C89A1E20054DEA9 /* LoginNavigationCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -906,6 +924,19 @@
 			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		1F7246072CA52D8200D931CB /* iForestDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1F7246082CA52D8200D931CB /* iForestDataModel.xcdatamodel */,
+			);
+			currentVersion = 1F7246082CA52D8200D931CB /* iForestDataModel.xcdatamodel */;
+			path = iForestDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1FAF32982C88A69F009FCEA3 /* Project object */;
 }

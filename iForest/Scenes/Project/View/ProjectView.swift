@@ -99,6 +99,6 @@ struct ProjectView: View {
 }
 
 #Preview {
-    ProjectView(store: ProjectViewStore(firestoreManager: FirestoreManager()))
+    ProjectView(store: ProjectViewStore(firestoreManager: LocalDataManager()))
 }
 

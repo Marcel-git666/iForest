@@ -34,6 +34,8 @@ extension LoginViewStore {
             break;
         case let .storeLogin(email):
             break;
+        case .skipLogin:
+            skipLogin()
         }
     }
 }
@@ -91,5 +93,10 @@ extension LoginViewStore {
                 print("Error: \(error.localizedDescription)")
             }
         }
+    }
+    
+    private func skipLogin() {
+            // Transition to the main app without authentication
+            eventSubject.send(.loggedIn) // Trigger navigation event
     }
 }

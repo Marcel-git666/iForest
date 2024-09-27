@@ -7,8 +7,16 @@
 
 import Foundation
 
-struct Stand: Identifiable {
+struct Stand: Identifiable, Codable {
     var id: String
     var name: String
     var size: Double
+    var shape: Shape
+    var image: Data?
+    var trees: [Tree]
+    
+    enum Shape: String, Codable {
+        case circular
+        case square
+    }
 }

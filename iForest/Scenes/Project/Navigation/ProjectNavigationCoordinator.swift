@@ -26,7 +26,7 @@ final class ProjectNavigationCoordinator: NSObject, ProjectCoordinating {
     }
     
     func start() {
-        let firestoreManager = FirestoreManager()
+        let firestoreManager = LocalDataManager()
         let store = ProjectViewStore(firestoreManager: firestoreManager)
         self.projectViewStore = store // Store reference to use later
         
@@ -76,7 +76,7 @@ private extension ProjectNavigationCoordinator {
     }
     
     func presentStandsView(for project: Project) {
-        let store = StandsViewStore(firestoreManager: FirestoreManager(), projectId: project.id)
+        let store = StandsViewStore(firestoreManager: LocalDataManager(), projectId: project.id)
         let standsView = StandsView(store: store)
         let viewController = UIHostingController(rootView: standsView)
         navigationController.pushViewController(viewController, animated: true)

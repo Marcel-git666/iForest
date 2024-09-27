@@ -11,7 +11,7 @@ import Combine
 import os
 
 final class ProjectViewStore: ObservableObject, Store {
-    private let firestoreManager: FirestoreManaging
+    private let firestoreManager: DataManaging
     private let logger = Logger()
     private let eventSubject = PassthroughSubject<ProjectViewEvent, Never>()
     @Published var state: ProjectViewState = .initial
@@ -21,7 +21,7 @@ final class ProjectViewStore: ObservableObject, Store {
         eventSubject.eraseToAnyPublisher()
     }
     
-    init(firestoreManager: FirestoreManaging) {
+    init(firestoreManager: DataManaging) {
         self.firestoreManager = firestoreManager
         Task { @MainActor in
             fetchProjects()

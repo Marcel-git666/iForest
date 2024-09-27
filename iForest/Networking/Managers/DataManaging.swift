@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FirestoreManaging {
+protocol DataManaging {
     func fetchProjects() async throws -> [Project]
     func createProject(name: String) async throws -> Project
     func deleteProject(_ projectId: String) async throws

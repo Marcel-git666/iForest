@@ -5,6 +5,7 @@
 //  Created by Marcel Mravec on 04.09.2024.
 //
 
+import CoreData
 import FirebaseCore
 import os
 import SwiftUI
@@ -13,13 +14,23 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     // Delegate pattern
     weak var deeplinkHandler: DeeplinkHandling?
     
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "iForestDataModel.xcdatamodeld")
+        container.loadPersistentStores { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+        return container
+    }()
+    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         FirebaseApp.configure()
         UserDefaults.standard.set(true, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-
+        
         //        deeplinkFromService()
         return true
     }
@@ -29,6 +40,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self?.deeplinkHandler?.handleDeeplink(.onboarding(page: 0))
         }
     }
+    
+    func saveContext() {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
 }
 
 @main
@@ -36,6 +59,7 @@ struct iForestApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @ObservedObject private var appCoordinator = AppCoordinator()
     private let logger = Logger()
+    let context = CoreDataStack.shared.context
     
     init() {
         appCoordinator.start()
@@ -46,6 +70,7 @@ struct iForestApp: App {
         WindowGroup {
             CoordinatorView(coordinator: appCoordinator )
                 .id(appCoordinator.isAuthorized)
+                .environment(\.managedObjectContext, context)
                 .onAppear {
                     logger.info("🦈 AppCoordinator has appeared.")
                 }

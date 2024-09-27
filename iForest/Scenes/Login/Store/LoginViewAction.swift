@@ -11,4 +11,5 @@ enum LoginViewAction {
     case viewDidLoad
     case storeLogin(String)
     case removeLogin
+    case skipLogin
 }

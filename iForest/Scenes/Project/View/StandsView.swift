@@ -90,5 +90,5 @@ struct StandsView: View {
 }
 
 #Preview {
-    StandsView(store: StandsViewStore(firestoreManager: FirestoreManager(), projectId: "123"))
+    StandsView(store: StandsViewStore(firestoreManager: LocalDataManager(), projectId: "123"))
 }

@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Project: Identifiable {
+struct Project: Codable, Identifiable {
     let id: String
     var name: String
-//    var stands: [Stand]
+    var stands: [Stand]
 }

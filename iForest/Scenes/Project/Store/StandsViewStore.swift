@@ -10,14 +10,14 @@ import Foundation
 import os
 
 final class StandsViewStore: ObservableObject {
-    private let firestoreManager: FirestoreManaging
+    private let firestoreManager: DataManaging
     private let projectId: String
     private let logger = Logger()
 
     @Published var state: StandsViewState = .loading
     @Published var stands: [Stand] = []
 
-    init(firestoreManager: FirestoreManaging, projectId: String) {
+    init(firestoreManager: DataManaging, projectId: String) {
         self.firestoreManager = firestoreManager
         self.projectId = projectId
         Task { @MainActor in
