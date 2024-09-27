@@ -52,15 +52,15 @@ private extension ProjectNavigationCoordinator {
         switch event {
         case .logout:
             eventSubject.send(.logout(self))
-
+            
         case .openCreateProjectView:
             presentCreateProjectView()
-
+            
         case let .openStands(project):
             presentStandsView(for: project) // Navigate to StandsView when a project is tapped
         }
     }
-
+    
     
     func presentCreateProjectView() {
         let creationView = ProjectCreationView { [weak self] projectName in
@@ -75,12 +75,58 @@ private extension ProjectNavigationCoordinator {
         navigationController.pushViewController(viewController, animated: true) // Push the new view
     }
     
-    func presentStandsView(for project: Project) {
+    private func presentStandsView(for project: Project) {
         let store = StandsViewStore(firestoreManager: LocalDataManager(), projectId: project.id)
+        
+        // Listen for StandsViewEvent from StandsViewStore
+        store.eventPublisher
+            .sink { [weak self] event in
+                self?.handleStandsEvent(event)
+            }
+            .store(in: &cancellables)
+        
         let standsView = StandsView(store: store)
         let viewController = UIHostingController(rootView: standsView)
         navigationController.pushViewController(viewController, animated: true)
     }
+    
+    private func handleStandsEvent(_ event: StandsViewEvent) {
+        switch event {
+        case .createStandView:
+            presentCreateStandView() // Present the creation view when event is triggered
+        case .updateStandView(let stand):
+            presentUpdateStandView(for: stand) // Handle update
+        case .backToProject:
+            navigationController.popViewController(animated: true) // Navigate back to the project view
+        }
+    }
+    
+    private func presentCreateStandView() {
+        let creationView = StandCreationView { [weak self] standName, standSize in
+            self?.navigationController.popViewController(animated: true) // Go back after saving
+            if let standsViewController = self?.navigationController.viewControllers.first as? UIHostingController<StandsView> {
+                Task { @MainActor in
+                    standsViewController.rootView.store.send(.createStand(name: standName, size: standSize)) // Add the stand
+                }
+            }
+        }
+        let viewController = UIHostingController(rootView: creationView)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    private func presentUpdateStandView(for stand: Stand) {
+        let updateView = StandCreationView(stand: stand) { [weak self] updatedName, updatedSize in
+            self?.navigationController.popViewController(animated: true) // Go back after saving
+            if let standsViewController = self?.navigationController.viewControllers.first as? UIHostingController<StandsView> {
+                Task { @MainActor in
+                    standsViewController.rootView.store.send(.updateStand(stand, newName: updatedName, newSize: updatedSize)) // Update the stand
+                }
+            }
+        }
+        let viewController = UIHostingController(rootView: updateView)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
 }
 
 extension ProjectNavigationCoordinator: EventEmitting {

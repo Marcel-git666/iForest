@@ -13,10 +13,15 @@ final class StandsViewStore: ObservableObject {
     private let firestoreManager: DataManaging
     private let projectId: String
     private let logger = Logger()
-
+    private let eventSubject = PassthroughSubject<StandsViewEvent, Never>()
+    
     @Published var state: StandsViewState = .loading
     @Published var stands: [Stand] = []
-
+    
+    var eventPublisher: AnyPublisher<StandsViewEvent, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
+    
     init(firestoreManager: DataManaging, projectId: String) {
         self.firestoreManager = firestoreManager
         self.projectId = projectId
@@ -24,25 +29,25 @@ final class StandsViewStore: ObservableObject {
             send(.fetchStands)
         }
     }
-
-    // Handle actions
+    
+    func sendEvent(_ event: StandsViewEvent) {
+        eventSubject.send(event) // Safe way to expose sending events
+    }
+    
     @MainActor
     func send(_ action: StandsViewAction) {
         switch action {
         case .fetchStands:
             fetchStands()
-
         case let .createStand(name, size):
             createStand(name: name, size: size)
-
         case let .deleteStand(stand):
             deleteStand(stand)
-
         case let .updateStand(stand, newName, newSize):
             updateStand(stand, newName: newName, newSize: newSize)
         }
     }
-
+    
     // Fetch stands for the current project
     @MainActor
     private func fetchStands() {
@@ -60,7 +65,7 @@ final class StandsViewStore: ObservableObject {
             }
         }
     }
-
+    
     // Create a new stand
     @MainActor
     private func createStand(name: String, size: Double) {
@@ -76,7 +81,7 @@ final class StandsViewStore: ObservableObject {
             }
         }
     }
-
+    
     // Delete a stand
     @MainActor
     private func deleteStand(_ stand: Stand) {
@@ -94,7 +99,7 @@ final class StandsViewStore: ObservableObject {
             }
         }
     }
-
+    
     // Update a stand
     @MainActor
     private func updateStand(_ stand: Stand, newName: String, newSize: Double) {

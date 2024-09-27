@@ -64,7 +64,7 @@ struct StandsView: View {
             }
 
             Button(action: {
-                // Handle stand creation (you can add a new view or form here)
+                store.sendEvent(.createStandView)
             }) {
                 Text("Create Stand")
                     .foregroundColor(.white)
