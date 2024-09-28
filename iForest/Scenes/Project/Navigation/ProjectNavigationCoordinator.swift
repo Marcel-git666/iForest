@@ -122,18 +122,23 @@ private extension ProjectNavigationCoordinator {
     }
     
     private func presentUpdateStandView(for stand: Stand) {
-        if let standViewController = self.navigationController.viewControllers.first as? UIHostingController<StandView> {
+        print("presentUpdateStandView called for stand: \(stand)") // Debugging output
+        
+        // Iterate through the view controllers in the stack and find StandView
+        if let standViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<StandView> }) as? UIHostingController<StandView> {
             let store = standViewController.rootView.store // Access the store from StandView
-            
-            let updateView = StandCreationView(store: store, stand: stand) // Pass the store and stand
+
+            // Create the StandCreationView for updating
+            let updateView = StandCreationView(store: store, stand: stand)
+
+            // Push the update view onto the navigation stack
             let viewController = UIHostingController(rootView: updateView)
-            
-            // Push the view controller for updating the stand
+            print("Pushing StandCreationView for update to navigation stack") // Debugging
             navigationController.pushViewController(viewController, animated: true)
+        } else {
+            print("Error: Could not find StandView in the navigation stack") // Add this for debugging
         }
     }
-
-    
 }
 
 extension ProjectNavigationCoordinator: EventEmitting {

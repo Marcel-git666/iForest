@@ -10,7 +10,7 @@ import SwiftUI
 struct StandView: View {
     @ObservedObject var store: StandViewStore
 
-    @State private var showingUpdateAlert = false
+//    @State private var showingUpdateAlert = false
     @State private var standToUpdate: Stand?
     @State private var updatedStandName = ""
     @State private var updatedStandSize = ""
@@ -33,26 +33,26 @@ struct StandView: View {
                                 Text(stand.name)
                                 Text("Size: \(stand.size)")
                                     .font(.caption)
-                                Text("Shape: \(stand.shape.rawValue.capitalized)") // Show shape
-                                    .font(.caption)
                             }
                             Spacer()
+                            
+                            // Edit Button
                             Button(action: {
-                                standToUpdate = stand
-                                updatedStandName = stand.name
-                                updatedStandSize = "\(stand.size)"
-                                updatedStandShape = stand.shape // Set the initial shape value
-                                showingUpdateAlert = true
+                                store.sendEvent(.updateStandView(stand)) // Trigger event to open StandCreationView
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.blue)
                             }
+                            .buttonStyle(PlainButtonStyle())
+
+                            // Delete Button
                             Button(action: {
-                                store.send(.deleteStand(stand))
+                                store.send(.deleteStand(stand)) // Delete stand
                             }) {
                                 Image(systemName: "trash")
                                     .foregroundColor(.red)
                             }
+                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                 }
@@ -80,26 +80,6 @@ struct StandView: View {
             }
             .padding()
         }
-        .alert("Update Stand", isPresented: $showingUpdateAlert, actions: {
-            TextField("Name", text: $updatedStandName)
-            TextField("Size", text: $updatedStandSize)
-                .keyboardType(.decimalPad)
-            
-            // Shape Picker
-            Picker("Shape", selection: $updatedStandShape) {
-                Text("Circular").tag(Stand.Shape.circular)
-                Text("Square").tag(Stand.Shape.square)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
-
-            Button("Save", action: {
-                if let stand = standToUpdate, let size = Double(updatedStandSize) {
-                    store.send(.updateStand(stand, newName: updatedStandName, newSize: size, newShape: updatedStandShape)) // Pass the shape as well
-                }
-            })
-            Button("Cancel", role: .cancel, action: {})
-        })
     }
 }
 
