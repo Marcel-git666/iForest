@@ -9,7 +9,7 @@ import Foundation
 
 enum StandsViewAction {
     case fetchStands
-    case createStand(name: String, size: Double)
+    case createStand(name: String, size: Double, shape: Stand.Shape)
     case deleteStand(Stand)
-    case updateStand(Stand, newName: String, newSize: Double)
+    case updateStand(Stand, newName: String, newSize: Double, newShape: Stand.Shape)
 }

@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct StandCreationView: View {
-    var stand: Stand? = nil // Pass a stand if you are updating, leave nil if creating
+    @ObservedObject var store: StandViewStore
+    var stand: Stand? = nil
+    
     @State private var standName: String = ""
     @State private var standSize: String = ""
-    var onSave: (String, Double) -> Void
+    @State private var shape: Stand.Shape = .circular // Include shape
     
-    init(stand: Stand? = nil, onSave: @escaping (String, Double) -> Void) {
+    init(store: StandViewStore, stand: Stand? = nil) {
+        self.store = store
         self.stand = stand
-        self.onSave = onSave
         _standName = State(initialValue: stand?.name ?? "")
         _standSize = State(initialValue: stand != nil ? "\(stand!.size)" : "")
+        _shape = State(initialValue: stand?.shape ?? .circular) // Set initial value for shape
     }
     
     var body: some View {
@@ -34,10 +37,24 @@ struct StandCreationView: View {
                 .keyboardType(.decimalPad)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-
+            
+            Picker("Shape", selection: $shape) {
+                Text("Circular").tag(Stand.Shape.circular)
+                Text("Square").tag(Stand.Shape.square)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+            
             Button(action: {
                 if !standName.isEmpty, let size = Double(standSize) {
-                    onSave(standName, size)
+                    print("Save button tapped with name: \(standName) and size: \(size)") // Add this line for debugging
+                    
+                    // Call the appropriate store action to either create or update the stand
+                    if let stand = stand {
+                        store.send(.updateStand(stand, newName: standName, newSize: size, newShape: shape))
+                    } else {
+                        store.send(.createStand(name: standName, size: size, shape: shape))
+                    }
                 }
             }) {
                 Text(stand != nil ? "Update Stand" : "Save Stand")
@@ -55,6 +72,7 @@ struct StandCreationView: View {
     }
 }
 
+
 #Preview {
-    StandCreationView(onSave: { _, _ in })
+    StandCreationView(store: StandViewStore(firestoreManager: LocalDataManager(), projectId: "1"))
 }

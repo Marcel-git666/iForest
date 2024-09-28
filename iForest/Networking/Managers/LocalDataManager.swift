@@ -92,7 +92,7 @@ final class LocalDataManager: DataManaging {
 
 
 
-    func createStand(for projectId: String, name: String, size: Double) async throws -> Stand {
+    func createStand(for projectId: String, name: String, size: Double, shape: Stand.Shape) async throws -> Stand {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", projectId)
@@ -101,7 +101,7 @@ final class LocalDataManager: DataManaging {
         if let entity = result.first,
            let jsonData = entity.jsonData?.data(using: .utf8),
            var project = try? JSONDecoder().decode(Project.self, from: jsonData) {
-            let newStand = Stand(id: UUID().uuidString, name: name, size: size, shape: .circular, trees: [])
+            let newStand = Stand(id: UUID().uuidString, name: name, size: size, shape: shape, trees: [])
             project.stands.append(newStand)
             entity.jsonData = try String(data: JSONEncoder().encode(project), encoding: .utf8)
             try context.save()
@@ -126,7 +126,7 @@ final class LocalDataManager: DataManaging {
         }
     }
 
-    func updateStand(for projectId: String, standId: String, newName: String, newSize: Double) async throws {
+    func updateStand(for projectId: String, standId: String, newName: String, newSize: Double, newShape: Stand.Shape) async throws {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", projectId)

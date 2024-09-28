@@ -9,16 +9,16 @@ import Combine
 import Foundation
 import os
 
-final class StandsViewStore: ObservableObject {
+final class StandViewStore: ObservableObject {
     private let firestoreManager: DataManaging
     private let projectId: String
     private let logger = Logger()
-    private let eventSubject = PassthroughSubject<StandsViewEvent, Never>()
+    private let eventSubject = PassthroughSubject<StandViewEvent, Never>()
     
     @Published var state: StandsViewState = .loading
     @Published var stands: [Stand] = []
     
-    var eventPublisher: AnyPublisher<StandsViewEvent, Never> {
+    var eventPublisher: AnyPublisher<StandViewEvent, Never> {
         eventSubject.eraseToAnyPublisher()
     }
     
@@ -30,7 +30,8 @@ final class StandsViewStore: ObservableObject {
         }
     }
     
-    func sendEvent(_ event: StandsViewEvent) {
+    func sendEvent(_ event: StandViewEvent) {
+        print("StandViewEvent: \(event)")
         eventSubject.send(event) // Safe way to expose sending events
     }
     
@@ -39,12 +40,12 @@ final class StandsViewStore: ObservableObject {
         switch action {
         case .fetchStands:
             fetchStands()
-        case let .createStand(name, size):
-            createStand(name: name, size: size)
+        case let .createStand(name, size, shape):
+            createStand(name: name, size: size, shape: shape)
         case let .deleteStand(stand):
             deleteStand(stand)
-        case let .updateStand(stand, newName, newSize):
-            updateStand(stand, newName: newName, newSize: newSize)
+        case .updateStand(let stand, let newName, let newSize, let newShape):
+                updateStand(stand, newName: newName, newSize: newSize, newShape: newShape)
         }
     }
     
@@ -68,19 +69,22 @@ final class StandsViewStore: ObservableObject {
     
     // Create a new stand
     @MainActor
-    private func createStand(name: String, size: Double) {
+    private func createStand(name: String, size: Double, shape: Stand.Shape) {
         Task {
             do {
-                let newStand = try await firestoreManager.createStand(for: projectId, name: name, size: size)
+                let newStand = try await firestoreManager.createStand(for: projectId, name: name, size: size, shape: shape)
                 DispatchQueue.main.async {
-                    self.stands.append(newStand)
+                    print("Stand created: \(newStand)") // Debugging
+                    self.stands.append(newStand) // Append the new stand to the list
                     self.state.status = .loaded
+                    self.sendEvent(.backToProject) // Navigate back to the stand list
                 }
             } catch {
                 logger.error("❌ Failed to create stand: \(error.localizedDescription)")
             }
         }
     }
+
     
     // Delete a stand
     @MainActor
@@ -102,19 +106,23 @@ final class StandsViewStore: ObservableObject {
     
     // Update a stand
     @MainActor
-    private func updateStand(_ stand: Stand, newName: String, newSize: Double) {
+    private func updateStand(_ stand: Stand, newName: String, newSize: Double, newShape: Stand.Shape) {
         Task {
             do {
-                try await firestoreManager.updateStand(for: projectId, standId: stand.id, newName: newName, newSize: newSize)
+                try await firestoreManager.updateStand(for: projectId, standId: stand.id, newName: newName, newSize: newSize, newShape: newShape)
                 DispatchQueue.main.async {
                     if let index = self.stands.firstIndex(where: { $0.id == stand.id }) {
                         self.stands[index].name = newName
                         self.stands[index].size = newSize
+                        self.stands[index].shape = newShape
+                        print("Stand updated: \(self.stands[index])") // Debugging
                     }
+                    self.sendEvent(.backToProject) // Navigate back to the stand list
                 }
             } catch {
                 logger.error("❌ Failed to update stand: \(error.localizedDescription)")
             }
         }
     }
+
 }

@@ -48,7 +48,7 @@
 		1F2120FF2C95B2EB0050B857 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 1F2120FE2C95B2EB0050B857 /* KeychainAccess */; };
 		1F2C337E2C96D45600FE0C02 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C337D2C96D45600FE0C02 /* Project.swift */; };
 		1F2C33802C96D92A00FE0C02 /* ProjectCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C337F2C96D92A00FE0C02 /* ProjectCreationView.swift */; };
-		1F6F60AD2CA6DE330046A869 /* StandsViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6F60AC2CA6DE330046A869 /* StandsViewEvent.swift */; };
+		1F6F60AD2CA6DE330046A869 /* StandViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6F60AC2CA6DE330046A869 /* StandViewEvent.swift */; };
 		1F7246022CA528EC00D931CB /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7246012CA528EC00D931CB /* LocalDataManager.swift */; };
 		1F7246042CA52B6F00D931CB /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7246032CA52B6F00D931CB /* Tree.swift */; };
 		1F7246062CA52BA400D931CB /* Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7246052CA52BA400D931CB /* Measurement.swift */; };
@@ -74,8 +74,8 @@
 		1FD091AD2C96F8FD00E9A1D1 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091AC2C96F8FD00E9A1D1 /* FirestoreManager.swift */; };
 		1FD091AF2C96F91600E9A1D1 /* DataManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091AE2C96F91600E9A1D1 /* DataManaging.swift */; };
 		1FD091B12C9722E700E9A1D1 /* Stand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091B02C9722E700E9A1D1 /* Stand.swift */; };
-		1FD091B32C97239800E9A1D1 /* StandsViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091B22C97239800E9A1D1 /* StandsViewStore.swift */; };
-		1FD091B52C97242A00E9A1D1 /* StandsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091B42C97242A00E9A1D1 /* StandsView.swift */; };
+		1FD091B32C97239800E9A1D1 /* StandViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091B22C97239800E9A1D1 /* StandViewStore.swift */; };
+		1FD091B52C97242A00E9A1D1 /* StandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091B42C97242A00E9A1D1 /* StandView.swift */; };
 		1FD091B72C97645600E9A1D1 /* StandsViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091B62C97645600E9A1D1 /* StandsViewAction.swift */; };
 		1FD091B92C97648C00E9A1D1 /* StandsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD091B82C97648C00E9A1D1 /* StandsViewState.swift */; };
 /* End PBXBuildFile section */
@@ -125,7 +125,7 @@
 		1F2120FB2C95B29B0050B857 /* KeychainManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManagerError.swift; sourceTree = "<group>"; };
 		1F2C337D2C96D45600FE0C02 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		1F2C337F2C96D92A00FE0C02 /* ProjectCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCreationView.swift; sourceTree = "<group>"; };
-		1F6F60AC2CA6DE330046A869 /* StandsViewEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandsViewEvent.swift; sourceTree = "<group>"; };
+		1F6F60AC2CA6DE330046A869 /* StandViewEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandViewEvent.swift; sourceTree = "<group>"; };
 		1F7246012CA528EC00D931CB /* LocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
 		1F7246032CA52B6F00D931CB /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
 		1F7246052CA52BA400D931CB /* Measurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measurement.swift; sourceTree = "<group>"; };
@@ -148,8 +148,8 @@
 		1FD091AC2C96F8FD00E9A1D1 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		1FD091AE2C96F91600E9A1D1 /* DataManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManaging.swift; sourceTree = "<group>"; };
 		1FD091B02C9722E700E9A1D1 /* Stand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stand.swift; sourceTree = "<group>"; };
-		1FD091B22C97239800E9A1D1 /* StandsViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandsViewStore.swift; sourceTree = "<group>"; };
-		1FD091B42C97242A00E9A1D1 /* StandsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandsView.swift; sourceTree = "<group>"; };
+		1FD091B22C97239800E9A1D1 /* StandViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandViewStore.swift; sourceTree = "<group>"; };
+		1FD091B42C97242A00E9A1D1 /* StandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandView.swift; sourceTree = "<group>"; };
 		1FD091B62C97645600E9A1D1 /* StandsViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandsViewAction.swift; sourceTree = "<group>"; };
 		1FD091B82C97648C00E9A1D1 /* StandsViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandsViewState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -413,8 +413,8 @@
 				1F0359462C8A021B0054DEA9 /* ProjectView.swift */,
 				1F2C337F2C96D92A00FE0C02 /* ProjectCreationView.swift */,
 				1FBAAD2F2C8B50440008DB60 /* ProjectViewEvent.swift */,
-				1FD091B42C97242A00E9A1D1 /* StandsView.swift */,
-				1F6F60AC2CA6DE330046A869 /* StandsViewEvent.swift */,
+				1FD091B42C97242A00E9A1D1 /* StandView.swift */,
+				1F6F60AC2CA6DE330046A869 /* StandViewEvent.swift */,
 				1F8B6F042CA6ECC500B21B0D /* StandCreationView.swift */,
 			);
 			path = View;
@@ -522,7 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				1FBAAD322C8B50AE0008DB60 /* ProjectViewStore.swift */,
-				1FD091B22C97239800E9A1D1 /* StandsViewStore.swift */,
+				1FD091B22C97239800E9A1D1 /* StandViewStore.swift */,
 				1FD091B62C97645600E9A1D1 /* StandsViewAction.swift */,
 				1FBAAD342C8B50C90008DB60 /* ProjectViewAction.swift */,
 				1FBAAD362C8B50D80008DB60 /* ProjectViewState.swift */,
@@ -635,8 +635,8 @@
 				1F2120FC2C95B29B0050B857 /* KeychainManagerError.swift in Sources */,
 				1FD091B92C97648C00E9A1D1 /* StandsViewState.swift in Sources */,
 				1F2C337E2C96D45600FE0C02 /* Project.swift in Sources */,
-				1F6F60AD2CA6DE330046A869 /* StandsViewEvent.swift in Sources */,
-				1FD091B32C97239800E9A1D1 /* StandsViewStore.swift in Sources */,
+				1F6F60AD2CA6DE330046A869 /* StandViewEvent.swift in Sources */,
+				1FD091B32C97239800E9A1D1 /* StandViewStore.swift in Sources */,
 				1F03591C2C89EFFD0054DEA9 /* LoginViewState.swift in Sources */,
 				1F0359032C898BE60054DEA9 /* CoordinatorView.swift in Sources */,
 				1F0358F52C8987420054DEA9 /* DeeplinkHandling.swift in Sources */,
@@ -658,7 +658,7 @@
 				1F2120ED2C95B1BD0050B857 /* FirebaseAuthManaging.swift in Sources */,
 				1F0359392C89F8EF0054DEA9 /* FontType.swift in Sources */,
 				1FBAAD2E2C8B47330008DB60 /* ProjectNavigationCoordinatorEvent.swift in Sources */,
-				1FD091B52C97242A00E9A1D1 /* StandsView.swift in Sources */,
+				1FD091B52C97242A00E9A1D1 /* StandView.swift in Sources */,
 				1FD091B12C9722E700E9A1D1 /* Stand.swift in Sources */,
 				1F2C33802C96D92A00FE0C02 /* ProjectCreationView.swift in Sources */,
 				1FBAAD332C8B50AE0008DB60 /* ProjectViewStore.swift in Sources */,

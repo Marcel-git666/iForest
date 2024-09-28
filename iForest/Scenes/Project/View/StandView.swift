@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-struct StandsView: View {
-    @ObservedObject var store: StandsViewStore
+struct StandView: View {
+    @ObservedObject var store: StandViewStore
 
     @State private var showingUpdateAlert = false
     @State private var standToUpdate: Stand?
     @State private var updatedStandName = ""
     @State private var updatedStandSize = ""
+    @State private var updatedStandShape: Stand.Shape = .circular // Default shape
 
     var body: some View {
         VStack {
@@ -32,12 +33,15 @@ struct StandsView: View {
                                 Text(stand.name)
                                 Text("Size: \(stand.size)")
                                     .font(.caption)
+                                Text("Shape: \(stand.shape.rawValue.capitalized)") // Show shape
+                                    .font(.caption)
                             }
                             Spacer()
                             Button(action: {
                                 standToUpdate = stand
                                 updatedStandName = stand.name
                                 updatedStandSize = "\(stand.size)"
+                                updatedStandShape = stand.shape // Set the initial shape value
                                 showingUpdateAlert = true
                             }) {
                                 Image(systemName: "pencil")
@@ -64,6 +68,7 @@ struct StandsView: View {
             }
 
             Button(action: {
+                print("Create Stand button tapped")
                 store.sendEvent(.createStandView)
             }) {
                 Text("Create Stand")
@@ -79,9 +84,18 @@ struct StandsView: View {
             TextField("Name", text: $updatedStandName)
             TextField("Size", text: $updatedStandSize)
                 .keyboardType(.decimalPad)
+            
+            // Shape Picker
+            Picker("Shape", selection: $updatedStandShape) {
+                Text("Circular").tag(Stand.Shape.circular)
+                Text("Square").tag(Stand.Shape.square)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+
             Button("Save", action: {
                 if let stand = standToUpdate, let size = Double(updatedStandSize) {
-                    store.send(.updateStand(stand, newName: updatedStandName, newSize: size))
+                    store.send(.updateStand(stand, newName: updatedStandName, newSize: size, newShape: updatedStandShape)) // Pass the shape as well
                 }
             })
             Button("Cancel", role: .cancel, action: {})
@@ -90,5 +104,5 @@ struct StandsView: View {
 }
 
 #Preview {
-    StandsView(store: StandsViewStore(firestoreManager: LocalDataManager(), projectId: "123"))
+    StandView(store: StandViewStore(firestoreManager: LocalDataManager(), projectId: "123"))
 }

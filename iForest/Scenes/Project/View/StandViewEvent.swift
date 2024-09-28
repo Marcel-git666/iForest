@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum StandsViewEvent {
+enum StandViewEvent {
     case createStandView
     case updateStandView(Stand)
     case backToProject

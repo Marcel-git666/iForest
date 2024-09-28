@@ -46,7 +46,6 @@ private extension ProjectNavigationCoordinator {
         return UIHostingController(rootView: ProjectView(store: store))
     }
 }
-
 private extension ProjectNavigationCoordinator {
     private func handleEvent(_ event: ProjectViewEvent) {
         switch event {
@@ -76,7 +75,7 @@ private extension ProjectNavigationCoordinator {
     }
     
     private func presentStandsView(for project: Project) {
-        let store = StandsViewStore(firestoreManager: LocalDataManager(), projectId: project.id)
+        let store = StandViewStore(firestoreManager: LocalDataManager(), projectId: project.id)
         
         // Listen for StandsViewEvent from StandsViewStore
         store.eventPublisher
@@ -85,12 +84,13 @@ private extension ProjectNavigationCoordinator {
             }
             .store(in: &cancellables)
         
-        let standsView = StandsView(store: store)
+        let standsView = StandView(store: store)
         let viewController = UIHostingController(rootView: standsView)
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    private func handleStandsEvent(_ event: StandsViewEvent) {
+    private func handleStandsEvent(_ event: StandViewEvent) {
+        print("Handling StandViewEvent: \(event)")
         switch event {
         case .createStandView:
             presentCreateStandView() // Present the creation view when event is triggered
@@ -102,30 +102,37 @@ private extension ProjectNavigationCoordinator {
     }
     
     private func presentCreateStandView() {
-        let creationView = StandCreationView { [weak self] standName, standSize in
-            self?.navigationController.popViewController(animated: true) // Go back after saving
-            if let standsViewController = self?.navigationController.viewControllers.first as? UIHostingController<StandsView> {
-                Task { @MainActor in
-                    standsViewController.rootView.store.send(.createStand(name: standName, size: standSize)) // Add the stand
-                }
-            }
+        print("presentCreateStandView called") // Debugging output
+        
+        // Iterate through the view controllers in the stack and find StandView
+        if let standViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<StandView> }) as? UIHostingController<StandView> {
+            let store = standViewController.rootView.store // Access the store from StandView
+
+            // Create the StandCreationView with the store
+            let creationView = StandCreationView(store: store)
+
+            let viewController = UIHostingController(rootView: creationView)
+            print("Pushing StandCreationView to navigation stack") // Add this for debugging
+
+            // Push the new view controller onto the navigation stack
+            navigationController.pushViewController(viewController, animated: true)
+        } else {
+            print("Error: Could not find StandView in the navigation stack") // Add this for debugging
         }
-        let viewController = UIHostingController(rootView: creationView)
-        navigationController.pushViewController(viewController, animated: true)
     }
     
     private func presentUpdateStandView(for stand: Stand) {
-        let updateView = StandCreationView(stand: stand) { [weak self] updatedName, updatedSize in
-            self?.navigationController.popViewController(animated: true) // Go back after saving
-            if let standsViewController = self?.navigationController.viewControllers.first as? UIHostingController<StandsView> {
-                Task { @MainActor in
-                    standsViewController.rootView.store.send(.updateStand(stand, newName: updatedName, newSize: updatedSize)) // Update the stand
-                }
-            }
+        if let standViewController = self.navigationController.viewControllers.first as? UIHostingController<StandView> {
+            let store = standViewController.rootView.store // Access the store from StandView
+            
+            let updateView = StandCreationView(store: store, stand: stand) // Pass the store and stand
+            let viewController = UIHostingController(rootView: updateView)
+            
+            // Push the view controller for updating the stand
+            navigationController.pushViewController(viewController, animated: true)
         }
-        let viewController = UIHostingController(rootView: updateView)
-        navigationController.pushViewController(viewController, animated: true)
     }
+
     
 }
 
