@@ -56,22 +56,31 @@ private extension ProjectNavigationCoordinator {
             presentCreateProjectView()
             
         case let .openStands(project):
-            presentStandsView(for: project) // Navigate to StandsView when a project is tapped
+            presentStandsView(for: project)
+        case .backToProjectList:
+                navigationController.popViewController(animated: true)
         }
     }
     
     
-    func presentCreateProjectView() {
-        let creationView = ProjectCreationView { [weak self] projectName in
-            self?.navigationController.popViewController(animated: true) // Go back after saving
-            if let projectViewController = self?.navigationController.viewControllers.first as? UIHostingController<ProjectView> {
-                Task { @MainActor in
-                    projectViewController.rootView.store.send(.createProject(projectName)) // Add the project
-                }
-            }
+    private func presentCreateProjectView() {
+        print("presentCreateProjectView called") // Debugging output
+        
+        // Find the ProjectView in the navigation stack
+        if let projectViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<ProjectView> }) as? UIHostingController<ProjectView> {
+            let store = projectViewController.rootView.store // Access the store from ProjectView
+
+            // Create the ProjectCreationView with the store
+            let creationView = ProjectCreationView(store: store)
+
+            let viewController = UIHostingController(rootView: creationView)
+            print("Pushing ProjectCreationView to navigation stack") // Debugging
+
+            // Push the new view controller onto the navigation stack
+            navigationController.pushViewController(viewController, animated: true)
+        } else {
+            print("Error: Could not find ProjectView in the navigation stack") // Debugging
         }
-        let viewController = UIHostingController(rootView: creationView)
-        navigationController.pushViewController(viewController, animated: true) // Push the new view
     }
     
     private func presentStandsView(for project: Project) {

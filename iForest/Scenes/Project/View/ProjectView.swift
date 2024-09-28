@@ -22,7 +22,10 @@ struct ProjectView: View {
                     .textTypeModifier(textType: .navigationTitle)
                 
                 switch store.state.status {
-                case .initial:
+                case .loading:
+                    ProgressView("Loading projects...") // Handle loading state
+                
+                case .loaded, .initial:
                     List {
                         ForEach(store.projects) { project in
                             HStack {
@@ -60,6 +63,11 @@ struct ProjectView: View {
                     Text("No Projects Available")
                         .font(.title)
                         .foregroundColor(.gray)
+                
+                case .error:
+                    Text("Error loading projects")
+                        .font(.title)
+                        .foregroundColor(.red)
                 }
                 
                 // Create Project Button

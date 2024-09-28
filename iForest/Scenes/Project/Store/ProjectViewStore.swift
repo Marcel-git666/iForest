@@ -67,17 +67,17 @@ extension ProjectViewStore {
     
     // Create a project using FirestoreManager
     @MainActor
-    func createProject(name: String) {
+    private func createProject(name: String) {
         Task {
             do {
                 let newProject = try await firestoreManager.createProject(name: name)
                 DispatchQueue.main.async {
-                    self.projects.append(newProject)
-                    self.state.status = .initial
-                    self.logger.info("✅ Project created: \(newProject.name)")
+                    self.projects.append(newProject) // Append the new project to the list
+                    self.state.status = .loaded
+                    self.eventSubject.send(.backToProjectList) // Navigate back to the project list
                 }
             } catch {
-                logger.error("❌ Failed to create project: \(error.localizedDescription)")
+                print("❌ Failed to create project: \(error.localizedDescription)")
             }
         }
     }

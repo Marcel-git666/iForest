@@ -10,6 +10,9 @@ import Foundation
 struct ProjectViewState {
     enum Status {
         case initial
+        case loaded
+        case loading
+        case error
         case empty
     }
     

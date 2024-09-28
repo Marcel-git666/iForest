@@ -11,4 +11,5 @@ enum ProjectViewEvent {
     case logout
     case openCreateProjectView
     case openStands(Project)
+    case backToProjectList
 }

@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct ProjectCreationView: View {
+    @ObservedObject var store: ProjectViewStore
     @State private var projectName: String = ""
-    var onSave: (String) -> Void
+    
+    init(store: ProjectViewStore) {
+        self.store = store
+    }
     
     var body: some View {
         VStack {
@@ -23,7 +27,7 @@ struct ProjectCreationView: View {
 
             Button(action: {
                 if !projectName.isEmpty {
-                    onSave(projectName)
+                    store.send(.createProject(projectName))
                 }
             }) {
                 Text("Save Project")
@@ -42,5 +46,5 @@ struct ProjectCreationView: View {
 }
 
 #Preview {
-    ProjectCreationView(onSave: { _ in })
+    ProjectCreationView(store: ProjectViewStore(firestoreManager: LocalDataManager()))
 }
