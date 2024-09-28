@@ -98,6 +98,21 @@ private extension ProjectNavigationCoordinator {
         navigationController.pushViewController(viewController, animated: true)
     }
     
+    private func presentTreeView(for stand: Stand) {
+        let store = TreeViewStore(firestoreManager: LocalDataManager(), standId: stand.id)
+        
+        store.eventPublisher
+            .sink { [weak self] event in
+                self?.handleTreeEvent(event)
+            }
+            .store(in: &cancellables)
+        
+        let treeView = TreeView(store: store)
+        let viewController = UIHostingController(rootView: treeView)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+
+    
     private func handleStandsEvent(_ event: StandViewEvent) {
         print("Handling StandViewEvent: \(event)")
         switch event {
@@ -107,6 +122,8 @@ private extension ProjectNavigationCoordinator {
             presentUpdateStandView(for: stand) // Handle update
         case .backToProject:
             navigationController.popViewController(animated: true) // Navigate back to the project view
+        case .openTrees(let stand):
+            presentTreeView(for: stand)
         }
     }
     
@@ -143,6 +160,57 @@ private extension ProjectNavigationCoordinator {
             // Push the update view onto the navigation stack
             let viewController = UIHostingController(rootView: updateView)
             print("Pushing StandCreationView for update to navigation stack") // Debugging
+            navigationController.pushViewController(viewController, animated: true)
+        } else {
+            print("Error: Could not find StandView in the navigation stack") // Add this for debugging
+        }
+    }
+    
+    private func handleTreeEvent(_ event: TreeViewEvent) {
+        print("Handling TreeViewEvent: \(event)")
+        switch event {
+        case .createTreeView:
+            presentCreateTreeView()
+        case .updateTreeView(let tree):
+            presentUpdateTreeView(for: tree)
+        case .backToStand:
+            navigationController.popViewController(animated: true) // Navigate back to the project view
+        }
+    }
+    
+    private func presentCreateTreeView() {
+        print("presentCreateStandView called") // Debugging output
+        
+        // Iterate through the view controllers in the stack and find StandView
+        if let treeViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<TreeView> }) as? UIHostingController<TreeView> {
+            let store = treeViewController.rootView.store // Access the store from StandView
+
+            // Create the StandCreationView with the store
+            let creationView = TreeCreationView(store: store)
+
+            let viewController = UIHostingController(rootView: creationView)
+            print("Pushing StandCreationView to navigation stack") // Add this for debugging
+
+            // Push the new view controller onto the navigation stack
+            navigationController.pushViewController(viewController, animated: true)
+        } else {
+            print("Error: Could not find StandView in the navigation stack") // Add this for debugging
+        }
+    }
+    
+    private func presentUpdateTreeView(for tree: Tree) {
+        print("presentUpdateTreeView called for tree: \(tree)") // Debugging output
+        
+        // Iterate through the view controllers in the stack and find StandView
+        if let treeViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<TreeView> }) as? UIHostingController<TreeView> {
+            let store = treeViewController.rootView.store // Access the store from TreeView
+            
+            // Create the StandCreationView for updating
+            let updateView = TreeCreationView(store: store, tree: tree)
+            
+            // Push the update view onto the navigation stack
+            let viewController = UIHostingController(rootView: updateView)
+            print("Pushing TreeCreationView for update to navigation stack") // Debugging
             navigationController.pushViewController(viewController, animated: true)
         } else {
             print("Error: Could not find StandView in the navigation stack") // Add this for debugging

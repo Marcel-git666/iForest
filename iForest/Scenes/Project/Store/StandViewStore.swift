@@ -40,12 +40,16 @@ final class StandViewStore: ObservableObject {
         switch action {
         case .fetchStands:
             fetchStands()
-        case let .createStand(name, size, shape):
-            createStand(name: name, size: size, shape: shape)
+        case let .createOrUpdateStand(stand):
+            if let existingStand = stands.first(where: { $0.id == stand.id }) {
+                updateStand(existingStand, with: stand)
+            } else {
+                createStand(stand)
+            }
         case let .deleteStand(stand):
             deleteStand(stand)
-        case .updateStand(let stand, let newName, let newSize, let newShape):
-                updateStand(stand, newName: newName, newSize: newSize, newShape: newShape)
+        case let .openTrees(stand):
+            eventSubject.send(.openTrees(stand))
         }
     }
     
@@ -69,22 +73,19 @@ final class StandViewStore: ObservableObject {
     
     // Create a new stand
     @MainActor
-    private func createStand(name: String, size: Double, shape: Stand.Shape) {
+    private func createStand(_ stand: Stand) {
         Task {
             do {
-                let newStand = try await firestoreManager.createStand(for: projectId, name: name, size: size, shape: shape)
+                let newStand = try await firestoreManager.createStand(for: projectId, name: stand.name, size: stand.size, shape: stand.shape)
                 DispatchQueue.main.async {
-                    print("Stand created: \(newStand)") // Debugging
-                    self.stands.append(newStand) // Append the new stand to the list
+                    self.stands.append(newStand)
                     self.state.status = .loaded
-                    self.sendEvent(.backToProject) // Navigate back to the stand list
                 }
             } catch {
                 logger.error("❌ Failed to create stand: \(error.localizedDescription)")
             }
         }
     }
-
     
     // Delete a stand
     @MainActor
@@ -106,23 +107,18 @@ final class StandViewStore: ObservableObject {
     
     // Update a stand
     @MainActor
-    private func updateStand(_ stand: Stand, newName: String, newSize: Double, newShape: Stand.Shape) {
+    private func updateStand(_ existingStand: Stand, with updatedStand: Stand) {
         Task {
             do {
-                try await firestoreManager.updateStand(for: projectId, standId: stand.id, newName: newName, newSize: newSize, newShape: newShape)
+                try await firestoreManager.updateStand(for: projectId, standId: updatedStand.id, newName: updatedStand.name, newSize: updatedStand.size, newShape: updatedStand.shape)
                 DispatchQueue.main.async {
-                    if let index = self.stands.firstIndex(where: { $0.id == stand.id }) {
-                        self.stands[index].name = newName
-                        self.stands[index].size = newSize
-                        self.stands[index].shape = newShape
-                        print("Stand updated: \(self.stands[index])") // Debugging
+                    if let index = self.stands.firstIndex(where: { $0.id == existingStand.id }) {
+                        self.stands[index] = updatedStand
                     }
-                    self.sendEvent(.backToProject) // Navigate back to the stand list
                 }
             } catch {
                 logger.error("❌ Failed to update stand: \(error.localizedDescription)")
             }
         }
     }
-
 }

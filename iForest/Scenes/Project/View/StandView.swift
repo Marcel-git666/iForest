@@ -54,6 +54,10 @@ struct StandView: View {
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
+                        .contentShape(Rectangle()) // Makes the entire row tappable
+                        .onTapGesture {
+                            store.send(.openTrees(stand))
+                        }
                     }
                 }
 

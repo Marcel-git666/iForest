@@ -9,10 +9,10 @@ import SwiftUI
 
 struct StandCreationView: View {
     @ObservedObject var store: StandViewStore
-    var stand: Stand? = nil
+    var stand: Stand? = nil // Use this if updating an existing stand
     @State private var standName: String = ""
     @State private var standSize: String = ""
-    @State private var shape: Stand.Shape = .circular // Default shape
+    @State private var shape: Stand.Shape = .circular
 
     init(store: StandViewStore, stand: Stand? = nil) {
         self.store = store
@@ -27,11 +27,11 @@ struct StandCreationView: View {
             Text(stand != nil ? "Update Stand" : "Create New Stand")
                 .textTypeModifier(textType: .navigationTitle)
                 .padding(.top, 20)
-
+            
             TextField("Stand Name", text: $standName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-
+            
             TextField("Size", text: $standSize)
                 .keyboardType(.decimalPad)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -44,14 +44,17 @@ struct StandCreationView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding()
 
-            // Save Button: Triggers either update or create
             Button(action: {
-                if !standName.isEmpty, let size = Double(standSize) {
-                    if let stand = stand {
-                        store.send(.updateStand(stand, newName: standName, newSize: size, newShape: shape)) // Trigger update action
-                    } else {
-                        store.send(.createStand(name: standName, size: size, shape: shape)) // Trigger create action
-                    }
+                if let size = Double(standSize), !standName.isEmpty {
+                    let newStand = Stand(
+                        id: stand?.id ?? UUID().uuidString,
+                        name: standName,
+                        size: size,
+                        shape: shape,
+                        image: nil, // Image is nil for now
+                        trees: stand?.trees ?? []
+                    )
+                    store.send(.createOrUpdateStand(stand: newStand))
                 }
             }) {
                 Text(stand != nil ? "Update Stand" : "Save Stand")
@@ -62,24 +65,12 @@ struct StandCreationView: View {
                     .cornerRadius(8)
             }
             .padding()
-
+            
             Spacer()
-
-            // Cancel Button: Sends event to navigate back
-            Button(action: {
-                store.sendEvent(.backToProject) // Send event to navigate back
-            }) {
-                Text("Cancel")
-                    .foregroundColor(.red)
-                    .padding()
-            }
         }
         .padding()
     }
 }
-
-
-
 
 #Preview {
     StandCreationView(store: StandViewStore(firestoreManager: LocalDataManager(), projectId: "1"))

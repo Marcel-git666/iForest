@@ -11,5 +11,5 @@ struct Measurement: Identifiable, Codable {
     var id: String
     var date: Date
     var height: Double
-    var circumference: Double
+    var girth: Double
 }

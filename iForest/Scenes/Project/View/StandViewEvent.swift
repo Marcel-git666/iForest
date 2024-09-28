@@ -11,4 +11,5 @@ enum StandViewEvent {
     case createStandView
     case updateStandView(Stand)
     case backToProject
+    case openTrees(Stand)
 }
