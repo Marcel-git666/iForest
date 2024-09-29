@@ -9,11 +9,12 @@ import SwiftUI
 
 struct StandCreationView: View {
     @ObservedObject var store: StandViewStore
-    var stand: Stand? = nil // Use this if updating an existing stand
+    var stand: Stand? = nil
     @State private var standName: String = ""
     @State private var standSize: String = ""
     @State private var shape: Stand.Shape = .circular
-
+    @State private var showError = false
+    
     init(store: StandViewStore, stand: Stand? = nil) {
         self.store = store
         self.stand = stand
@@ -45,16 +46,20 @@ struct StandCreationView: View {
             .padding()
 
             Button(action: {
-                if let size = Double(standSize), !standName.isEmpty {
+                if let size = Double(standSize.trimmingCharacters(in: .whitespaces)), !standName.isEmpty {
                     let newStand = Stand(
                         id: stand?.id ?? UUID().uuidString,
                         name: standName,
                         size: size,
                         shape: shape,
-                        image: nil, // Image is nil for now
+                        image: nil,
                         trees: stand?.trees ?? []
                     )
                     store.send(.createOrUpdateStand(stand: newStand))
+                    store.sendEvent(.backToStand)
+                } else {
+                    // Show an error if input is invalid
+                    showError = true
                 }
             }) {
                 Text(stand != nil ? "Update Stand" : "Save Stand")
@@ -65,6 +70,13 @@ struct StandCreationView: View {
                     .cornerRadius(8)
             }
             .padding()
+            .alert(isPresented: $showError) {
+                Alert(
+                    title: Text("Invalid Input"),
+                    message: Text("Please enter a valid name and size."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
             
             Spacer()
         }
@@ -73,5 +85,5 @@ struct StandCreationView: View {
 }
 
 #Preview {
-    StandCreationView(store: StandViewStore(firestoreManager: LocalDataManager(), projectId: "1"))
+    StandCreationView(store: StandViewStore(dataManager: LocalDataManager(), projectId: "1"))
 }

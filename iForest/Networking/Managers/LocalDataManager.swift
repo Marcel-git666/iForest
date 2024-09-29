@@ -34,22 +34,21 @@ final class LocalDataManager: DataManaging {
         }
     }
     
-    func createProject(name: String) async throws -> Project {
+    func createProject(_ project: Project) async throws -> Project {
         let context = persistentContainer.viewContext
-        let newProject = Project(id: UUID().uuidString, name: name, stands: [])
         
         let entity = DataEntity(context: context)
-        entity.id = newProject.id
-        entity.jsonData = try String(data: JSONEncoder().encode(newProject), encoding: .utf8)
+        entity.id = project.id
+        entity.jsonData = try String(data: JSONEncoder().encode(project), encoding: .utf8)
         
         try context.save()
-        return newProject
+        return project
     }
     
-    func deleteProject(_ projectId: String) async throws {
+    func deleteProject(_ project: Project) async throws {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", projectId)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
         let result = try context.fetch(fetchRequest)
         if let entity = result.first {
             context.delete(entity)
@@ -57,85 +56,68 @@ final class LocalDataManager: DataManaging {
         }
     }
     
-    func updateProject(_ projectId: String, newName: String) async throws {
+    func updateProject(_ project: Project) async throws {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", projectId)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
         let result = try context.fetch(fetchRequest)
-        if let entity = result.first,
-           let jsonData = entity.jsonData?.data(using: .utf8), // Convert String to Data
-           var project = try? JSONDecoder().decode(Project.self, from: jsonData) { // Decode the JSON
-            project.name = newName
-            entity.jsonData = try String(data: JSONEncoder().encode(project), encoding: .utf8) // Encode back to JSON string
+        if let entity = result.first {
+            entity.jsonData = try String(data: JSONEncoder().encode(project), encoding: .utf8)
             try context.save()
         }
     }
     
     // MARK: - Stand Methods
     
-    func fetchStands(for projectId: String) async throws -> [Stand] {
-        let context = persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", projectId) // Fetch only the project with the given ID
-        let result = try context.fetch(fetchRequest)
-        
-        // Check if the project with the given ID exists
-        if let entity = result.first,
-           let jsonData = entity.jsonData?.data(using: .utf8),
-           let project = try? JSONDecoder().decode(Project.self, from: jsonData) {
-            return project.stands // Return the stands for that specific project
-        } else {
-            return [] // Return an empty array if no project is found or decoding fails
-        }
+    func fetchStands(for project: Project) async throws -> [Stand] {
+        return project.stands
     }
     
-    func createStand(for projectId: String, name: String, size: Double, shape: Stand.Shape) async throws -> Stand {
+    func createStand(_ stand: Stand, for project: Project) async throws -> Stand {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", projectId)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
         let result = try context.fetch(fetchRequest)
         
         if let entity = result.first,
-           let jsonData = entity.jsonData?.data(using: .utf8),
-           var project = try? JSONDecoder().decode(Project.self, from: jsonData) {
-            let newStand = Stand(id: UUID().uuidString, name: name, size: size, shape: shape, trees: [])
-            project.stands.append(newStand)
-            entity.jsonData = try String(data: JSONEncoder().encode(project), encoding: .utf8)
+           var existingProject = try? JSONDecoder().decode(Project.self, from: entity.jsonData?.data(using: .utf8) ?? Data()) {
+            
+            existingProject.stands.append(stand)
+            entity.jsonData = try String(data: JSONEncoder().encode(existingProject), encoding: .utf8)
             try context.save()
-            return newStand
+            return stand
         } else {
             throw NSError(domain: "ProjectNotFound", code: 404, userInfo: nil)
         }
     }
     
-    func deleteStand(for projectId: String, standId: String) async throws {
+    func deleteStand(_ stand: Stand, from project: Project) async throws {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", projectId)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
         let result = try context.fetch(fetchRequest)
         
         if let entity = result.first,
-           let jsonData = entity.jsonData?.data(using: .utf8),
-           var project = try? JSONDecoder().decode(Project.self, from: jsonData) {
-            project.stands.removeAll { $0.id == standId }
-            entity.jsonData = try String(data: JSONEncoder().encode(project), encoding: .utf8)
+           var existingProject = try? JSONDecoder().decode(Project.self, from: entity.jsonData?.data(using: .utf8) ?? Data()) {
+            
+            existingProject.stands.removeAll { $0.id == stand.id }
+            entity.jsonData = try String(data: JSONEncoder().encode(existingProject), encoding: .utf8)
             try context.save()
         }
     }
     
-    func updateStand(for projectId: String, standId: String, newName: String, newSize: Double, newShape: Stand.Shape) async throws {
+    func updateStand(_ stand: Stand, in project: Project) async throws {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", projectId)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
         let result = try context.fetch(fetchRequest)
         
         if let entity = result.first,
-           let jsonData = entity.jsonData?.data(using: .utf8),
-           var project = try? JSONDecoder().decode(Project.self, from: jsonData) {
-            if let standIndex = project.stands.firstIndex(where: { $0.id == standId }) {
-                project.stands[standIndex].name = newName
-                project.stands[standIndex].size = newSize
-                entity.jsonData = try String(data: JSONEncoder().encode(project), encoding: .utf8)
+           var existingProject = try? JSONDecoder().decode(Project.self, from: entity.jsonData?.data(using: .utf8) ?? Data()) {
+            
+            if let index = existingProject.stands.firstIndex(where: { $0.id == stand.id }) {
+                existingProject.stands[index] = stand
+                entity.jsonData = try String(data: JSONEncoder().encode(existingProject), encoding: .utf8)
                 try context.save()
             }
         }
@@ -143,102 +125,82 @@ final class LocalDataManager: DataManaging {
     
     // MARK: - Tree Methods
     
-    func fetchTrees(for standId: String) async throws -> [Tree] {
-        let context = persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
-        
-        // Fetch all projects, as Core Data doesn't support querying nested collections directly
-        let result = try context.fetch(fetchRequest)
-        
-        // Find the project that contains the stand with the given standId
-        for entity in result {
-            if let jsonData = entity.jsonData?.data(using: .utf8),
-               let project = try? JSONDecoder().decode(Project.self, from: jsonData) {
-                
-                // Find the correct stand by its id
-                if let stand = project.stands.first(where: { $0.id == standId }) {
-                    return stand.trees // Return the trees for the found stand
-                }
-            }
-        }
-        return [] // Return an empty array if no matching stand or trees are found
+    func fetchTrees(for stand: Stand) async throws -> [Tree] {
+        return stand.trees
     }
     
-    func createTree(for standId: String, name: String, size: Double, location: String) async throws -> Tree {
+    func createTree(_ tree: Tree, for stand: Stand) async throws -> Tree {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
-        let result = try context.fetch(fetchRequest)
         
         // Iterate over all projects to find the one containing the stand
+        let result = try context.fetch(fetchRequest)
         if let entity = result.first(where: { entity in
             if let jsonData = entity.jsonData?.data(using: .utf8),
                let project = try? JSONDecoder().decode(Project.self, from: jsonData),
-               project.stands.contains(where: { $0.id == standId }) {
+               project.stands.contains(where: { $0.id == stand.id }) {
                 return true
             }
             return false
         }) {
             if let jsonData = entity.jsonData?.data(using: .utf8),
                var project = try? JSONDecoder().decode(Project.self, from: jsonData),
-               let standIndex = project.stands.firstIndex(where: { $0.id == standId }) {
+               let standIndex = project.stands.firstIndex(where: { $0.id == stand.id }) {
                 
-                let newTree = Tree(id: UUID().uuidString, name: name, size: size, location: location, measurements: [])
-                project.stands[standIndex].trees.append(newTree)
+                project.stands[standIndex].trees.append(tree)
                 entity.jsonData = try String(data: JSONEncoder().encode(project), encoding: .utf8)
                 try context.save()
-                return newTree
+                return tree
             }
         }
         throw NSError(domain: "StandNotFound", code: 404, userInfo: nil)
     }
-
-    func deleteTree(for standId: String, treeId: String) async throws {
+    
+    func deleteTree(_ tree: Tree, from stand: Stand) async throws {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
-        let result = try context.fetch(fetchRequest)
         
-        // Find the project containing the stand and tree
+        // Iterate over all projects to find the one containing the stand
+        let result = try context.fetch(fetchRequest)
         if let entity = result.first(where: { entity in
             if let jsonData = entity.jsonData?.data(using: .utf8),
                let project = try? JSONDecoder().decode(Project.self, from: jsonData),
-               project.stands.contains(where: { $0.id == standId }) {
+               project.stands.contains(where: { $0.id == stand.id }) {
                 return true
             }
             return false
         }) {
             if let jsonData = entity.jsonData?.data(using: .utf8),
                var project = try? JSONDecoder().decode(Project.self, from: jsonData),
-               let standIndex = project.stands.firstIndex(where: { $0.id == standId }) {
+               let standIndex = project.stands.firstIndex(where: { $0.id == stand.id }) {
                 
-                project.stands[standIndex].trees.removeAll { $0.id == treeId }
+                project.stands[standIndex].trees.removeAll { $0.id == tree.id }
                 entity.jsonData = try String(data: JSONEncoder().encode(project), encoding: .utf8)
                 try context.save()
             }
         }
     }
     
-    func updateTree(for standId: String, treeId: String, newName: String, newSize: Double, newLocation: String) async throws {
+    func updateTree(_ tree: Tree, in stand: Stand) async throws {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
-        let result = try context.fetch(fetchRequest)
         
-        // Find the project containing the stand and tree
+        // Iterate over all projects to find the one containing the stand
+        let result = try context.fetch(fetchRequest)
         if let entity = result.first(where: { entity in
             if let jsonData = entity.jsonData?.data(using: .utf8),
                let project = try? JSONDecoder().decode(Project.self, from: jsonData),
-               project.stands.contains(where: { $0.id == standId }) {
+               project.stands.contains(where: { $0.id == stand.id }) {
                 return true
             }
             return false
         }) {
             if let jsonData = entity.jsonData?.data(using: .utf8),
                var project = try? JSONDecoder().decode(Project.self, from: jsonData),
-               let standIndex = project.stands.firstIndex(where: { $0.id == standId }),
-               let treeIndex = project.stands[standIndex].trees.firstIndex(where: { $0.id == treeId }) {
+               let standIndex = project.stands.firstIndex(where: { $0.id == stand.id }),
+               let treeIndex = project.stands[standIndex].trees.firstIndex(where: { $0.id == tree.id }) {
                 
-                project.stands[standIndex].trees[treeIndex].name = newName
-                project.stands[standIndex].trees[treeIndex].size = newSize
-                project.stands[standIndex].trees[treeIndex].location = newLocation
+                project.stands[standIndex].trees[treeIndex] = tree
                 entity.jsonData = try String(data: JSONEncoder().encode(project), encoding: .utf8)
                 try context.save()
             }

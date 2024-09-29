@@ -70,5 +70,5 @@ struct TreeCreationView: View {
 
 
 #Preview {
-    TreeCreationView(store: TreeViewStore(firestoreManager: LocalDataManager(), standId: "456456"))
+    TreeCreationView(store: TreeViewStore(dataManager: LocalDataManager(), standId: "456456"))
 }

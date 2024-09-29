@@ -46,5 +46,5 @@ struct ProjectCreationView: View {
 }
 
 #Preview {
-    ProjectCreationView(store: ProjectViewStore(firestoreManager: LocalDataManager()))
+    ProjectCreationView(store: ProjectViewStore(dataManager: LocalDataManager()))
 }

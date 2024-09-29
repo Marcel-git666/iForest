@@ -26,8 +26,8 @@ final class ProjectNavigationCoordinator: NSObject, ProjectCoordinating {
     }
     
     func start() {
-        let firestoreManager = LocalDataManager()
-        let store = ProjectViewStore(firestoreManager: firestoreManager)
+        let dataManager = LocalDataManager()
+        let store = ProjectViewStore(dataManager: dataManager)
         self.projectViewStore = store // Store reference to use later
         
         store.eventPublisher
@@ -84,7 +84,7 @@ private extension ProjectNavigationCoordinator {
     }
     
     private func presentStandsView(for project: Project) {
-        let store = StandViewStore(firestoreManager: LocalDataManager(), projectId: project.id)
+        let store = StandViewStore(dataManager: LocalDataManager(), projectId: project.id)
         
         // Listen for StandsViewEvent from StandsViewStore
         store.eventPublisher
@@ -99,7 +99,7 @@ private extension ProjectNavigationCoordinator {
     }
     
     private func presentTreeView(for stand: Stand) {
-        let store = TreeViewStore(firestoreManager: LocalDataManager(), standId: stand.id)
+        let store = TreeViewStore(dataManager: LocalDataManager(), standId: stand.id)
         
         store.eventPublisher
             .sink { [weak self] event in
@@ -120,7 +120,7 @@ private extension ProjectNavigationCoordinator {
             presentCreateStandView() // Present the creation view when event is triggered
         case .updateStandView(let stand):
             presentUpdateStandView(for: stand) // Handle update
-        case .backToProject:
+        case .backToStand:
             navigationController.popViewController(animated: true) // Navigate back to the project view
         case .openTrees(let stand):
             presentTreeView(for: stand)

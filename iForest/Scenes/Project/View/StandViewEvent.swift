@@ -10,6 +10,6 @@ import Foundation
 enum StandViewEvent {
     case createStandView
     case updateStandView(Stand)
-    case backToProject
+    case backToStand
     case openTrees(Stand)
 }

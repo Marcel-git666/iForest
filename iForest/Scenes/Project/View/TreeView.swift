@@ -76,5 +76,5 @@ struct TreeView: View {
 }
 
 #Preview {
-    TreeView(store: TreeViewStore(firestoreManager: LocalDataManager(), standId: "123"))
+    TreeView(store: TreeViewStore(dataManager: LocalDataManager(), standId: "123"))
 }

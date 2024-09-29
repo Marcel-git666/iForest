@@ -10,7 +10,7 @@ import Foundation
 import os
 
 final class TreeViewStore: ObservableObject {
-    private let firestoreManager: DataManaging
+    private let dataManager: DataManaging
     private let standId: String
     private let logger = Logger()
     private let eventSubject = PassthroughSubject<TreeViewEvent, Never>()
@@ -22,8 +22,8 @@ final class TreeViewStore: ObservableObject {
         eventSubject.eraseToAnyPublisher()
     }
     
-    init(firestoreManager: DataManaging, standId: String) {
-        self.firestoreManager = firestoreManager
+    init(dataManager: DataManaging, standId: String) {
+        self.dataManager = dataManager
         self.standId = standId
         Task { @MainActor in
             send(.fetchTrees)
@@ -50,13 +50,17 @@ final class TreeViewStore: ObservableObject {
         }
     }
     
+    @MainActor
     private func fetchTrees() {
         Task {
             do {
-                let fetchedTrees = try await firestoreManager.fetchTrees(for: standId)
-                DispatchQueue.main.async {
-                    self.trees = fetchedTrees
-                    self.state.status = fetchedTrees.isEmpty ? .empty : .loaded
+                let project = try await dataManager.fetchProjects().first { $0.stands.contains(where: { $0.id == standId }) }
+                if let stand = project?.stands.first(where: { $0.id == standId }) {
+                    let fetchedTrees = stand.trees
+                    DispatchQueue.main.async {
+                        self.trees = fetchedTrees
+                        self.state.status = fetchedTrees.isEmpty ? .empty : .loaded
+                    }
                 }
             } catch {
                 logger.error("❌ Failed to fetch trees: \(error.localizedDescription)")
@@ -64,15 +68,19 @@ final class TreeViewStore: ObservableObject {
             }
         }
     }
-    
+
+    @MainActor
     private func createTree(_ tree: Tree) {
         Task {
             do {
-                let newTree = try await firestoreManager.createTree(for: standId, name: tree.name, size: tree.size, location: tree.location)
-                DispatchQueue.main.async {
-                    self.trees.append(newTree)
-                    self.state.status = .loaded
-                    self.sendEvent(.backToStand)
+                let project = try await dataManager.fetchProjects().first { $0.stands.contains(where: { $0.id == standId }) }
+                if let stand = project?.stands.first(where: { $0.id == standId }) {
+                    let newTree = try await dataManager.createTree(tree, for: stand)
+                    DispatchQueue.main.async {
+                        self.trees.append(newTree)
+                        self.state.status = .loaded
+                        self.sendEvent(.backToStand)
+                    }
                 }
             } catch {
                 logger.error("❌ Failed to create tree: \(error.localizedDescription)")
@@ -80,14 +88,18 @@ final class TreeViewStore: ObservableObject {
         }
     }
     
+    @MainActor
     private func updateTree(_ existingTree: Tree, with updatedTree: Tree) {
         Task {
             do {
-                try await firestoreManager.updateTree(for: standId, treeId: existingTree.id, newName: updatedTree.name, newSize: updatedTree.size, newLocation: updatedTree.location)
-                DispatchQueue.main.async {
-                    if let index = self.trees.firstIndex(where: { $0.id == existingTree.id }) {
-                        self.trees[index] = updatedTree
-                        self.sendEvent(.backToStand)
+                let project = try await dataManager.fetchProjects().first { $0.stands.contains(where: { $0.id == standId }) }
+                if let stand = project?.stands.first(where: { $0.id == standId }) {
+                    try await dataManager.updateTree(updatedTree, in: stand)
+                    DispatchQueue.main.async {
+                        if let index = self.trees.firstIndex(where: { $0.id == existingTree.id }) {
+                            self.trees[index] = updatedTree
+                            self.sendEvent(.backToStand)
+                        }
                     }
                 }
             } catch {
@@ -96,14 +108,18 @@ final class TreeViewStore: ObservableObject {
         }
     }
     
+    @MainActor
     private func deleteTree(_ tree: Tree) {
         Task {
             do {
-                try await firestoreManager.deleteTree(for: standId, treeId: tree.id)
-                DispatchQueue.main.async {
-                    self.trees.removeAll { $0.id == tree.id }
-                    if self.trees.isEmpty {
-                        self.state.status = .empty
+                let project = try await dataManager.fetchProjects().first { $0.stands.contains(where: { $0.id == standId }) }
+                if let stand = project?.stands.first(where: { $0.id == standId }) {
+                    try await dataManager.deleteTree(tree, from: stand)
+                    DispatchQueue.main.async {
+                        self.trees.removeAll { $0.id == tree.id }
+                        if self.trees.isEmpty {
+                            self.state.status = .empty
+                        }
                     }
                 }
             } catch {

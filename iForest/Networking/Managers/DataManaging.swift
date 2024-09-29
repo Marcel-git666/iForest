@@ -8,16 +8,21 @@
 import Foundation
 
 protocol DataManaging {
+    // Project-related operations
     func fetchProjects() async throws -> [Project]
-    func createProject(name: String) async throws -> Project
-    func deleteProject(_ projectId: String) async throws
-    func updateProject(_ projectId: String, newName: String) async throws
-    func fetchStands(for projectId: String) async throws -> [Stand]
-    func createStand(for projectId: String, name: String, size: Double, shape: Stand.Shape) async throws -> Stand
-    func deleteStand(for projectId: String, standId: String) async throws
-    func updateStand(for projectId: String, standId: String, newName: String, newSize: Double, newShape: Stand.Shape) async throws
-    func fetchTrees(for standId: String) async throws -> [Tree]
-    func createTree(for standId: String, name: String, size: Double, location: String) async throws -> Tree
-    func deleteTree(for standId: String, treeId: String) async throws
-    func updateTree(for standId: String, treeId: String, newName: String, newSize: Double, newLocation: String) async throws
+    func createProject(_ project: Project) async throws -> Project
+    func deleteProject(_ project: Project) async throws
+    func updateProject(_ project: Project) async throws
+    
+    // Stand-related operations
+    func fetchStands(for project: Project) async throws -> [Stand]
+    func createStand(_ stand: Stand, for project: Project) async throws -> Stand
+    func deleteStand(_ stand: Stand, from project: Project) async throws
+    func updateStand(_ stand: Stand, in project: Project) async throws
+    
+    // Tree-related operations
+    func fetchTrees(for stand: Stand) async throws -> [Tree]
+    func createTree(_ tree: Tree, for stand: Stand) async throws -> Tree
+    func deleteTree(_ tree: Tree, from stand: Stand) async throws
+    func updateTree(_ tree: Tree, in stand: Stand) async throws
 }

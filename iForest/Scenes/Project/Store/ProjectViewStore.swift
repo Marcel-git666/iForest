@@ -6,12 +6,11 @@
 //
 
 import Foundation
-
 import Combine
 import os
 
 final class ProjectViewStore: ObservableObject, Store {
-    private let firestoreManager: DataManaging
+    private let dataManager: DataManaging
     private let logger = Logger()
     private let eventSubject = PassthroughSubject<ProjectViewEvent, Never>()
     @Published var state: ProjectViewState = .initial
@@ -21,8 +20,8 @@ final class ProjectViewStore: ObservableObject, Store {
         eventSubject.eraseToAnyPublisher()
     }
     
-    init(firestoreManager: DataManaging) {
-        self.firestoreManager = firestoreManager
+    init(dataManager: DataManaging) {
+        self.dataManager = dataManager
         Task { @MainActor in
             fetchProjects()
         }
@@ -50,7 +49,7 @@ extension ProjectViewStore {
     func fetchProjects() {
         Task {
             do {
-                let fetchedProjects = try await firestoreManager.fetchProjects()
+                let fetchedProjects = try await dataManager.fetchProjects()
                 DispatchQueue.main.async {
                     if fetchedProjects.isEmpty {
                         self.state.status = .empty // Update to empty state if no projects
@@ -65,14 +64,15 @@ extension ProjectViewStore {
         }
     }
     
-    // Create a project using FirestoreManager
+    // Create a project using DataManager
     @MainActor
     private func createProject(name: String) {
         Task {
             do {
-                let newProject = try await firestoreManager.createProject(name: name)
+                let newProject = Project(id: UUID().uuidString, name: name, stands: [])
+                let createdProject = try await dataManager.createProject(newProject)
                 DispatchQueue.main.async {
-                    self.projects.append(newProject) // Append the new project to the list
+                    self.projects.append(createdProject) // Append the new project to the list
                     self.state.status = .loaded
                     self.eventSubject.send(.backToProjectList) // Navigate back to the project list
                 }
@@ -81,11 +81,12 @@ extension ProjectViewStore {
             }
         }
     }
+    
     @MainActor
     func deleteProject(_ project: Project) {
         Task {
             do {
-                try await firestoreManager.deleteProject(project.id)
+                try await dataManager.deleteProject(project) // Use the full project model
                 DispatchQueue.main.async {
                     self.projects.removeAll { $0.id == project.id }
                     if self.projects.isEmpty {
@@ -104,10 +105,12 @@ extension ProjectViewStore {
     func updateProject(_ project: Project, newName: String) {
         Task {
             do {
-                try await firestoreManager.updateProject(project.id, newName: newName)
+                var updatedProject = project
+                updatedProject.name = newName
+                try await dataManager.updateProject(updatedProject) // Pass the updated project
                 DispatchQueue.main.async {
-                    if let index = self.projects.firstIndex(where: { $0.id == project.id }) {
-                        self.projects[index].name = newName
+                    if let index = self.projects.firstIndex(where: { $0.id == updatedProject.id }) {
+                        self.projects[index] = updatedProject // Replace the old project with the updated one
                         self.logger.info("✏️ Project updated: \(newName)")
                     }
                 }

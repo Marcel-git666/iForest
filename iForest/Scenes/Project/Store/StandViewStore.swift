@@ -10,7 +10,7 @@ import Foundation
 import os
 
 final class StandViewStore: ObservableObject {
-    private let firestoreManager: DataManaging
+    private let dataManager: DataManaging
     private let projectId: String
     private let logger = Logger()
     private let eventSubject = PassthroughSubject<StandViewEvent, Never>()
@@ -22,8 +22,8 @@ final class StandViewStore: ObservableObject {
         eventSubject.eraseToAnyPublisher()
     }
     
-    init(firestoreManager: DataManaging, projectId: String) {
-        self.firestoreManager = firestoreManager
+    init(dataManager: DataManaging, projectId: String) {
+        self.dataManager = dataManager
         self.projectId = projectId
         Task { @MainActor in
             send(.fetchStands)
@@ -59,10 +59,13 @@ final class StandViewStore: ObservableObject {
         state.status = .loading
         Task {
             do {
-                let fetchedStands = try await firestoreManager.fetchStands(for: projectId)
-                DispatchQueue.main.async {
-                    self.stands = fetchedStands
-                    self.state.status = fetchedStands.isEmpty ? .empty : .loaded
+                let project = try await dataManager.fetchProjects().first { $0.id == projectId }
+                if let project = project {
+                    let fetchedStands = project.stands
+                    DispatchQueue.main.async {
+                        self.stands = fetchedStands
+                        self.state.status = fetchedStands.isEmpty ? .empty : .loaded
+                    }
                 }
             } catch {
                 logger.error("❌ Failed to fetch stands: \(error.localizedDescription)")
@@ -76,10 +79,13 @@ final class StandViewStore: ObservableObject {
     private func createStand(_ stand: Stand) {
         Task {
             do {
-                let newStand = try await firestoreManager.createStand(for: projectId, name: stand.name, size: stand.size, shape: stand.shape)
-                DispatchQueue.main.async {
-                    self.stands.append(newStand)
-                    self.state.status = .loaded
+                let project = try await dataManager.fetchProjects().first { $0.id == projectId }
+                if let project = project {
+                    let newStand = try await dataManager.createStand(stand, for: project)
+                    DispatchQueue.main.async {
+                        self.stands.append(newStand)
+                        self.state.status = .loaded
+                    }
                 }
             } catch {
                 logger.error("❌ Failed to create stand: \(error.localizedDescription)")
@@ -92,11 +98,14 @@ final class StandViewStore: ObservableObject {
     private func deleteStand(_ stand: Stand) {
         Task {
             do {
-                try await firestoreManager.deleteStand(for: projectId, standId: stand.id)
-                DispatchQueue.main.async {
-                    self.stands.removeAll { $0.id == stand.id }
-                    if self.stands.isEmpty {
-                        self.state.status = .empty
+                let project = try await dataManager.fetchProjects().first { $0.id == projectId }
+                if let project = project {
+                    try await dataManager.deleteStand(stand, from: project)
+                    DispatchQueue.main.async {
+                        self.stands.removeAll { $0.id == stand.id }
+                        if self.stands.isEmpty {
+                            self.state.status = .empty
+                        }
                     }
                 }
             } catch {
@@ -110,10 +119,13 @@ final class StandViewStore: ObservableObject {
     private func updateStand(_ existingStand: Stand, with updatedStand: Stand) {
         Task {
             do {
-                try await firestoreManager.updateStand(for: projectId, standId: updatedStand.id, newName: updatedStand.name, newSize: updatedStand.size, newShape: updatedStand.shape)
-                DispatchQueue.main.async {
-                    if let index = self.stands.firstIndex(where: { $0.id == existingStand.id }) {
-                        self.stands[index] = updatedStand
+                let project = try await dataManager.fetchProjects().first { $0.id == projectId }
+                if let project = project {
+                    try await dataManager.updateStand(updatedStand, in: project)
+                    DispatchQueue.main.async {
+                        if let index = self.stands.firstIndex(where: { $0.id == existingStand.id }) {
+                            self.stands[index] = updatedStand
+                        }
                     }
                 }
             } catch {
