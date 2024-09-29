@@ -13,6 +13,10 @@ struct TreeCreationView: View {
     @State private var treeName: String = ""
     @State private var treeSize: String = ""
     @State private var treeLocation: String = ""
+    
+    // State for showing alerts
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
 
     init(store: TreeViewStore, tree: Tree? = nil) {
         self.store = store
@@ -51,6 +55,10 @@ struct TreeCreationView: View {
                         measurements: tree?.measurements ?? []
                     )
                     store.send(.createOrUpdateTree(tree: newTree))
+                } else {
+                    // Show alert for invalid input
+                    alertMessage = treeName.isEmpty ? "Tree name is required." : "Invalid size entered."
+                    showingAlert = true
                 }
             }) {
                 Text(tree != nil ? "Update Tree" : "Save Tree")
@@ -65,9 +73,11 @@ struct TreeCreationView: View {
             Spacer()
         }
         .padding()
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Invalid Input"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
     }
 }
-
 
 #Preview {
     TreeCreationView(store: TreeViewStore(dataManager: LocalDataManager(), standId: "456456"))

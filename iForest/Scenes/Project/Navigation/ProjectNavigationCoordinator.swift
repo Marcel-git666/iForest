@@ -189,12 +189,12 @@ private extension ProjectNavigationCoordinator {
             let creationView = TreeCreationView(store: store)
 
             let viewController = UIHostingController(rootView: creationView)
-            print("Pushing StandCreationView to navigation stack") // Add this for debugging
+            print("Pushing TreeCreationView to navigation stack") // Add this for debugging
 
             // Push the new view controller onto the navigation stack
             navigationController.pushViewController(viewController, animated: true)
         } else {
-            print("Error: Could not find StandView in the navigation stack") // Add this for debugging
+            print("Error: Could not find TreeView in the navigation stack") // Add this for debugging
         }
     }
     

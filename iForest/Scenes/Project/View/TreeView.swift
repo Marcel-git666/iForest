@@ -40,12 +40,14 @@ struct TreeView: View {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.blue)
                             }
+                            .buttonStyle(PlainButtonStyle())
                             Button(action: {
                                 store.send(.deleteTree(tree))
                             }) {
                                 Image(systemName: "trash")
                                     .foregroundColor(.red)
                             }
+                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                 }
