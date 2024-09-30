@@ -12,14 +12,14 @@ struct PhotoCaptureView: View {
     @ObservedObject var store: PhotoViewStore
     @State private var showImagePicker = false
     @State private var inputImage: UIImage?
-    
+
     var body: some View {
         VStack {
             Text("Capture Stand Photo")
                 .font(.title)
                 .padding()
-            
-            if let image = store.capturedImage {
+
+            if let image = inputImage {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
@@ -43,6 +43,8 @@ struct PhotoCaptureView: View {
             Button("Save Photo") {
                 if let inputImage = inputImage {
                     store.send(.savePhoto(inputImage))
+                } else {
+                    print("No image selected")
                 }
             }
             .buttonStyle(PlainButtonStyle())
@@ -54,7 +56,11 @@ struct PhotoCaptureView: View {
             .buttonStyle(PlainButtonStyle())
             .padding()
         }
-        .sheet(isPresented: $showImagePicker) {
+        .sheet(isPresented: $showImagePicker, onDismiss: {
+            if let image = inputImage {
+                store.send(.savePhoto(image))
+            }
+        }) {
             ImagePicker(image: $inputImage)
         }
     }
@@ -63,3 +69,4 @@ struct PhotoCaptureView: View {
 #Preview {
     PhotoCaptureView(store: PhotoViewStore())
 }
+

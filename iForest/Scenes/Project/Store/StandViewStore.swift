@@ -53,6 +53,8 @@ final class StandViewStore: ObservableObject {
             eventSubject.send(.openTrees(stand))
         case let .capturePhoto(stand):
             eventSubject.send(.capturePhoto(stand))
+        case let .photoCaptured(image):
+            handlePhotoCapture(image)
         }
     }
     
@@ -138,6 +140,32 @@ final class StandViewStore: ObservableObject {
                 }
             } catch {
                 logger.error("❌ Failed to update stand: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    @MainActor
+    private func handlePhotoCapture(_ image: UIImage) {
+        // Find the stand and update its image
+        if let existingStand = stands.first {
+            var updatedStand = existingStand
+            updatedStand.image = image.jpegData(compressionQuality: 1.0) // Convert UIImage to Data
+            
+            // Update the stand in the data manager
+            Task {
+                do {
+                    let project = try await dataManager.fetchProjects().first { $0.id == projectId }
+                    if let project = project {
+                        try await dataManager.updateStand(updatedStand, in: project)
+                        DispatchQueue.main.async {
+                            if let index = self.stands.firstIndex(where: { $0.id == existingStand.id }) {
+                                self.stands[index] = updatedStand
+                            }
+                        }
+                    }
+                } catch {
+                    logger.error("❌ Failed to update stand: \(error.localizedDescription)")
+                }
             }
         }
     }

@@ -28,6 +28,7 @@ final class PhotoViewStore: ObservableObject {
             // Trigger the camera here
 
         case let .savePhoto(image):
+            logger.info("📸 Photo captured")
             capturedImage = image
             eventSubject.send(.photoSaved(image))
 

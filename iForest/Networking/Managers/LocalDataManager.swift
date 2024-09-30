@@ -70,7 +70,17 @@ final class LocalDataManager: DataManaging {
     // MARK: - Stand Methods
     
     func fetchStands(for project: Project) async throws -> [Stand] {
-        return project.stands
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
+        
+        if let entity = try context.fetch(fetchRequest).first,
+           let jsonData = entity.jsonData?.data(using: .utf8),
+           let project = try? JSONDecoder().decode(Project.self, from: jsonData) {
+            return project.stands
+        } else {
+            throw NSError(domain: "ProjectNotFound", code: 404, userInfo: nil)
+        }
     }
     
     func createStand(_ stand: Stand, for project: Project) async throws -> Stand {

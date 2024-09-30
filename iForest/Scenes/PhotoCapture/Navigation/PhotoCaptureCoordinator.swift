@@ -31,9 +31,16 @@ final class PhotoCaptureCoordinator: NSObject, PhotoCaptureCoordinating {
     
     func start() {
         let store = PhotoViewStore()
+        
+        // Capture 'self' outside the Task block safely
         store.eventPublisher
             .sink { [weak self] event in
-                self?.handleEvent(event)
+                guard let strongSelf = self else { return } // Capture 'self' before the Task
+                
+                // Now, run the Task within a safe context
+                Task { @MainActor in
+                    strongSelf.handleEvent(event) // Safe to call 'handleEvent' with strong reference
+                }
             }
             .store(in: &cancellables)
         
@@ -43,12 +50,23 @@ final class PhotoCaptureCoordinator: NSObject, PhotoCaptureCoordinating {
         // Present the PhotoCaptureView
         navigationController.present(viewController, animated: true)
     }
+
     
+    @MainActor 
     private func handleEvent(_ event: PhotoCaptureViewEvent) {
         switch event {
         case let .photoSaved(image):
             logger.info("📸 Photo saved")
             navigationController.dismiss(animated: true)
+            print("ViewControllers: \(navigationController.viewControllers)")
+            // Pass the captured image to the store (e.g., StandViewStore)
+            if let standViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<StandView> }) as? UIHostingController<StandView> {
+                Task { @MainActor in
+                    standViewController.rootView.store.send(.photoCaptured(image: image))
+                }
+            } else {
+                logger.error("❌ Failed to find StandView in the navigation stack")
+            }
             
         case .cancel:
             logger.info("❌ Photo capture cancelled")

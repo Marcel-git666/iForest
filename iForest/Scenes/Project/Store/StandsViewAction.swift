@@ -5,7 +5,7 @@
 //  Created by Marcel Mravec on 15.09.2024.
 //
 
-import Foundation
+import SwiftUI
 
 enum StandsViewAction {
     case fetchStands
@@ -13,4 +13,5 @@ enum StandsViewAction {
     case deleteStand(Stand)
     case openTrees(Stand)
     case capturePhoto(Stand)
+    case photoCaptured(image: UIImage)
 }
