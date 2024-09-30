@@ -58,7 +58,7 @@ private extension ProjectNavigationCoordinator {
         case let .openStands(project):
             presentStandsView(for: project)
         case .backToProjectList:
-                navigationController.popViewController(animated: true)
+            navigationController.popViewController(animated: true)
         }
     }
     
@@ -69,13 +69,13 @@ private extension ProjectNavigationCoordinator {
         // Find the ProjectView in the navigation stack
         if let projectViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<ProjectView> }) as? UIHostingController<ProjectView> {
             let store = projectViewController.rootView.store // Access the store from ProjectView
-
+            
             // Create the ProjectCreationView with the store
             let creationView = ProjectCreationView(store: store)
-
+            
             let viewController = UIHostingController(rootView: creationView)
             print("Pushing ProjectCreationView to navigation stack") // Debugging
-
+            
             // Push the new view controller onto the navigation stack
             navigationController.pushViewController(viewController, animated: true)
         } else {
@@ -111,7 +111,7 @@ private extension ProjectNavigationCoordinator {
         let viewController = UIHostingController(rootView: treeView)
         navigationController.pushViewController(viewController, animated: true)
     }
-
+    
     
     private func handleStandsEvent(_ event: StandViewEvent) {
         print("Handling StandViewEvent: \(event)")
@@ -124,6 +124,8 @@ private extension ProjectNavigationCoordinator {
             navigationController.popViewController(animated: true) // Navigate back to the project view
         case .openTrees(let stand):
             presentTreeView(for: stand)
+        case let .capturePhoto(stand):
+            presentPhotoCapture(for: stand)
         }
     }
     
@@ -133,13 +135,13 @@ private extension ProjectNavigationCoordinator {
         // Iterate through the view controllers in the stack and find StandView
         if let standViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<StandView> }) as? UIHostingController<StandView> {
             let store = standViewController.rootView.store // Access the store from StandView
-
+            
             // Create the StandCreationView with the store
             let creationView = StandCreationView(store: store)
-
+            
             let viewController = UIHostingController(rootView: creationView)
             print("Pushing StandCreationView to navigation stack") // Add this for debugging
-
+            
             // Push the new view controller onto the navigation stack
             navigationController.pushViewController(viewController, animated: true)
         } else {
@@ -153,10 +155,10 @@ private extension ProjectNavigationCoordinator {
         // Iterate through the view controllers in the stack and find StandView
         if let standViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<StandView> }) as? UIHostingController<StandView> {
             let store = standViewController.rootView.store // Access the store from StandView
-
+            
             // Create the StandCreationView for updating
             let updateView = StandCreationView(store: store, stand: stand)
-
+            
             // Push the update view onto the navigation stack
             let viewController = UIHostingController(rootView: updateView)
             print("Pushing StandCreationView for update to navigation stack") // Debugging
@@ -166,6 +168,39 @@ private extension ProjectNavigationCoordinator {
         }
     }
     
+    private func presentPhotoCapture(for stand: Stand) {
+        let photoCoordinator = PhotoCaptureCoordinator(navigationController: navigationController)
+        childCoordinators.append(photoCoordinator)
+        
+        photoCoordinator.eventPublisher
+            .sink { [weak self] photoEvent in
+                guard let self = self else { return }
+                
+                switch photoEvent {
+                case let .photoCaptured(image):
+                    Task { @MainActor in
+                        // Create a new instance of updatedStand inside the Task to avoid mutation errors
+                        var updatedStand = stand
+                        updatedStand.image = image.jpegData(compressionQuality: 1.0)
+                        self.navigationController.popViewController(animated: true)
+                        if let standStore = (self.navigationController.viewControllers.first as? UIHostingController<StandView>)?.rootView.store {
+                            standStore.send(.createOrUpdateStand(stand: updatedStand))
+                        }
+                    }
+
+                case .photoCaptureCancelled:
+                    Task { @MainActor in
+                        self.navigationController.popViewController(animated: true)
+                    }
+                }
+            }
+            .store(in: &cancellables)
+
+        // Start the photo capture flow
+        photoCoordinator.start()
+    }
+
+
     private func handleTreeEvent(_ event: TreeViewEvent) {
         print("Handling TreeViewEvent: \(event)")
         switch event {
@@ -184,13 +219,13 @@ private extension ProjectNavigationCoordinator {
         // Iterate through the view controllers in the stack and find StandView
         if let treeViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<TreeView> }) as? UIHostingController<TreeView> {
             let store = treeViewController.rootView.store // Access the store from StandView
-
+            
             // Create the StandCreationView with the store
             let creationView = TreeCreationView(store: store)
-
+            
             let viewController = UIHostingController(rootView: creationView)
             print("Pushing TreeCreationView to navigation stack") // Add this for debugging
-
+            
             // Push the new view controller onto the navigation stack
             navigationController.pushViewController(viewController, animated: true)
         } else {

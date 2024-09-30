@@ -9,22 +9,22 @@ import SwiftUI
 
 struct StandView: View {
     @ObservedObject var store: StandViewStore
-
-//    @State private var showingUpdateAlert = false
+    
+    //    @State private var showingUpdateAlert = false
     @State private var standToUpdate: Stand?
     @State private var updatedStandName = ""
     @State private var updatedStandSize = ""
     @State private var updatedStandShape: Stand.Shape = .circular // Default shape
-
+    
     var body: some View {
         VStack {
             Text("Stands")
                 .textTypeModifier(textType: .navigationTitle)
-
+            
             switch store.state.status {
             case .loading:
                 ProgressView("Loading stands...")
-
+                
             case .loaded:
                 List {
                     ForEach(store.stands) { stand in
@@ -44,7 +44,14 @@ struct StandView: View {
                                     .foregroundColor(.blue)
                             }
                             .buttonStyle(PlainButtonStyle())
-
+                            
+                            Button(action: {
+                                store.sendEvent(.capturePhoto(stand))
+                            }) {
+                                Image(systemName: "camera")
+                                    .foregroundColor(.green)
+                            }
+                            .buttonStyle(PlainButtonStyle())
                             // Delete Button
                             Button(action: {
                                 store.send(.deleteStand(stand)) // Delete stand
@@ -60,17 +67,17 @@ struct StandView: View {
                         }
                     }
                 }
-
+                
             case .empty:
                 Text("No Stands Available")
                     .font(.title)
                     .foregroundColor(.gray)
-
+                
             case .error:
                 Text("Error loading stands")
                     .foregroundColor(.red)
             }
-
+            
             Button(action: {
                 print("Create Stand button tapped")
                 store.sendEvent(.createStandView)

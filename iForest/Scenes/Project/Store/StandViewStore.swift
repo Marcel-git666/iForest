@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import os
+import SwiftUI
 
 final class StandViewStore: ObservableObject {
     private let dataManager: DataManaging
@@ -50,6 +51,8 @@ final class StandViewStore: ObservableObject {
             deleteStand(stand)
         case let .openTrees(stand):
             eventSubject.send(.openTrees(stand))
+        case let .capturePhoto(stand):
+            eventSubject.send(.capturePhoto(stand))
         }
     }
     
@@ -119,14 +122,19 @@ final class StandViewStore: ObservableObject {
     private func updateStand(_ existingStand: Stand, with updatedStand: Stand) {
         Task {
             do {
-                let project = try await dataManager.fetchProjects().first { $0.id == projectId }
-                if let project = project {
+                // Fetch the project to ensure you're updating the stand within the correct project
+                if let project = try await dataManager.fetchProjects().first(where: { $0.id == projectId }) {
+                    // Update the stand in the correct project
                     try await dataManager.updateStand(updatedStand, in: project)
+                    
+                    // Update local state in the StandViewStore
                     DispatchQueue.main.async {
                         if let index = self.stands.firstIndex(where: { $0.id == existingStand.id }) {
                             self.stands[index] = updatedStand
                         }
                     }
+                } else {
+                    logger.error("❌ Project not found for ID: \(self.projectId)")
                 }
             } catch {
                 logger.error("❌ Failed to update stand: \(error.localizedDescription)")

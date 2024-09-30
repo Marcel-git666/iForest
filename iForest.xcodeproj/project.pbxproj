@@ -84,6 +84,14 @@
 		1FD20EC72CA84F52002BCF1A /* TreeViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD20EC62CA84F52002BCF1A /* TreeViewStore.swift */; };
 		1FD20EC92CA84F85002BCF1A /* TreeViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD20EC82CA84F85002BCF1A /* TreeViewAction.swift */; };
 		1FD20ECB2CA84F9B002BCF1A /* TreeViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD20ECA2CA84F9B002BCF1A /* TreeViewState.swift */; };
+		1FE751822CAAB395002D9383 /* PhotoCaptureCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE751812CAAB395002D9383 /* PhotoCaptureCoordinator.swift */; };
+		1FE751842CAAB3CC002D9383 /* PhotoViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE751832CAAB3CC002D9383 /* PhotoViewStore.swift */; };
+		1FE751862CAAB6BB002D9383 /* PhotoViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE751852CAAB6BB002D9383 /* PhotoViewAction.swift */; };
+		1FE751882CAAB6C8002D9383 /* PhotoCaptureEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE751872CAAB6C8002D9383 /* PhotoCaptureEvent.swift */; };
+		1FE7518A2CAAB71B002D9383 /* PhotoCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE751892CAAB71B002D9383 /* PhotoCaptureView.swift */; };
+		1FE7518C2CAAB80B002D9383 /* PhotoCaptureViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7518B2CAAB80B002D9383 /* PhotoCaptureViewEvent.swift */; };
+		1FE7518E2CAAB84E002D9383 /* PhotoCaptureCoordinatorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7518D2CAAB84E002D9383 /* PhotoCaptureCoordinatorEvent.swift */; };
+		1FE751912CAAB8AC002D9383 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE751902CAAB8AC002D9383 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +172,14 @@
 		1FD20EC62CA84F52002BCF1A /* TreeViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeViewStore.swift; sourceTree = "<group>"; };
 		1FD20EC82CA84F85002BCF1A /* TreeViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeViewAction.swift; sourceTree = "<group>"; };
 		1FD20ECA2CA84F9B002BCF1A /* TreeViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeViewState.swift; sourceTree = "<group>"; };
+		1FE751812CAAB395002D9383 /* PhotoCaptureCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureCoordinator.swift; sourceTree = "<group>"; };
+		1FE751832CAAB3CC002D9383 /* PhotoViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewStore.swift; sourceTree = "<group>"; };
+		1FE751852CAAB6BB002D9383 /* PhotoViewAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewAction.swift; sourceTree = "<group>"; };
+		1FE751872CAAB6C8002D9383 /* PhotoCaptureEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureEvent.swift; sourceTree = "<group>"; };
+		1FE751892CAAB71B002D9383 /* PhotoCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureView.swift; sourceTree = "<group>"; };
+		1FE7518B2CAAB80B002D9383 /* PhotoCaptureViewEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureViewEvent.swift; sourceTree = "<group>"; };
+		1FE7518D2CAAB84E002D9383 /* PhotoCaptureCoordinatorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCaptureCoordinatorEvent.swift; sourceTree = "<group>"; };
+		1FE751902CAAB8AC002D9383 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				1F0359002C898AE40054DEA9 /* Login */,
+				1FE7517D2CAAB347002D9383 /* PhotoCapture */,
 				1F0359432C8A01C90054DEA9 /* Project */,
 			);
 			path = Scenes;
@@ -296,6 +313,7 @@
 		1F03590B2C89D3BE0054DEA9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1FE7518F2CAAB897002D9383 /* UIKit */,
 				1F0359222C89F3430054DEA9 /* SwiftUI */,
 				1F03590C2C89D3C80054DEA9 /* CustomNavigationController.swift */,
 				1F03590E2C89D3EE0054DEA9 /* CustomNavigationControllerEvent.swift */,
@@ -559,6 +577,52 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		1FE7517D2CAAB347002D9383 /* PhotoCapture */ = {
+			isa = PBXGroup;
+			children = (
+				1FE7517E2CAAB34E002D9383 /* Navigation */,
+				1FE7517F2CAAB358002D9383 /* Store */,
+				1FE751802CAAB360002D9383 /* View */,
+			);
+			path = PhotoCapture;
+			sourceTree = "<group>";
+		};
+		1FE7517E2CAAB34E002D9383 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				1FE751812CAAB395002D9383 /* PhotoCaptureCoordinator.swift */,
+				1FE7518D2CAAB84E002D9383 /* PhotoCaptureCoordinatorEvent.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		1FE7517F2CAAB358002D9383 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				1FE751832CAAB3CC002D9383 /* PhotoViewStore.swift */,
+				1FE751872CAAB6C8002D9383 /* PhotoCaptureEvent.swift */,
+				1FE751852CAAB6BB002D9383 /* PhotoViewAction.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		1FE751802CAAB360002D9383 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1FE751892CAAB71B002D9383 /* PhotoCaptureView.swift */,
+				1FE7518B2CAAB80B002D9383 /* PhotoCaptureViewEvent.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1FE7518F2CAAB897002D9383 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				1FE751902CAAB8AC002D9383 /* ImagePicker.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -649,9 +713,11 @@
 				1F03592F2C89F7DD0054DEA9 /* CustomTextLabel.swift in Sources */,
 				1F0359212C89F2130054DEA9 /* UIViewController+Ext.swift in Sources */,
 				1F2120F02C95B1E20050B857 /* Credentials.swift in Sources */,
+				1FE7518A2CAAB71B002D9383 /* PhotoCaptureView.swift in Sources */,
 				1FC7D2D72C88B5E4000E6922 /* AppCoordinator.swift in Sources */,
 				1FD20EC72CA84F52002BCF1A /* TreeViewStore.swift in Sources */,
 				1F2120FC2C95B29B0050B857 /* KeychainManagerError.swift in Sources */,
+				1FE751882CAAB6C8002D9383 /* PhotoCaptureEvent.swift in Sources */,
 				1FD091B92C97648C00E9A1D1 /* StandsViewState.swift in Sources */,
 				1F2C337E2C96D45600FE0C02 /* Project.swift in Sources */,
 				1F6F60AD2CA6DE330046A869 /* StandViewEvent.swift in Sources */,
@@ -679,16 +745,20 @@
 				1F0359392C89F8EF0054DEA9 /* FontType.swift in Sources */,
 				1FD20EC12CA84E2C002BCF1A /* TreeView.swift in Sources */,
 				1FBAAD2E2C8B47330008DB60 /* ProjectNavigationCoordinatorEvent.swift in Sources */,
+				1FE751822CAAB395002D9383 /* PhotoCaptureCoordinator.swift in Sources */,
 				1FD091B52C97242A00E9A1D1 /* StandView.swift in Sources */,
 				1FD091B12C9722E700E9A1D1 /* Stand.swift in Sources */,
 				1F2C33802C96D92A00FE0C02 /* ProjectCreationView.swift in Sources */,
 				1FBAAD332C8B50AE0008DB60 /* ProjectViewStore.swift in Sources */,
 				1FBAAD302C8B50440008DB60 /* ProjectViewEvent.swift in Sources */,
+				1FE751912CAAB8AC002D9383 /* ImagePicker.swift in Sources */,
+				1FE7518C2CAAB80B002D9383 /* PhotoCaptureViewEvent.swift in Sources */,
 				1F03590F2C89D3EE0054DEA9 /* CustomNavigationControllerEvent.swift in Sources */,
 				1FBAAD352C8B50C90008DB60 /* ProjectViewAction.swift in Sources */,
 				1F03591E2C89F07D0054DEA9 /* LoginViewEvent.swift in Sources */,
 				1F03593E2C89F9980054DEA9 /* TextTypeModifier.swift in Sources */,
 				1F0359322C89F83D0054DEA9 /* FontSize.swift in Sources */,
+				1FE7518E2CAAB84E002D9383 /* PhotoCaptureCoordinatorEvent.swift in Sources */,
 				1F0359342C89F8640054DEA9 /* TextType.swift in Sources */,
 				1FD20EC92CA84F85002BCF1A /* TreeViewAction.swift in Sources */,
 				1F03591A2C89EFE70054DEA9 /* LoginViewAction.swift in Sources */,
@@ -708,8 +778,10 @@
 				1FD20EC52CA84EFE002BCF1A /* TreeViewEvent.swift in Sources */,
 				1F8B6F052CA6ECC500B21B0D /* StandCreationView.swift in Sources */,
 				1F0359472C8A021B0054DEA9 /* ProjectView.swift in Sources */,
+				1FE751862CAAB6BB002D9383 /* PhotoViewAction.swift in Sources */,
 				1F7246062CA52BA400D931CB /* Measurement.swift in Sources */,
 				1F0359092C89A1E20054DEA9 /* LoginNavigationCoordinator.swift in Sources */,
+				1FE751842CAAB3CC002D9383 /* PhotoViewStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -848,6 +920,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iForest/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses your camera to take photos of stands and trees.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -879,6 +952,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iForest/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses your camera to take photos of stands and trees.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

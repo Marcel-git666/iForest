@@ -12,4 +12,5 @@ enum StandsViewAction {
     case createOrUpdateStand(stand: Stand)
     case deleteStand(Stand)
     case openTrees(Stand)
+    case capturePhoto(Stand)
 }

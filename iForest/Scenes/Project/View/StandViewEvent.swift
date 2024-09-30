@@ -10,6 +10,7 @@ import Foundation
 enum StandViewEvent {
     case createStandView
     case updateStandView(Stand)
+    case capturePhoto(Stand) 
     case backToStand
     case openTrees(Stand)
 }
