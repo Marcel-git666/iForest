@@ -58,7 +58,7 @@ final class PhotoCaptureCoordinator: NSObject, PhotoCaptureCoordinating {
         case let .photoSaved(image):
             logger.info("📸 Photo saved")
             navigationController.dismiss(animated: true)
-            print("ViewControllers: \(navigationController.viewControllers)")
+            // print("ViewControllers: \(navigationController.viewControllers)")
             // Pass the captured image to the store (e.g., StandViewStore)
             if let standViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<StandView> }) as? UIHostingController<StandView> {
                 Task { @MainActor in

@@ -10,7 +10,6 @@ import SwiftUI
 struct StandView: View {
     @ObservedObject var store: StandViewStore
     
-    //    @State private var showingUpdateAlert = false
     @State private var standToUpdate: Stand?
     @State private var updatedStandName = ""
     @State private var updatedStandSize = ""
@@ -20,6 +19,7 @@ struct StandView: View {
         VStack {
             Text("Stands")
                 .textTypeModifier(textType: .navigationTitle)
+                .foregroundColor(.primary) 
             
             switch store.state.status {
             case .loading:
@@ -31,20 +31,23 @@ struct StandView: View {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(stand.name)
+                                    .foregroundColor(.primary) // Adapts to light/dark mode
                                 Text("Size: \(stand.size)")
                                     .font(.caption)
+                                    .foregroundColor(.secondary)
                             }
                             Spacer()
                             
                             // Edit Button
                             Button(action: {
-                                store.sendEvent(.updateStandView(stand)) // Trigger event to open StandCreationView
+                                store.sendEvent(.updateStandView(stand))
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.blue)
                             }
                             .buttonStyle(PlainButtonStyle())
-                            
+
+                            // Capture Photo Button
                             Button(action: {
                                 store.sendEvent(.capturePhoto(stand))
                             }) {
@@ -52,9 +55,10 @@ struct StandView: View {
                                     .foregroundColor(.green)
                             }
                             .buttonStyle(PlainButtonStyle())
+                            
                             // Delete Button
                             Button(action: {
-                                store.send(.deleteStand(stand)) // Delete stand
+                                store.send(.deleteStand(stand))
                             }) {
                                 Image(systemName: "trash")
                                     .foregroundColor(.red)
@@ -79,18 +83,18 @@ struct StandView: View {
             }
             
             Button(action: {
-                print("Create Stand button tapped")
                 store.sendEvent(.createStandView)
             }) {
                 Text("Create Stand")
                     .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color.blue)
+                    .background(Color.accentColor) // Adaptive button color
                     .cornerRadius(8)
             }
             .padding()
         }
+        .background(Color(UIColor.systemBackground)) // Adaptive background color
     }
 }
 

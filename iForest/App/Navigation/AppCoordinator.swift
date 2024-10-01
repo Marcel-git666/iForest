@@ -37,16 +37,22 @@ extension AppCoordinator {
     }
     
     func setupAppUI() {
-        UITabBar.appearance().backgroundColor = .systemBrown
-        UITabBar.appearance().isTranslucent = false
-        UITabBar.appearance().tintColor = .white
-//        UITabBarItem.appearance().setTitleTextAttributes(
-//            [
-//                NSAttributedString.Key.font: TextType.caption.uiFont
-//            ], for: .normal
-//        )
-        UINavigationBar.appearance().tintColor = .white
-    }
+            // Set background color for Tab Bar
+            UITabBar.appearance().backgroundColor = .systemBrown
+            UITabBar.appearance().isTranslucent = false
+            UITabBar.appearance().tintColor = .white
+
+            // Set tintColor for navigation bar items (back buttons, bar buttons, etc.)
+            UINavigationBar.appearance().tintColor = .blue // Choose a color visible in both light/dark mode
+
+            // Set navigation bar background color based on the current interface style
+            UINavigationBar.appearance().backgroundColor = UIColor.systemBackground
+
+            // Adjust title text color for navigation bar
+            UINavigationBar.appearance().titleTextAttributes = [
+                .foregroundColor: UIColor.label // Adapts to light/dark mode
+            ]
+        }
     
     func makeLoginFlow() -> ViewControllerCoordinator {
         let loginCoordinator = LoginNavigationCoordinator()

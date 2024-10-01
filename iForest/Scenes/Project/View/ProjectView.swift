@@ -20,6 +20,7 @@ struct ProjectView: View {
                 // Custom Navigation Title
                 Text("Projects")
                     .textTypeModifier(textType: .navigationTitle)
+                    .foregroundColor(.primary) 
                 
                 switch store.state.status {
                 case .loading:
@@ -30,6 +31,7 @@ struct ProjectView: View {
                         ForEach(store.projects) { project in
                             HStack {
                                 Text(project.name)
+                                    .foregroundColor(.primary) // Adapts to light/dark mode
                                 Spacer()
                                 
                                 // Edit Button
@@ -75,10 +77,10 @@ struct ProjectView: View {
                     store.send(.openCreateProjectView)
                 }) {
                     Text("Create Project")
-                        .foregroundColor(.white)
+                        .foregroundColor(.white) // Button text
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(Color.blue)
+                        .background(Color.accentColor) // Adaptive button background
                         .cornerRadius(8)
                 }
                 .padding()
@@ -90,10 +92,12 @@ struct ProjectView: View {
                         store.send(.logout)
                     }) {
                         Text("Logout")
+                            .foregroundColor(.primary) // Adapts to light/dark mode
                     }
                 }
             }
         }
+        .background(Color(UIColor.systemBackground)) // Adapts to light/dark mode
         .alert("Update Project", isPresented: $showingUpdateAlert, actions: {
             TextField("Project Name", text: $updatedProjectName)
             Button("Save", action: {
@@ -109,4 +113,3 @@ struct ProjectView: View {
 #Preview {
     ProjectView(store: ProjectViewStore(dataManager: LocalDataManager()))
 }
-
