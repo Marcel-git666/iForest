@@ -19,7 +19,6 @@ struct StandView: View {
         VStack {
             Text("Stands")
                 .textTypeModifier(textType: .navigationTitle)
-                .foregroundColor(.primary) 
             
             switch store.state.status {
             case .loading:

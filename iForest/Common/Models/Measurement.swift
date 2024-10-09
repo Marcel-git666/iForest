@@ -12,4 +12,5 @@ struct Measurement: Identifiable, Codable {
     var date: Date
     var height: Double
     var girth: Double
+    var photo: Data?
 }

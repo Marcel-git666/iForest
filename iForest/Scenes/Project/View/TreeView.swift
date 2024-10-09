@@ -10,8 +10,6 @@ import SwiftUI
 struct TreeView: View {
     @ObservedObject var store: TreeViewStore
     
-    @State private var selectedTree: Tree? = nil
-    
     var body: some View {
         VStack {
             Text("Trees")
@@ -27,14 +25,16 @@ struct TreeView: View {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(tree.name)
-                                Text("Size: \(tree.size)")
-                                    .font(.caption)
-                                Text("Location: \(tree.location)")
-                                    .font(.caption2)
+                                if let lastMeasurement = tree.measurements.last {
+                                    Text("Height: \(lastMeasurement.height) m")
+                                    Text("Girth: \(lastMeasurement.girth) cm")
+                                    Text("Date: \(lastMeasurement.date, formatter: dateFormatter)")
+                                } else {
+                                    Text("No measurements yet")
+                                }
                             }
                             Spacer()
                             Button(action: {
-                                selectedTree = tree
                                 store.sendEvent(.updateTreeView(tree))
                             }) {
                                 Image(systemName: "pencil")
@@ -75,6 +75,12 @@ struct TreeView: View {
             .padding()
         }
     }
+}
+
+private var dateFormatter: DateFormatter {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .short
+    return formatter
 }
 
 #Preview {

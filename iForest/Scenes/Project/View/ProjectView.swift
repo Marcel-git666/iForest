@@ -20,7 +20,6 @@ struct ProjectView: View {
                 // Custom Navigation Title
                 Text("Projects")
                     .textTypeModifier(textType: .navigationTitle)
-                    .foregroundColor(.primary) 
                 
                 switch store.state.status {
                 case .loading:

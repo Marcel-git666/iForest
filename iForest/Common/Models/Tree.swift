@@ -10,8 +10,6 @@ import Foundation
 struct Tree: Identifiable, Codable {
     var id: String
     var name: String
-    var size: Double
     var location: String
-    var photo: Data?
     var measurements: [Measurement]
 }
