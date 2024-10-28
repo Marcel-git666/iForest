@@ -9,4 +9,5 @@ import Foundation
 
 enum LoginViewEvent {
     case loggedIn
+    case loggedOut
 }

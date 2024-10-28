@@ -24,7 +24,10 @@ final class ProjectNavigationCoordinator: NSObject, ProjectCoordinating {
     deinit {
         logger.info("❌ Deinit ProjectNavigationCoordinator")
     }
-    
+    override init() {
+        super.init()
+        logger.info(" Init ProjectNavigationCoordinator")
+    }
     func start() {
         let dataManager = LocalDataManager()
         let store = ProjectViewStore(dataManager: dataManager)
@@ -59,6 +62,8 @@ private extension ProjectNavigationCoordinator {
             presentStandsView(for: project)
         case .backToProjectList:
             navigationController.popViewController(animated: true)
+        case .login:
+            eventSubject.send(.login(self))
         }
     }
     

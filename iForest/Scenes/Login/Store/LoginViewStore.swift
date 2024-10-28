@@ -29,24 +29,42 @@ extension LoginViewStore {
     func send(_ action: LoginViewAction) {
         switch action {
         case .viewDidLoad:
-            break;
+            checkLoginState()
         case .removeLogin:
-            break;
+            logout()
         case let .storeLogin(email):
             break;
         case .skipLogin:
+            logger.info("I'm in switch trying to skipLogin.\n")
             skipLogin()
+        }
+    }
+    @MainActor
+    private func checkLoginState() {
+        // Set `status` based on Keychain data presence
+        if let _ = try? keychainService.fetchAuthData() {
+            state.status = .loggedIn
+        } else {
+            state.status = .loggedOut
         }
     }
 }
 
 extension LoginViewStore {
+    @MainActor
     func storeLogin(_ email: String) {
         do {
             try keychainService.storeLogin(email)
+            state.status = .loggedIn
         } catch {
             logger.info("❌ Login (email) not saved due to exception.")
         }
+    }
+    @MainActor
+    private func logout() {
+        removeLogin()
+        state.status = .loggedOut // Update state to loggedOut on logout
+        eventSubject.send(.loggedOut)
     }
     
     func removeLogin() {
@@ -94,9 +112,10 @@ extension LoginViewStore {
             }
         }
     }
-    
+    @MainActor
     private func skipLogin() {
-            // Transition to the main app without authentication
-            eventSubject.send(.loggedIn) // Trigger navigation event
+        logger.info("I'm in skipLogin function.\n")
+        state.status = .loggedOut
+        eventSubject.send(.loggedOut)
     }
 }

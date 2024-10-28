@@ -31,13 +31,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseApp.configure()
         UserDefaults.standard.set(true, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
-        //        deeplinkFromService()
+        deeplinkFromService()
         return true
     }
     
     func deeplinkFromService() { // swiftlint:disable:next no_magic_numbers
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            self?.deeplinkHandler?.handleDeeplink(.onboarding(page: 0))
+        if !UserDefaults.standard.bool(forKey: "hasSeenOnboarding") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+                self?.deeplinkHandler?.handleDeeplink(.onboarding(page: 0))
+            }
         }
     }
     

@@ -12,4 +12,5 @@ enum ProjectViewEvent {
     case openCreateProjectView
     case openStands(Project)
     case backToProjectList
+    case login
 }

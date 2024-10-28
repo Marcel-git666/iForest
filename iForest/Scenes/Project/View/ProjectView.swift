@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProjectView: View {
     @ObservedObject var store: ProjectViewStore
-    
+
     @State private var showingUpdateAlert = false
     @State private var projectToUpdate: Project?
     @State private var updatedProjectName = ""

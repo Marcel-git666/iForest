@@ -13,5 +13,6 @@ enum ProjectViewAction {
     case deleteProject(Project)
     case createProject(String)
     case logout
+    case login
 }
 

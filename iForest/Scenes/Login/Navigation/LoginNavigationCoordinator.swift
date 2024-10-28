@@ -52,6 +52,8 @@ private extension LoginNavigationCoordinator {
         switch event {
         case .loggedIn:
             eventSubject.send(.signedIn(self))
+        case .loggedOut:
+            eventSubject.send(.proceedWithoutLogin(self))
         }
     }
 }
@@ -62,33 +64,33 @@ extension LoginNavigationCoordinator: EventEmitting {
     }
 }
 
-//extension LoginNavigationCoordinator {
-//    func handleDeeplink(_ deeplink: Deeplink) {
-//        switch deeplink {
-//        case let .onboarding(page):
-//            let coordinator = makeOnboardingFlow(page: page)
-//            startChildCoordinator(coordinator)
-//            navigationController.present(coordinator.rootViewController, animated: true)
-//        default:
-//            break
-//        }
-//        childCoordinators.forEach { $0.handleDeeplink(deeplink) }
-//    }
-//    
-//    func makeOnboardingFlow(page: Int) -> ViewControllerCoordinator {
-//        let coordinator = OnboardingNavigationCoordinator()
-//        coordinator.eventPublisher
-//            .sink { [weak self] event in
-//                self?.handleEvent(event)
-//            }
-//            .store(in: &cancellables)
-//        return coordinator
-//    }
-//    
-//    func handleEvent(_ event: OnboardingNavigationCoordinatorEvent) {
-//        switch event {
-//        case let .dismiss(coordinator):
-//            release(coordinator: coordinator)
-//        }
-//    }
-//}
+extension LoginNavigationCoordinator {
+    func handleDeeplink(_ deeplink: Deeplink) {
+        switch deeplink {
+        case let .onboarding(page):
+            let coordinator = makeOnboardingFlow(page: page)
+            startChildCoordinator(coordinator)
+            navigationController.present(coordinator.rootViewController, animated: true)
+        default:
+            break
+        }
+        childCoordinators.forEach { $0.handleDeeplink(deeplink) }
+    }
+    
+    func makeOnboardingFlow(page: Int) -> ViewControllerCoordinator {
+        let coordinator = OnboardingNavigationCoordinator()
+        coordinator.eventPublisher
+            .sink { [weak self] event in
+                self?.handleEvent(event)
+            }
+            .store(in: &cancellables)
+        return coordinator
+    }
+    
+    func handleEvent(_ event: OnboardingNavigationCoordinatorEvent) {
+        switch event {
+        case let .dismiss(coordinator):
+            release(coordinator: coordinator)
+        }
+    }
+}

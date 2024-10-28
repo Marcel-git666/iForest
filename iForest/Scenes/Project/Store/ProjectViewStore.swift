@@ -42,6 +42,8 @@ extension ProjectViewStore {
             createProject(name: projectName)
         case .logout:
             eventSubject.send(.logout)
+        case .login:
+            eventSubject.send(.login)
         }
     }
     
