@@ -48,6 +48,7 @@
 		1F2120FF2C95B2EB0050B857 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 1F2120FE2C95B2EB0050B857 /* KeychainAccess */; };
 		1F2C337E2C96D45600FE0C02 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C337D2C96D45600FE0C02 /* Project.swift */; };
 		1F2C33802C96D92A00FE0C02 /* ProjectCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C337F2C96D92A00FE0C02 /* ProjectCreationView.swift */; };
+		1F3529012CD13D7000BE11A8 /* AccessLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3529002CD13D7000BE11A8 /* AccessLevel.swift */; };
 		1F6F60AD2CA6DE330046A869 /* StandViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6F60AC2CA6DE330046A869 /* StandViewEvent.swift */; };
 		1F7246022CA528EC00D931CB /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7246012CA528EC00D931CB /* LocalDataManager.swift */; };
 		1F7246042CA52B6F00D931CB /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7246032CA52B6F00D931CB /* Tree.swift */; };
@@ -63,7 +64,6 @@
 		1F8163BF2CCEA7C500E721CD /* EventEmittingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8163BE2CCEA7C500E721CD /* EventEmittingView.swift */; };
 		1F8163C22CCEA88300E721CD /* OnboardingButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8163C12CCEA88300E721CD /* OnboardingButtonStyle.swift */; };
 		1F8B6F052CA6ECC500B21B0D /* StandCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8B6F042CA6ECC500B21B0D /* StandCreationView.swift */; };
-		1FA007262CD03ABC001FEE89 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA007252CD03ABC001FEE89 /* AppState.swift */; };
 		1FAF32A42C88A69F009FCEA3 /* iForestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF32A32C88A69F009FCEA3 /* iForestApp.swift */; };
 		1FAF32A82C88A6A0009FCEA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAF32A72C88A6A0009FCEA3 /* Assets.xcassets */; };
 		1FAF32AB2C88A6A0009FCEA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAF32AA2C88A6A0009FCEA3 /* Preview Assets.xcassets */; };
@@ -148,6 +148,7 @@
 		1F2120FB2C95B29B0050B857 /* KeychainManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManagerError.swift; sourceTree = "<group>"; };
 		1F2C337D2C96D45600FE0C02 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		1F2C337F2C96D92A00FE0C02 /* ProjectCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCreationView.swift; sourceTree = "<group>"; };
+		1F3529002CD13D7000BE11A8 /* AccessLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessLevel.swift; sourceTree = "<group>"; };
 		1F6F60AC2CA6DE330046A869 /* StandViewEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandViewEvent.swift; sourceTree = "<group>"; };
 		1F7246012CA528EC00D931CB /* LocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
 		1F7246032CA52B6F00D931CB /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
@@ -163,7 +164,6 @@
 		1F8163BE2CCEA7C500E721CD /* EventEmittingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEmittingView.swift; sourceTree = "<group>"; };
 		1F8163C12CCEA88300E721CD /* OnboardingButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingButtonStyle.swift; sourceTree = "<group>"; };
 		1F8B6F042CA6ECC500B21B0D /* StandCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandCreationView.swift; sourceTree = "<group>"; };
-		1FA007252CD03ABC001FEE89 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		1FAF32A02C88A69F009FCEA3 /* iForest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iForest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FAF32A32C88A69F009FCEA3 /* iForestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iForestApp.swift; sourceTree = "<group>"; };
 		1FAF32A72C88A6A0009FCEA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -529,7 +529,7 @@
 				1F7246032CA52B6F00D931CB /* Tree.swift */,
 				1F7246052CA52BA400D931CB /* Measurement.swift */,
 				1F7246072CA52D8200D931CB /* iForestDataModel.xcdatamodeld */,
-				1FA007252CD03ABC001FEE89 /* AppState.swift */,
+				1F3529002CD13D7000BE11A8 /* AccessLevel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -763,7 +763,6 @@
 				1F03590D2C89D3C80054DEA9 /* CustomNavigationController.swift in Sources */,
 				1F03592F2C89F7DD0054DEA9 /* CustomTextLabel.swift in Sources */,
 				1F0359212C89F2130054DEA9 /* UIViewController+Ext.swift in Sources */,
-				1FA007262CD03ABC001FEE89 /* AppState.swift in Sources */,
 				1F2120F02C95B1E20050B857 /* Credentials.swift in Sources */,
 				1FE7518A2CAAB71B002D9383 /* PhotoCaptureView.swift in Sources */,
 				1FC7D2D72C88B5E4000E6922 /* AppCoordinator.swift in Sources */,
@@ -821,6 +820,7 @@
 				1FE7518E2CAAB84E002D9383 /* PhotoCaptureCoordinatorEvent.swift in Sources */,
 				1F0359342C89F8640054DEA9 /* TextType.swift in Sources */,
 				1FD20EC92CA84F85002BCF1A /* TreeViewAction.swift in Sources */,
+				1F3529012CD13D7000BE11A8 /* AccessLevel.swift in Sources */,
 				1F03591A2C89EFE70054DEA9 /* LoginViewAction.swift in Sources */,
 				1FBAAD2C2C8B3EE50008DB60 /* ProjectNavigationCoordinator.swift in Sources */,
 				1FBAAD372C8B50D80008DB60 /* ProjectViewState.swift in Sources */,

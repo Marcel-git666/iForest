@@ -71,7 +71,7 @@ struct iForestApp: App {
     var body: some Scene {
         WindowGroup {
             CoordinatorView(coordinator: appCoordinator )
-                .id(appCoordinator.isAuthorized)
+                .id(appCoordinator.accessLevel)
                 .environment(\.managedObjectContext, context)
                 .onAppear {
                     logger.info("🦈 AppCoordinator has appeared.")

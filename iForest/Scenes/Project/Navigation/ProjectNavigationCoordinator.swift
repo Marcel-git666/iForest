@@ -29,6 +29,7 @@ final class ProjectNavigationCoordinator: NSObject, ProjectCoordinating {
         logger.info(" Init ProjectNavigationCoordinator")
     }
     func start() {
+        logger.info("Starting project Navigation Coordinator.")
         let dataManager = LocalDataManager()
         let store = ProjectViewStore(dataManager: dataManager)
         self.projectViewStore = store // Store reference to use later
@@ -46,6 +47,7 @@ final class ProjectNavigationCoordinator: NSObject, ProjectCoordinating {
 // MARK: - Factories
 private extension ProjectNavigationCoordinator {
     func makeProject(with store: ProjectViewStore) -> UIViewController {
+        logger.info("Making project view....")
         return UIHostingController(rootView: ProjectView(store: store))
     }
 }
