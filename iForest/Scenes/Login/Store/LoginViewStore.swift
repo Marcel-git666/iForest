@@ -33,7 +33,7 @@ extension LoginViewStore {
         case .removeLogin:
             logout()
         case let .storeLogin(email):
-            break;
+            storeLogin(email)
         case .skipLogin:
             logger.info("I'm in switch trying to skipLogin.\n")
             skipLogin()

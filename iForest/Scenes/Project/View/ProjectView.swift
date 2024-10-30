@@ -25,7 +25,7 @@ struct ProjectView: View {
                 switch store.state.status {
                 case .loading:
                     ProgressView("Loading projects...") // Handle loading state
-                
+                    
                 case .loaded, .initial:
                     List {
                         ForEach(store.projects) { project in
@@ -44,7 +44,7 @@ struct ProjectView: View {
                                         .foregroundColor(.blue)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-
+                                
                                 // Delete Button
                                 Button(action: {
                                     store.deleteProject(project)
@@ -65,7 +65,7 @@ struct ProjectView: View {
                     Text("No Projects Available")
                         .font(.title)
                         .foregroundColor(.gray)
-                
+                    
                 case .error:
                     Text("Error loading projects")
                         .font(.title)
@@ -89,7 +89,11 @@ struct ProjectView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         print("ProjectView access level: \(appState.accessLevel)")
-                        store.send(.logout)
+                        if appState.accessLevel == .authorized {
+                            store.send(.logout)
+                        } else {
+                            store.send(.login)
+                        }
                     }) {
                         Text(appState.accessLevel == .authorized ? "Logout" : "Login")
                             .foregroundColor(.primary)
@@ -112,4 +116,5 @@ struct ProjectView: View {
 
 #Preview {
     ProjectView(store: ProjectViewStore(dataManager: LocalDataManager()))
+        .environmentObject(AppState.shared)
 }

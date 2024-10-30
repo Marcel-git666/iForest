@@ -83,15 +83,15 @@ extension AppCoordinator {
 extension AppCoordinator {
     func handleEvent(_ event: LoginNavigationCoordinatorEvent) {
         switch event {
-        case let .signedIn(coordinator):
+        case .signedIn:
             logger.info("User signed in.")
             AppState.shared.accessLevel = .authorized
             updateRootViewController()
-        case let .proceedWithoutLogin(coordinator):
+        case .proceedWithoutLogin:
             logger.info("User skipped login; proceeding as guest.")
             AppState.shared.accessLevel = .guest
             updateRootViewController()
-        case let .logout(coordinator):
+        case .logout:
             logger.info("User logged out.")
             AppState.shared.accessLevel = .none
             updateRootViewController()
@@ -100,7 +100,7 @@ extension AppCoordinator {
     
     func handleEvent(_ event: ProjectNavigationCoordinatorEvent) {
         switch event {
-        case let .logout(coordinator):
+        case .logout:
             logger.info("User logged out from Project screen.")
             AppState.shared.accessLevel = .none
             updateRootViewController()

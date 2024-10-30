@@ -74,7 +74,7 @@ struct iForestApp: App {
             CoordinatorView(coordinator: appCoordinator )
                 //.id(appCoordinator.appState)
                 .environment(\.managedObjectContext, context)
-                .environmentObject(appState)
+                .environmentObject(AppState.shared)
                 .onAppear {
                     logger.info("🦈 AppCoordinator has appeared.")
                 }

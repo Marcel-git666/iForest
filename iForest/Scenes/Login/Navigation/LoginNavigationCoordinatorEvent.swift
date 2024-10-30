@@ -6,7 +6,7 @@
 //
 
 enum LoginNavigationCoordinatorEvent {
-    case signedIn(Coordinator)
-    case proceedWithoutLogin(Coordinator)
-    case logout(Coordinator)
+    case signedIn
+    case proceedWithoutLogin
+    case logout
 }

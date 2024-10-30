@@ -8,7 +8,7 @@
 import Foundation
 
 enum ProjectNavigationCoordinatorEvent {
-    case logout(Coordinator)
+    case logout
     case login
 }
 

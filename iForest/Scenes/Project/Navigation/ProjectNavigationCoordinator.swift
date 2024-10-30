@@ -55,7 +55,7 @@ private extension ProjectNavigationCoordinator {
     private func handleEvent(_ event: ProjectViewEvent) {
         switch event {
         case .logout:
-            eventSubject.send(.logout(self))
+            eventSubject.send(.logout)
             
         case .openCreateProjectView:
             presentCreateProjectView()
