@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ProjectView: View {
     @ObservedObject var store: ProjectViewStore
-
+    @EnvironmentObject var appState: AppState
+    
     @State private var showingUpdateAlert = false
     @State private var projectToUpdate: Project?
     @State private var updatedProjectName = ""
@@ -85,13 +86,13 @@ struct ProjectView: View {
                 .padding()
             }
             .toolbar {
-                // Custom Toolbar for Logout Button
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
+                        print("ProjectView access level: \(appState.accessLevel)")
                         store.send(.logout)
                     }) {
-                        Text("Logout")
-                            .foregroundColor(.primary) // Adapts to light/dark mode
+                        Text(appState.accessLevel == .authorized ? "Logout" : "Login")
+                            .foregroundColor(.primary)
                     }
                 }
             }

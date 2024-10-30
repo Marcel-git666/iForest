@@ -60,6 +60,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct iForestApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @ObservedObject private var appCoordinator = AppCoordinator()
+    @StateObject private var appState = AppState()
     private let logger = Logger()
     let context = CoreDataStack.shared.context
     
@@ -71,8 +72,9 @@ struct iForestApp: App {
     var body: some Scene {
         WindowGroup {
             CoordinatorView(coordinator: appCoordinator )
-                .id(appCoordinator.accessLevel)
+                //.id(appCoordinator.appState)
                 .environment(\.managedObjectContext, context)
+                .environmentObject(appState)
                 .onAppear {
                     logger.info("🦈 AppCoordinator has appeared.")
                 }

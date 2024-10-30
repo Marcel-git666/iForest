@@ -7,6 +7,12 @@
 
 import Foundation
 
+final class AppState: ObservableObject {
+    static let shared = AppState()
+    
+    @Published var accessLevel: AccessLevel = .none
+}
+
 enum AccessLevel: CustomStringConvertible {
     case none
     case guest

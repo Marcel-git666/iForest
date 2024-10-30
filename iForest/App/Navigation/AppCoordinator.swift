@@ -13,53 +13,42 @@ protocol AppCoordinating: ViewControllerCoordinator {}
 
 final class AppCoordinator: AppCoordinating, ObservableObject {
     // MARK: Private properties
-    private(set) lazy var rootViewController: UIViewController = {
-        if (accessLevel != .none) {
-            makeProjectFlow().rootViewController
-        } else {
-            makeLoginFlow().rootViewController
-        }
-    }()
     private lazy var cancellables = Set<AnyCancellable>()
     private lazy var keychainService = KeychainService(keychainManager: KeychainManager())
     private lazy var logger = Logger()
+    // Persist coordinators to avoid recreating them
+    private lazy var projectCoordinator = makeProjectFlow()
+    private lazy var loginCoordinator = makeLoginFlow()
+    
     // MARK: Public properties
     var childCoordinators = [Coordinator]()
-    @Published var accessLevel: AccessLevel = .none
+//    var accessLevel: AccessLevel {
+//        get { appState.accessLevel }
+//        set { appState.accessLevel = newValue }
+//    }
+    
+    // Root view controller, dynamically set based on access level
+    var rootViewController: UIViewController {
+        switch AppState.shared.accessLevel {
+        case .authorized, .guest:
+            return projectCoordinator.rootViewController
+        case .none:
+            return loginCoordinator.rootViewController
+        }
+    }
     
     // MARK: Lifecycle
     init() {
         if (try? keychainService.fetchAuthData()) != nil {
-            accessLevel = .authorized
+            AppState.shared.accessLevel = .authorized
         }
-        logger.info("AccessLevel = \(self.accessLevel)")
+        logger.info("AccessLevel = \(AppState.shared.accessLevel)")
     }
 }
 
 extension AppCoordinator {
     func start() {
-        setupAppUI()
-        
     }
-    
-    func setupAppUI() {
-        // Set background color for Tab Bar
-        UITabBar.appearance().backgroundColor = .systemBrown
-        UITabBar.appearance().isTranslucent = false
-        UITabBar.appearance().tintColor = .white
-        
-        // Set tintColor for navigation bar items (back buttons, bar buttons, etc.)
-        UINavigationBar.appearance().tintColor = .blue // Choose a color visible in both light/dark mode
-        
-        // Set navigation bar background color based on the current interface style
-        UINavigationBar.appearance().backgroundColor = UIColor.systemBackground
-        
-        // Adjust title text color for navigation bar
-        UINavigationBar.appearance().titleTextAttributes = [
-            .foregroundColor: UIColor.label // Adapts to light/dark mode
-        ]
-    }
-    
 }
 
 // MARK: - Factory methods
@@ -96,19 +85,16 @@ extension AppCoordinator {
         switch event {
         case let .signedIn(coordinator):
             logger.info("User signed in.")
-            rootViewController = makeProjectFlow().rootViewController
-            release(coordinator: coordinator)
-            accessLevel = .authorized
+            AppState.shared.accessLevel = .authorized
+            updateRootViewController()
         case let .proceedWithoutLogin(coordinator):
             logger.info("User skipped login; proceeding as guest.")
-            rootViewController = makeProjectFlow().rootViewController
-            release(coordinator: coordinator)
-            accessLevel = .guest
+            AppState.shared.accessLevel = .guest
+            updateRootViewController()
         case let .logout(coordinator):
             logger.info("User logged out.")
-            rootViewController = makeLoginFlow().rootViewController
-            release(coordinator: coordinator)
-            accessLevel = .none
+            AppState.shared.accessLevel = .none
+            updateRootViewController()
         }
     }
     
@@ -116,12 +102,20 @@ extension AppCoordinator {
         switch event {
         case let .logout(coordinator):
             logger.info("User logged out from Project screen.")
-            accessLevel = .none
-            rootViewController = makeLoginFlow().rootViewController
-            release(coordinator: coordinator)
-        case let .login(coordinator):
+            AppState.shared.accessLevel = .none
+            updateRootViewController()
+        case .login:
             logger.info("User requested login from Project screen.")
-            rootViewController.present(makeLoginFlow().rootViewController, animated: true)
+            AppState.shared.accessLevel = .none
+            updateRootViewController()
+        }
+    }
+    
+    private func updateRootViewController() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
+            window.rootViewController = rootViewController
+            window.makeKeyAndVisible()
         }
     }
 }

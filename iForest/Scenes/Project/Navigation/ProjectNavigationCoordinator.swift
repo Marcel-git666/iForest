@@ -65,7 +65,7 @@ private extension ProjectNavigationCoordinator {
         case .backToProjectList:
             navigationController.popViewController(animated: true)
         case .login:
-            eventSubject.send(.login(self))
+            eventSubject.send(.login)
         }
     }
     
