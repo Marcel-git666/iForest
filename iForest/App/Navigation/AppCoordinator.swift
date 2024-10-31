@@ -22,11 +22,7 @@ final class AppCoordinator: AppCoordinating, ObservableObject {
     
     // MARK: Public properties
     var childCoordinators = [Coordinator]()
-//    var accessLevel: AccessLevel {
-//        get { appState.accessLevel }
-//        set { appState.accessLevel = newValue }
-//    }
-    
+
     // Root view controller, dynamically set based on access level
     var rootViewController: UIViewController {
         switch AppState.shared.accessLevel {
