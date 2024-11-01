@@ -51,9 +51,9 @@ private extension LoginNavigationCoordinator {
     func handleEvent(_ event: LoginViewEvent) {
         switch event {
         case .loggedIn:
-            eventSubject.send(.signedIn)
+            eventSubject.send(.signedIn(self))
         case .loggedOut:
-            eventSubject.send(.proceedWithoutLogin)
+            eventSubject.send(.proceedWithoutLogin(self))
         }
     }
 }

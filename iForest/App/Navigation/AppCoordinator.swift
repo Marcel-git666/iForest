@@ -16,22 +16,18 @@ final class AppCoordinator: AppCoordinating, ObservableObject {
     private lazy var cancellables = Set<AnyCancellable>()
     private lazy var keychainService = KeychainService(keychainManager: KeychainManager())
     private lazy var logger = Logger()
+    
     // Persist coordinators to avoid recreating them
-    private lazy var projectCoordinator = makeProjectFlow()
-    private lazy var loginCoordinator = makeLoginFlow()
+//    private lazy var tabBarCoordinator = makeTabBarFlow()
+//    private lazy var loginCoordinator = makeLoginFlow()
     
     // MARK: Public properties
     var childCoordinators = [Coordinator]()
 
     // Root view controller, dynamically set based on access level
-    var rootViewController: UIViewController {
-        switch AppState.shared.accessLevel {
-        case .authorized, .guest:
-            return projectCoordinator.rootViewController
-        case .none:
-            return loginCoordinator.rootViewController
-        }
-    }
+    private(set) lazy var rootViewController: UIViewController = {
+        return AppState.shared.accessLevel == .authorized ? makeTabBarFlow().rootViewController : makeLoginFlow().rootViewController
+    }()
     
     // MARK: Lifecycle
     init() {
@@ -50,14 +46,14 @@ extension AppCoordinator {
 // MARK: - Factory methods
 extension AppCoordinator {
     
-    func makeProjectFlow() -> ViewControllerCoordinator {
-        let projectCoordinator = ProjectNavigationCoordinator()
-        startChildCoordinator(projectCoordinator)
-        projectCoordinator.eventPublisher.sink { [weak self] event in
+    func makeTabBarFlow() -> ViewControllerCoordinator {
+        let tabBarCoordinator = MainTabBarCoordinator()
+        startChildCoordinator(tabBarCoordinator)
+        tabBarCoordinator.eventPublisher.sink { [weak self] event in
             self?.handleEvent(event)
         }
         .store(in: &cancellables)
-        return projectCoordinator
+        return tabBarCoordinator
     }
     
     func makeLoginFlow() -> ViewControllerCoordinator {
@@ -79,14 +75,16 @@ extension AppCoordinator {
 extension AppCoordinator {
     func handleEvent(_ event: LoginNavigationCoordinatorEvent) {
         switch event {
-        case .signedIn:
+        case let .signedIn(coordinator):
             logger.info("User signed in.")
             AppState.shared.accessLevel = .authorized
             updateRootViewController()
-        case .proceedWithoutLogin:
+            release(coordinator: coordinator)
+        case let .proceedWithoutLogin(coordinator):
             logger.info("User skipped login; proceeding as guest.")
             AppState.shared.accessLevel = .guest
             updateRootViewController()
+            release(coordinator: coordinator)
         case .logout:
             logger.info("User logged out.")
             AppState.shared.accessLevel = .none
@@ -94,10 +92,10 @@ extension AppCoordinator {
         }
     }
     
-    func handleEvent(_ event: ProjectNavigationCoordinatorEvent) {
+    func handleEvent(_ event: MainTabBarEvent) {
         switch event {
         case .logout:
-            logger.info("User logged out from Project screen.")
+            logger.info("User logged out from MainTabBar screen.")
             AppState.shared.accessLevel = .none
             updateRootViewController()
         case .login:

@@ -64,6 +64,9 @@
 		1F8163BF2CCEA7C500E721CD /* EventEmittingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8163BE2CCEA7C500E721CD /* EventEmittingView.swift */; };
 		1F8163C22CCEA88300E721CD /* OnboardingButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8163C12CCEA88300E721CD /* OnboardingButtonStyle.swift */; };
 		1F8B6F052CA6ECC500B21B0D /* StandCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8B6F042CA6ECC500B21B0D /* StandCreationView.swift */; };
+		1FA2DD412CD527270018EA0F /* MainTabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2DD402CD527270018EA0F /* MainTabBarCoordinator.swift */; };
+		1FA2DD432CD527440018EA0F /* MainTabBarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2DD422CD527440018EA0F /* MainTabBarEvent.swift */; };
+		1FA2DD452CD527880018EA0F /* TabBarControllerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2DD442CD527880018EA0F /* TabBarControllerCoordinator.swift */; };
 		1FAF32A42C88A69F009FCEA3 /* iForestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF32A32C88A69F009FCEA3 /* iForestApp.swift */; };
 		1FAF32A82C88A6A0009FCEA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAF32A72C88A6A0009FCEA3 /* Assets.xcassets */; };
 		1FAF32AB2C88A6A0009FCEA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FAF32AA2C88A6A0009FCEA3 /* Preview Assets.xcassets */; };
@@ -164,6 +167,9 @@
 		1F8163BE2CCEA7C500E721CD /* EventEmittingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEmittingView.swift; sourceTree = "<group>"; };
 		1F8163C12CCEA88300E721CD /* OnboardingButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingButtonStyle.swift; sourceTree = "<group>"; };
 		1F8B6F042CA6ECC500B21B0D /* StandCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandCreationView.swift; sourceTree = "<group>"; };
+		1FA2DD402CD527270018EA0F /* MainTabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCoordinator.swift; sourceTree = "<group>"; };
+		1FA2DD422CD527440018EA0F /* MainTabBarEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarEvent.swift; sourceTree = "<group>"; };
+		1FA2DD442CD527880018EA0F /* TabBarControllerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerCoordinator.swift; sourceTree = "<group>"; };
 		1FAF32A02C88A69F009FCEA3 /* iForest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iForest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FAF32A32C88A69F009FCEA3 /* iForestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iForestApp.swift; sourceTree = "<group>"; };
 		1FAF32A72C88A6A0009FCEA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -236,6 +242,7 @@
 				1F0358F42C8987420054DEA9 /* DeeplinkHandling.swift */,
 				1F0358FB2C89885B0054DEA9 /* ViewControllerCoordinator.swift */,
 				1F0359132C89D4CA0054DEA9 /* NavigationControllerCoordinator.swift */,
+				1FA2DD442CD527880018EA0F /* TabBarControllerCoordinator.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -272,6 +279,7 @@
 		1F0358FF2C898ADC0054DEA9 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				1FA2DD3E2CD526FE0018EA0F /* MainTabBarCoordinator */,
 				1F8163B02CCEA68F00E721CD /* Onboarding */,
 				1F0359002C898AE40054DEA9 /* Login */,
 				1FE7517D2CAAB347002D9383 /* PhotoCapture */,
@@ -563,6 +571,23 @@
 			path = Styles;
 			sourceTree = "<group>";
 		};
+		1FA2DD3E2CD526FE0018EA0F /* MainTabBarCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				1FA2DD3F2CD5271C0018EA0F /* Navigation */,
+			);
+			path = MainTabBarCoordinator;
+			sourceTree = "<group>";
+		};
+		1FA2DD3F2CD5271C0018EA0F /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				1FA2DD402CD527270018EA0F /* MainTabBarCoordinator.swift */,
+				1FA2DD422CD527440018EA0F /* MainTabBarEvent.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 		1FAF32972C88A69F009FCEA3 = {
 			isa = PBXGroup;
 			children = (
@@ -770,6 +795,7 @@
 				1F8163B72CCEA71200E721CD /* OnboardingView.swift in Sources */,
 				1F2120FC2C95B29B0050B857 /* KeychainManagerError.swift in Sources */,
 				1FE751882CAAB6C8002D9383 /* PhotoCaptureEvent.swift in Sources */,
+				1FA2DD432CD527440018EA0F /* MainTabBarEvent.swift in Sources */,
 				1FD091B92C97648C00E9A1D1 /* StandsViewState.swift in Sources */,
 				1F2C337E2C96D45600FE0C02 /* Project.swift in Sources */,
 				1F6F60AD2CA6DE330046A869 /* StandViewEvent.swift in Sources */,
@@ -800,9 +826,11 @@
 				1F0359392C89F8EF0054DEA9 /* FontType.swift in Sources */,
 				1FD20EC12CA84E2C002BCF1A /* TreeView.swift in Sources */,
 				1FBAAD2E2C8B47330008DB60 /* ProjectNavigationCoordinatorEvent.swift in Sources */,
+				1FA2DD412CD527270018EA0F /* MainTabBarCoordinator.swift in Sources */,
 				1FE751822CAAB395002D9383 /* PhotoCaptureCoordinator.swift in Sources */,
 				1FD091B52C97242A00E9A1D1 /* StandView.swift in Sources */,
 				1F8163BD2CCEA76D00E721CD /* OnboardingViewEvent.swift in Sources */,
+				1FA2DD452CD527880018EA0F /* TabBarControllerCoordinator.swift in Sources */,
 				1F8163C22CCEA88300E721CD /* OnboardingButtonStyle.swift in Sources */,
 				1FD091B12C9722E700E9A1D1 /* Stand.swift in Sources */,
 				1F2C33802C96D92A00FE0C02 /* ProjectCreationView.swift in Sources */,

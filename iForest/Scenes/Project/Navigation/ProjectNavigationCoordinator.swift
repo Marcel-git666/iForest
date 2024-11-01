@@ -55,6 +55,7 @@ private extension ProjectNavigationCoordinator {
     private func handleEvent(_ event: ProjectViewEvent) {
         switch event {
         case .logout:
+            logger.info("Project View Event .logout")
             eventSubject.send(.logout)
             
         case .openCreateProjectView:
@@ -65,6 +66,7 @@ private extension ProjectNavigationCoordinator {
         case .backToProjectList:
             navigationController.popViewController(animated: true)
         case .login:
+            logger.info("Project View Event .login")
             eventSubject.send(.login)
         }
     }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProjectView: View {
     @ObservedObject var store: ProjectViewStore
-    @EnvironmentObject var appState: AppState
+//    @EnvironmentObject var appState: AppState
     
     @State private var showingUpdateAlert = false
     @State private var projectToUpdate: Project?
@@ -88,14 +88,14 @@ struct ProjectView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        print("ProjectView access level: \(appState.accessLevel)")
-                        if appState.accessLevel == .authorized {
+                        print("ProjectView access level: \(AppState.shared.accessLevel)")
+                        if AppState.shared.accessLevel == .authorized {
                             store.send(.logout)
                         } else {
                             store.send(.login)
                         }
                     }) {
-                        Text(appState.accessLevel == .authorized ? "Logout" : "Login")
+                        Text(AppState.shared.accessLevel == .authorized ? "Logout" : "Login")
                             .foregroundColor(.primary)
                     }
                 }
@@ -116,5 +116,5 @@ struct ProjectView: View {
 
 #Preview {
     ProjectView(store: ProjectViewStore(dataManager: LocalDataManager()))
-        .environmentObject(AppState.shared)
+        // .environmentObject(AppState.shared)
 }
