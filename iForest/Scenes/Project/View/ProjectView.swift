@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ProjectView: View {
     @ObservedObject var store: ProjectViewStore
-//    @EnvironmentObject var appState: AppState
     
     @State private var showingUpdateAlert = false
     @State private var projectToUpdate: Project?
@@ -116,5 +115,4 @@ struct ProjectView: View {
 
 #Preview {
     ProjectView(store: ProjectViewStore(dataManager: LocalDataManager()))
-        // .environmentObject(AppState.shared)
 }

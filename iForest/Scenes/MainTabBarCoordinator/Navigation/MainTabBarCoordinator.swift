@@ -74,10 +74,10 @@ private extension MainTabBarCoordinator {
         let projectCoordinator = ProjectNavigationCoordinator()
         startChildCoordinator(projectCoordinator)
         projectCoordinator.eventPublisher
-            .sink { [weak self] event in
-                self?.handleEvent(event)  // Pass events to MainTabBarCoordinator's handleEvent
-            }
-            .store(in: &cancellables)
+                .sink { [weak self] event in
+                    self?.handleEvent(event)  // Pass events to MainTabBarCoordinator's handleEvent
+                }
+                .store(in: &cancellables)
         projectCoordinator.rootViewController.tabBarItem = UITabBarItem(
             title: "Projects",
             image: UIImage(systemName: "list.bullet.rectangle.portrait"),

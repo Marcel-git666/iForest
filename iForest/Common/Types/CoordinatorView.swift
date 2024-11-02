@@ -12,7 +12,7 @@ struct CoordinatorView<T: ViewControllerCoordinator>: UIViewControllerRepresenta
     let coordinator: T
     
     func makeUIViewController(context: Context) -> UIViewController {
-        coordinator.rootViewController
+        return coordinator.rootViewController
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

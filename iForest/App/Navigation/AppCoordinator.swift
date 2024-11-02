@@ -23,24 +23,31 @@ final class AppCoordinator: AppCoordinating, ObservableObject {
     
     // MARK: Public properties
     var childCoordinators = [Coordinator]()
-
+    @Published var isAuthorized = false
+    
     // Root view controller, dynamically set based on access level
     private(set) lazy var rootViewController: UIViewController = {
-        return AppState.shared.accessLevel == .authorized ? makeTabBarFlow().rootViewController : makeLoginFlow().rootViewController
+        if isAuthorized {
+            makeTabBarFlow().rootViewController
+        }
+        else {
+            makeLoginFlow().rootViewController
+        }
     }()
     
     // MARK: Lifecycle
     init() {
         if (try? keychainService.fetchAuthData()) != nil {
             AppState.shared.accessLevel = .authorized
+            isAuthorized = true
         }
         logger.info("AccessLevel = \(AppState.shared.accessLevel)")
+        logger.info("isAuthorized = \(self.isAuthorized)")
     }
 }
 
 extension AppCoordinator {
-    func start() {
-    }
+    func start() {}
 }
 
 // MARK: - Factory methods
@@ -66,7 +73,6 @@ extension AppCoordinator {
         return loginCoordinator
     }
     
-    
     func handleDeeplink(deeplink: Deeplink) {
         childCoordinators.forEach { $0.handleDeeplink(deeplink) }
     }
@@ -78,17 +84,20 @@ extension AppCoordinator {
         case let .signedIn(coordinator):
             logger.info("User signed in.")
             AppState.shared.accessLevel = .authorized
-            updateRootViewController()
+            isAuthorized = true
+//            updateRootViewController()
             release(coordinator: coordinator)
         case let .proceedWithoutLogin(coordinator):
             logger.info("User skipped login; proceeding as guest.")
             AppState.shared.accessLevel = .guest
-            updateRootViewController()
+            isAuthorized = true
+//            updateRootViewController()
             release(coordinator: coordinator)
         case .logout:
             logger.info("User logged out.")
             AppState.shared.accessLevel = .none
-            updateRootViewController()
+            isAuthorized = false
+//            updateRootViewController()
         }
     }
     
@@ -97,19 +106,21 @@ extension AppCoordinator {
         case .logout:
             logger.info("User logged out from MainTabBar screen.")
             AppState.shared.accessLevel = .none
-            updateRootViewController()
+            isAuthorized = false
+//            updateRootViewController()
         case .login:
             logger.info("User requested login from Project screen.")
             AppState.shared.accessLevel = .none
-            updateRootViewController()
+            isAuthorized = false
+//            updateRootViewController()
         }
     }
     
-    private func updateRootViewController() {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            window.rootViewController = rootViewController
-            window.makeKeyAndVisible()
-        }
-    }
+//    private func updateRootViewController() {
+//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//           let window = windowScene.windows.first {
+//            window.rootViewController = rootViewController
+//            window.makeKeyAndVisible()
+//        }
+//    }
 }
