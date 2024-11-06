@@ -26,7 +26,7 @@ final class ProjectNavigationCoordinator: NSObject, ProjectCoordinating {
     }
     override init() {
         super.init()
-        logger.info(" Init ProjectNavigationCoordinator")
+        logger.info("🦈 Init ProjectNavigationCoordinator")
     }
     func start() {
         logger.info("Starting project Navigation Coordinator.")
@@ -41,6 +41,7 @@ final class ProjectNavigationCoordinator: NSObject, ProjectCoordinating {
             .store(in: &cancellables)
         
         navigationController.setViewControllers([makeProject(with: store)], animated: true)
+        print("Navigation stack after setting ProjectView: \(navigationController.viewControllers)")
     }
 }
 
@@ -73,21 +74,18 @@ private extension ProjectNavigationCoordinator {
     private func presentCreateProjectView() {
         print("presentCreateProjectView called") // Debugging output
         
-        // Find the ProjectView in the navigation stack
-        if let projectViewController = navigationController.viewControllers.first(where: { $0 is UIHostingController<ProjectView> }) as? UIHostingController<ProjectView> {
-            let store = projectViewController.rootView.store // Access the store from ProjectView
-            
-            // Create the ProjectCreationView with the store
-            let creationView = ProjectCreationView(store: store)
-            
-            let viewController = UIHostingController(rootView: creationView)
-            print("Pushing ProjectCreationView to navigation stack") // Debugging
-            
-            // Push the new view controller onto the navigation stack
-            navigationController.pushViewController(viewController, animated: true)
-        } else {
-            print("Error: Could not find ProjectView in the navigation stack") // Debugging
+        guard let store = projectViewStore else {
+            print("Error: ProjectViewStore is nil") // Add debugging for store availability
+            return
         }
+        
+        // Create ProjectCreationView directly with the available store
+        let creationView = ProjectCreationView(store: store)
+        let viewController = UIHostingController(rootView: creationView)
+        print("Pushing ProjectCreationView to navigation stack") // Debugging
+        
+        // Push the new view controller onto the navigation stack
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     private func presentStandsView(for project: Project) {

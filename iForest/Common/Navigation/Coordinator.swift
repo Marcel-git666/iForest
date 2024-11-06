@@ -20,6 +20,7 @@ extension Coordinator {
     }
     
     func startChildCoordinator(_ childCoordinator: Coordinator) {
+        print("Starting child coordinator: \(childCoordinator)")
         childCoordinators.append(childCoordinator)
         childCoordinator.start()
     }
