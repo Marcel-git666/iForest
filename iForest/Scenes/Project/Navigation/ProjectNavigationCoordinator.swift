@@ -48,7 +48,7 @@ final class ProjectNavigationCoordinator: NSObject, ProjectCoordinating {
 private extension ProjectNavigationCoordinator {
     func makeProject(with store: ProjectViewStore) -> UIViewController {
         logger.info("Making project view....")
-        return UIHostingController(rootView: ProjectView(store: store))
+        return UIHostingController(rootView: ProjectView(store: store).environmentObject(AppState.shared))
     }
 }
 private extension ProjectNavigationCoordinator {

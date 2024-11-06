@@ -20,7 +20,6 @@
 		1FA2DE332CD93F4F0018EA0F /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Common/GoogleService-Info.plist",
 				Info.plist,
 			);
 			target = 1FAF329F2C88A69F009FCEA3 /* iForest */;
@@ -71,7 +70,6 @@
 				1FAF329C2C88A69F009FCEA3 /* Sources */,
 				1FAF329D2C88A69F009FCEA3 /* Frameworks */,
 				1FAF329E2C88A69F009FCEA3 /* Resources */,
-				1FA2DD4D2CD92B9A0018EA0F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -136,26 +134,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		1FA2DD4D2CD92B9A0018EA0F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type: /bin/sh\n\n# Ensure that dSYM files for SPM frameworks are included in the archive.\n\necho \"Copying dSYMs for SPM frameworks...\"\n\nBUILD_DIR=\"${BUILD_DIR%Build/*}Build/Products\"\nDSYM_DESTINATION=\"${DWARF_DSYM_FOLDER_PATH}\"\n\nfind \"$BUILD_DIR\" -name '*.framework' | while read framework; do\n    FRAMEWORK_NAME=$(basename \"$framework\")\n    DSYM_SOURCE=\"${framework}.dSYM\"\n    if [ -d \"$DSYM_SOURCE\" ]; then\n        echo \"Copying dSYM for $FRAMEWORK_NAME\"\n        cp -r \"$DSYM_SOURCE\" \"$DSYM_DESTINATION\"\n    fi\ndone\n# Type a script or drag a script file from your workspace to insert its path.\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1FAF329C2C88A69F009FCEA3 /* Sources */ = {
@@ -310,7 +288,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.02;
 				PRODUCT_BUNDLE_IDENTIFIER = com.marcel.iForest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -342,7 +320,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.02;
 				PRODUCT_BUNDLE_IDENTIFIER = com.marcel.iForest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
