@@ -10,21 +10,15 @@ import CoreData
 
 final class LocalDataManager: DataManaging {
 
-    private let persistentContainer: NSPersistentContainer
-    
-    init() {
-        persistentContainer = NSPersistentContainer(name: "iForestDataModel")
-        persistentContainer.loadPersistentStores { description, error in
-            if let error = error {
-                fatalError("Failed to load Core Data stack: \(error)")
-            }
+    private let context: NSManagedObjectContext
+        
+        init(context: NSManagedObjectContext = CoreDataStack.shared.context) {
+            self.context = context
         }
-    }
     
     // MARK: - Project Methods
     
     func fetchProjects() async throws -> [Project] {
-        let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         let result = try context.fetch(fetchRequest)
         
@@ -35,7 +29,6 @@ final class LocalDataManager: DataManaging {
     }
     
     func createProject(_ project: Project) async throws -> Project {
-        let context = persistentContainer.viewContext
         
         let entity = DataEntity(context: context)
         entity.id = project.id
@@ -46,7 +39,6 @@ final class LocalDataManager: DataManaging {
     }
     
     func deleteProject(_ project: Project) async throws {
-        let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
         let result = try context.fetch(fetchRequest)
@@ -57,7 +49,7 @@ final class LocalDataManager: DataManaging {
     }
     
     func updateProject(_ project: Project) async throws {
-        let context = persistentContainer.viewContext
+
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
         let result = try context.fetch(fetchRequest)
@@ -70,7 +62,7 @@ final class LocalDataManager: DataManaging {
     // MARK: - Stand Methods
     
     func fetchStands(for project: Project) async throws -> [Stand] {
-        let context = persistentContainer.viewContext
+
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
         
@@ -84,7 +76,7 @@ final class LocalDataManager: DataManaging {
     }
     
     func createStand(_ stand: Stand, for project: Project) async throws -> Stand {
-        let context = persistentContainer.viewContext
+
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
         let result = try context.fetch(fetchRequest)
@@ -102,7 +94,7 @@ final class LocalDataManager: DataManaging {
     }
     
     func deleteStand(_ stand: Stand, from project: Project) async throws {
-        let context = persistentContainer.viewContext
+
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
         let result = try context.fetch(fetchRequest)
@@ -117,7 +109,7 @@ final class LocalDataManager: DataManaging {
     }
     
     func updateStand(_ stand: Stand, in project: Project) async throws {
-        let context = persistentContainer.viewContext
+
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", project.id)
         let result = try context.fetch(fetchRequest)
@@ -140,7 +132,7 @@ final class LocalDataManager: DataManaging {
     }
     
     func createTree(_ tree: Tree, for stand: Stand) async throws -> Tree {
-        let context = persistentContainer.viewContext
+
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         
         // Iterate over all projects to find the one containing the stand
@@ -167,7 +159,7 @@ final class LocalDataManager: DataManaging {
     }
     
     func deleteTree(_ tree: Tree, from stand: Stand) async throws {
-        let context = persistentContainer.viewContext
+
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         
         // Iterate over all projects to find the one containing the stand
@@ -192,7 +184,7 @@ final class LocalDataManager: DataManaging {
     }
     
     func updateTree(_ tree: Tree, in stand: Stand) async throws {
-        let context = persistentContainer.viewContext
+
         let fetchRequest: NSFetchRequest<DataEntity> = DataEntity.fetchRequest()
         
         // Iterate over all projects to find the one containing the stand

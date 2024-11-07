@@ -14,15 +14,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     // Delegate pattern
     weak var deeplinkHandler: DeeplinkHandling?
     
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "iForestDataModel")
-        container.loadPersistentStores { (storeDescription, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-        return container
-    }()
+    
     
     func application(
         _ application: UIApplication,
@@ -44,15 +36,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     
     func saveContext() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
+        CoreDataStack.shared.saveContext()
     }
 }
 
@@ -73,7 +57,7 @@ struct iForestApp: App {
         WindowGroup {
             CoordinatorView(coordinator: appCoordinator )
                 //.id(appCoordinator.appState)
-                .environment(\.managedObjectContext, context)
+                .environment(\.managedObjectContext, CoreDataStack.shared.context)
                 .environmentObject(AppState.shared)
                 .onAppear {
                     logger.info("🦈 AppCoordinator has appeared.")
